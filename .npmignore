@@ -1,0 +1,11 @@
+/.vscode
+/src
+/typings
+.jsbeautifyrc
+tsconfig.json
+typings.json
+*.ts
+*.map
+*.log
+!*.d.ts
+/bundle/ng2-error-handling.dev.d.ts
