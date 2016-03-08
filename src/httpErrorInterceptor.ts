@@ -5,6 +5,7 @@ import {HttpErrorInterceptorOptions} from './httpErrorInterceptorOptions';
 import {Observable} from 'rxjs/Observable';
 import {InternalServerErrorService} from './internalServerError.service';
 import {GlobalNotificationsService} from 'ng2-notifications/common';
+import {ServerValidationService} from './serverValidation.service';
 
 /**
  * Information about error, formatted for REST api
@@ -31,6 +32,7 @@ export class HttpErrorInterceptor extends HttpInterceptor
     //######################### constructor #########################
     constructor(@Optional() private _options: HttpErrorInterceptorOptions,
                 @Optional() private _internalServerErrorService: InternalServerErrorService,
+                @Optional() private _serverValidationService: ServerValidationService,
                 private _notifications: GlobalNotificationsService)
     {
         super();
@@ -66,6 +68,11 @@ export class HttpErrorInterceptor extends HttpInterceptor
                     {
                         this._notifications.error(itm);
                     })
+                }
+                
+                if(errorDetail.validationErrors && this._serverValidationService)
+                {
+                    this._serverValidationService.addServerValidationErrors(errorDetail.validationErrors);
                 }
             }
             

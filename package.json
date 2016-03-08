@@ -1,6 +1,6 @@
 {
     "name": "ng2-error-handling",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Angular 2 module used for handling http api error handling",
     "scripts":
     {
@@ -37,6 +37,7 @@
         "zone.js": "0.5.15",
         "rxjs": "5.0.0-beta.2",
         "bootstrap": "~3.3.6",
+        "ng2-common": "latest",
         "ng2-notifications": "latest",
         "ng2-http-extensions": "latest"
     },
