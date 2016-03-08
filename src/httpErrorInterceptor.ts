@@ -4,6 +4,23 @@ import {HttpInterceptor, HTTP_INTERCEPTORS} from 'ng2-http-extensions/intercepta
 import {HttpErrorInterceptorOptions} from './httpErrorInterceptorOptions';
 import {Observable} from 'rxjs/Observable';
 import {InternalServerErrorService} from './internalServerError.service';
+import {GlobalNotificationsService} from 'ng2-notifications/common';
+
+/**
+ * Information about error, formatted for REST api
+ */
+interface BadRequestDetail
+{
+    /**
+     * Gets or sets error messages that will be displayed
+     */
+    errors: string[];
+
+    /**
+     * Gets or sets validation error messages to be displayed
+     */
+    validationErrors: {[key: string]: string[]}; 
+}
 
 /**
  * Interceptor that is used for handling http errors with codes 400, 404..599
@@ -13,7 +30,8 @@ export class HttpErrorInterceptor extends HttpInterceptor
 {
     //######################### constructor #########################
     constructor(@Optional() private _options: HttpErrorInterceptorOptions,
-                @Optional() private _internalServerErrorService: InternalServerErrorService)
+                @Optional() private _internalServerErrorService: InternalServerErrorService,
+                private _notifications: GlobalNotificationsService)
     {
         super();
         
@@ -40,7 +58,15 @@ export class HttpErrorInterceptor extends HttpInterceptor
                     return Observable.empty();
                 }
                 
-                console.log(err);
+                var errorDetail = <BadRequestDetail>err.json();
+                
+                if(errorDetail.errors)
+                {
+                    errorDetail.errors.forEach(itm =>
+                    {
+                        this._notifications.error(itm);
+                    })
+                }
             }
             
             return Observable.empty();
