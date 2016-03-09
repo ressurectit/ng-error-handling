@@ -60,19 +60,26 @@ export class HttpErrorInterceptor extends HttpInterceptor
                     return Observable.empty();
                 }
                 
-                var errorDetail = <BadRequestDetail>err.json();
-                
-                if(errorDetail.errors)
+                try
                 {
-                    errorDetail.errors.forEach(itm =>
+                    var errorDetail = <BadRequestDetail>err.json();
+                    
+                    if(errorDetail.errors)
                     {
-                        this._notifications.error(itm);
-                    })
+                        errorDetail.errors.forEach(itm =>
+                        {
+                            this._notifications.error(itm);
+                        })
+                    }
+                    
+                    if(errorDetail.validationErrors && this._serverValidationService)
+                    {
+                        this._serverValidationService.addServerValidationErrors(errorDetail.validationErrors);
+                    }
                 }
-                
-                if(errorDetail.validationErrors && this._serverValidationService)
+                catch(error)
                 {
-                    this._serverValidationService.addServerValidationErrors(errorDetail.validationErrors);
+                    this._notifications.error(`Request '${err.url}' ended with error code: ${err.status}`);
                 }
             }
             
