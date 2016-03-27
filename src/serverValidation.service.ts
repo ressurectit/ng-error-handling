@@ -1,4 +1,6 @@
-import {Injectable, EventEmitter} from 'angular2/core';
+import {Injectable} from 'angular2/core';
+import {Subject} from 'rxjs/Subject';
+import {Observable} from 'rxjs/Observable';
 import utils from 'ng2-common/utils'
 
 /**
@@ -7,12 +9,22 @@ import utils from 'ng2-common/utils'
 @Injectable()
 export class ServerValidationService
 {
+    //######################### private fields #########################
+    
+    /**
+     * Subject that enables emiting server validation has changed, parameter indicates whether there are errors present, or not
+     */
+    private _serverValidationsChangedSubject: Subject<boolean> = new Subject();
+    
     //######################### public properties #########################
     
     /**
      * Occurs when server validation has changed, parameter indicates whether there are errors present, or not
      */
-    public serverValidationsChanged: EventEmitter<boolean> = new EventEmitter();
+    public get serverValidationsChanged(): Observable<boolean>
+    {
+        return this._serverValidationsChangedSubject.asObservable();
+    }
     
     /**
      * Server validation errors that are currently present
@@ -28,7 +40,7 @@ export class ServerValidationService
     public addServerValidationErrors(validationErrors: {[key: string]: string[]})
     {
         utils.common.extend(this.serverValidations, validationErrors);
-        this.serverValidationsChanged.emit(true);
+        this._serverValidationsChangedSubject.next(true);
     }
     
     /**
@@ -37,6 +49,6 @@ export class ServerValidationService
     public clearServerValidationErrors()
     {
         this.serverValidations = {};
-        this.serverValidationsChanged.emit(false);
+        this._serverValidationsChangedSubject.next(false);
     }
 }
