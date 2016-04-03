@@ -57,7 +57,7 @@ export class HttpErrorInterceptor extends HttpInterceptor
                         this._internalServerErrorService.showInternalServerError(err.text(), err.url);
                     }
                     
-                    return Observable.empty();
+                    return Observable.throw(err);
                 }
                 
                 try
@@ -83,7 +83,7 @@ export class HttpErrorInterceptor extends HttpInterceptor
                 }
             }
             
-            return Observable.empty();
+            return Observable.throw(err);
         });
     }
 }
