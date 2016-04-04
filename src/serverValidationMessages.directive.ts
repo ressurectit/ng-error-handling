@@ -1,5 +1,5 @@
-import {Control} from 'angular2/common';
-import {Directive, TemplateRef, ViewContainerRef, Input, OnDestroy} from 'angular2/core';
+import {NgControlName, NgFormControl, Control} from 'angular2/common';
+import {Directive, TemplateRef, ViewContainerRef, Input, OnDestroy, OnInit} from 'angular2/core';
 import {ServerValidationService} from './serverValidation.service';
 import {SERVER_VALIDATIONS} from './serverValidationValidator.directive';
 import {Subscription} from 'rxjs/Subscription';
@@ -11,14 +11,14 @@ import {Subscription} from 'rxjs/Subscription';
 {
     selector: "[serverValidations]",
 })
-export class ServerValidationMessages implements OnDestroy
+export class ServerValidationMessagesDirective implements OnDestroy, OnInit
 {
     //######################### private fields #########################
 
     /**
      * Control which server validation errors are displayed
      */
-    private _control: Control;
+    private _controlDirective: {control: Control};
     
     /**
      * Subscription that is obtained from subscribing
@@ -31,14 +31,14 @@ export class ServerValidationMessages implements OnDestroy
      * Control which server validation errors are displayed
      */
     @Input()
-    public set serverValidationsInput(control: Control)
+    public set serverValidationsInput(control: any)
     {
-        if(!(control instanceof Control))
+        if(!(control instanceof NgControlName) && !(control instanceof NgFormControl))
         {
-            throw new Error("Unable to assign serverValidationsInput, because it is not Control instance");
+            throw new Error("Unable to assign serverValidationsInput, because it is not NgFormControl or NgControlName instance");
         }
 
-        this._control = control;
+        this._controlDirective = control;
     }
 
     //######################### constructor #########################
@@ -46,35 +46,44 @@ export class ServerValidationMessages implements OnDestroy
     /**
      * Creates instance of MessageTemplate
      */
-    constructor(template: TemplateRef,
-                viewContainer: ViewContainerRef,
-                serverValidationService: ServerValidationService)
+    constructor(private _template: TemplateRef,
+                private _viewContainer: ViewContainerRef,
+                private _serverValidationService: ServerValidationService)
     {
-        if(!this._control)
+    }
+    
+    //######################### public methods - implementation of OnInit #########################
+    
+    /**
+     * Initialize component
+     */
+    public ngOnInit()
+    {
+        if(!this._controlDirective)
         {
             throw new Error("You must set 'serverValidationsInput' before use!");
         }
         
-        this._subscription = serverValidationService.serverValidationsChanged.subscribe(itm =>
+        this._subscription = this._serverValidationService.serverValidationsChanged.subscribe(itm =>
         {
-            viewContainer.clear();
+            this._viewContainer.clear();
 
             if(itm)
             {
-                this._control.updateValueAndValidity(
+                this._controlDirective.control.updateValueAndValidity(
                 {
                     onlySelf: false,
                     emitEvent: true
                 });
 
-                if(this._control.errors[SERVER_VALIDATIONS])
+                if(this._controlDirective.control.errors[SERVER_VALIDATIONS])
                 {
-                    (<string[]>this._control.errors[SERVER_VALIDATIONS]).forEach(message =>
+                    (<string[]>this._controlDirective.control.errors[SERVER_VALIDATIONS]).forEach(message =>
                     {
-                        var view = viewContainer.createEmbeddedView(template);
+                        var view = this._viewContainer.createEmbeddedView(this._template);
                         view.setLocal('\$implicit', message);
 
-                        viewContainer.insert(view);
+                        this._viewContainer.insert(view);
                     })
                 }
             }

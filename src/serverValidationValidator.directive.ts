@@ -17,7 +17,7 @@ export const SERVER_VALIDATIONS = "serverValidations";
 /**
  * Validator that is injected with directive ServerValidationValidator
  */
-const SERVER_VALIDATIONS_VALIDATOR = new Provider(NG_VALIDATORS, {useExisting: forwardRef(() => ServerValidationValidator), multi: true});
+const SERVER_VALIDATIONS_VALIDATOR = new Provider(NG_VALIDATORS, {useExisting: forwardRef(() => ServerValidationValidatorDirective), multi: true});
 
 /**
  * Server validation directive injecting server validations validator
@@ -27,7 +27,7 @@ const SERVER_VALIDATIONS_VALIDATOR = new Provider(NG_VALIDATORS, {useExisting: f
     selector: "[serverValidation]",
     providers: [SERVER_VALIDATIONS_VALIDATOR]
 })
-export class ServerValidationValidator implements Validator
+export class ServerValidationValidatorDirective implements Validator
 {
     //######################### constructor #########################
     constructor(@Attribute("serverValidation") private _serverValidation: string,

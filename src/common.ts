@@ -1,7 +1,12 @@
+import {ServerValidationValidatorDirective} from './serverValidationValidator.directive';
+import {ServerValidationMessagesDirective} from './serverValidationMessages.directive';
+
 export {HttpErrorInterceptor, ERROR_HANDLING_INTERCEPTOR_PROVIDER} from './httpErrorInterceptor';
 export {HttpErrorInterceptorOptions} from './httpErrorInterceptorOptions';
 export {InternalServerErrorService} from './internalServerError.service';
-export {InternalServerError} from './internalServerError.component';
+export {InternalServerErrorComponent} from './internalServerError.component';
 export {ServerValidationService} from './serverValidation.service';
-export {ServerValidationValidator} from './serverValidationValidator.directive';
-export {ServerValidationMessages} from './serverValidationMessages.directive';
+export {ServerValidationValidatorDirective} from './serverValidationValidator.directive';
+export {ServerValidationMessagesDirective} from './serverValidationMessages.directive';
+
+export const SERVER_VALIDATION_DIRECTIVES = [ServerValidationValidatorDirective, ServerValidationMessagesDirective];

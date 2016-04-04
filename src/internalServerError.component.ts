@@ -84,7 +84,7 @@ import {InternalServerErrorService, InternalServerErrorInfo} from './internalSer
         </div>
     </div>`
 })
-export class InternalServerError
+export class InternalServerErrorComponent
 {
     //######################### public properties #########################
 
