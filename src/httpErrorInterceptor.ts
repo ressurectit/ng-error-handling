@@ -1,4 +1,4 @@
-import {Injectable, Optional, provide, Provider} from 'angular2/core';
+import {Injectable, Inject, Optional, provide, Provider, OpaqueToken} from 'angular2/core';
 import {Response} from 'angular2/http';
 import {HttpInterceptor, HTTP_INTERCEPTORS} from 'ng2-http-extensions/interceptableHttp';
 import {HttpErrorInterceptorOptions} from './httpErrorInterceptorOptions';
@@ -6,21 +6,23 @@ import {Observable} from 'rxjs/Observable';
 import {InternalServerErrorService} from './internalServerError.service';
 import {GlobalNotificationsService} from 'ng2-notifications/common';
 import {ServerValidationService} from './serverValidation.service';
+import {StringMapWrapper} from 'angular2/src/facade/collection';
+import {isFunction} from 'angular2/src/facade/lang';
+import {BadRequestDetail} from './badRequestDetail';
+
+const ERROR_RESPONSE_MAP_PROVIDER: OpaqueToken = new OpaqueToken("ErrorResponseMapProvider");
 
 /**
- * Information about error, formatted for REST api
+ * Creates response mapping function for http error interceptor
+ * @param  {(err:any)=>BadRequestDetail} mappingFuncion Function that maps response to BadRequestDetail
+ * @returns Provider
  */
-interface BadRequestDetail
+export function createResponseMapperProvider(mappingFuncion: (err: any) => BadRequestDetail): Provider
 {
-    /**
-     * Gets or sets error messages that will be displayed
-     */
-    errors: string[];
-
-    /**
-     * Gets or sets validation error messages to be displayed
-     */
-    validationErrors: {[key: string]: string[]}; 
+    return provide(ERROR_HANDLING_INTERCEPTOR_PROVIDER,
+    {
+        useValue: mappingFuncion
+    });
 }
 
 /**
@@ -33,13 +35,19 @@ export class HttpErrorInterceptor extends HttpInterceptor
     constructor(@Optional() private _options: HttpErrorInterceptorOptions,
                 @Optional() private _internalServerErrorService: InternalServerErrorService,
                 @Optional() private _serverValidationService: ServerValidationService,
+                @Optional() @Inject(ERROR_RESPONSE_MAP_PROVIDER) private _responseMapper: (err: any) => BadRequestDetail,
                 private _notifications: GlobalNotificationsService)
     {
         super();
         
         if(!_options)
         {
-            this._options = new HttpErrorInterceptorOptions(false);
+            this._options = new HttpErrorInterceptorOptions();
+        }
+        
+        if(!_responseMapper || !isFunction(_responseMapper))
+        {
+            this._responseMapper = itm => itm;
         }
     }
 
@@ -62,7 +70,7 @@ export class HttpErrorInterceptor extends HttpInterceptor
                 
                 try
                 {
-                    var errorDetail = <BadRequestDetail>err.json();
+                    var errorDetail = this._responseMapper(err.json());
                     
                     if(errorDetail.errors)
                     {
@@ -72,9 +80,20 @@ export class HttpErrorInterceptor extends HttpInterceptor
                         })
                     }
                     
-                    if(errorDetail.validationErrors && this._serverValidationService)
+                    
+                    if(errorDetail.validationErrors)
                     {
-                        this._serverValidationService.addServerValidationErrors(errorDetail.validationErrors);
+                        if(this._serverValidationService && !this._options.globalValidationMessages)
+                        {
+                            this._serverValidationService.addServerValidationErrors(errorDetail.validationErrors);
+                        }
+                        else
+                        {
+                            StringMapWrapper.forEach(errorDetail.validationErrors, (errors: string[]) =>
+                            {
+                                errors.forEach(errorMessage => this._notifications.error(errorMessage));
+                            });
+                        }
                     }
                 }
                 catch(error)

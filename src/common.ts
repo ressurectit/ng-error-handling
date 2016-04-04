@@ -1,7 +1,8 @@
 import {ServerValidationValidatorDirective} from './serverValidationValidator.directive';
 import {ServerValidationMessagesDirective} from './serverValidationMessages.directive';
 
-export {HttpErrorInterceptor, ERROR_HANDLING_INTERCEPTOR_PROVIDER} from './httpErrorInterceptor';
+export {BadRequestDetail} from './badRequestDetail';
+export {HttpErrorInterceptor, ERROR_HANDLING_INTERCEPTOR_PROVIDER, createResponseMapperProvider} from './httpErrorInterceptor';
 export {HttpErrorInterceptorOptions} from './httpErrorInterceptorOptions';
 export {InternalServerErrorService} from './internalServerError.service';
 export {InternalServerErrorComponent} from './internalServerError.component';

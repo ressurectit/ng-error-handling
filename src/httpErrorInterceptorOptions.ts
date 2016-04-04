@@ -1,4 +1,5 @@
 import {Injectable} from 'angular2/core';
+import {isPresent} from 'angular2/src/facade/lang';
 
 /**
  * Options for HttpErrorInterceptor
@@ -11,7 +12,12 @@ export class HttpErrorInterceptorOptions
     /**
      * Indication whether run this interceptor in debug mode 
      */
-    public debug: boolean;
+    public debug: boolean = false;
+    
+    /**
+     * Indication whether display validation messages globally
+     */
+    public globalValidationMessages: boolean = false;
     
     //######################### constructor #########################
     
@@ -19,9 +25,18 @@ export class HttpErrorInterceptorOptions
     /**
      * Creates instance of HttpErrorInterceptorOptions
      * @param  {boolean} debug Indication whether run this interceptor in debug mode
+     * @param  {boolean} globalValidationMessages Indication whether display validation messages globally
      */
-    constructor(debug: boolean)
+    constructor(debug?: boolean, globalValidationMessages?: boolean)
     {
-        this.debug = debug;
+        if(isPresent(debug))
+        {
+            this.debug = debug;
+        }
+        
+        if(isPresent(globalValidationMessages))
+        {
+            this.globalValidationMessages = globalValidationMessages;
+        }
     }
 }
