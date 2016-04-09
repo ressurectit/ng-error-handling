@@ -1,4 +1,6 @@
-import {Injectable, EventEmitter} from 'angular2/core';
+import {Injectable} from 'angular2/core';
+import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
 
 /**
  * Internal server error information
@@ -34,12 +36,20 @@ export class InternalServerErrorService
      */
     private _id: number = 0;
     
+    /**
+     * Subject used for emitting internalServerErrorOccuredin
+     */
+    private _internalServerErrorOccuredSubject: Subject<InternalServerErrorInfo> = new Subject();
+    
     //######################### public properties #########################
     
     /**
      * Occurs when internal server occurs during http request
      */
-    public internalServerErrorOccured: EventEmitter<InternalServerErrorInfo> = new EventEmitter(); 
+    public get internalServerErrorOccured(): Observable<InternalServerErrorInfo>
+    {
+        return this._internalServerErrorOccuredSubject.asObservable(); 
+    } 
     
     //######################### public methods #########################
     
@@ -50,7 +60,7 @@ export class InternalServerErrorService
      */
     public showInternalServerError(errorHtml: string, requestUrl: string)
     {
-        this.internalServerErrorOccured.emit(
+        this._internalServerErrorOccuredSubject.next(
         {
             errorHtml: errorHtml,
             requestUrl: requestUrl,

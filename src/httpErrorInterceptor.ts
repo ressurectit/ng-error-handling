@@ -19,7 +19,7 @@ const ERROR_RESPONSE_MAP_PROVIDER: OpaqueToken = new OpaqueToken("ErrorResponseM
  */
 export function createResponseMapperProvider(mappingFuncion: (err: any) => BadRequestDetail): Provider
 {
-    return provide(ERROR_HANDLING_INTERCEPTOR_PROVIDER,
+    return provide(ERROR_RESPONSE_MAP_PROVIDER,
     {
         useValue: mappingFuncion
     });
@@ -54,7 +54,7 @@ export class HttpErrorInterceptor extends HttpInterceptor
     //######################### public methods - overriden HttpInterceptor #########################
     interceptResponse(response: Observable<any>): Observable<any>
     {
-        return response.catch((err: Response) =>
+        return response.do(() => {}, (err: Response) =>
         {
             if(err.status == 400 || err.status >= 404)
             {
@@ -65,7 +65,7 @@ export class HttpErrorInterceptor extends HttpInterceptor
                         this._internalServerErrorService.showInternalServerError(err.text(), err.url);
                     }
                     
-                    return Observable.throw(err);
+                    return;
                 }
                 
                 try
@@ -101,8 +101,6 @@ export class HttpErrorInterceptor extends HttpInterceptor
                     this._notifications.error(`Request '${err.url}' ended with error code: ${err.status}`);
                 }
             }
-            
-            return Observable.throw(err);
         });
     }
 }

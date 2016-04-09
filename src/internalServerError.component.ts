@@ -1,5 +1,6 @@
-import {Component, Directive, ElementRef} from 'angular2/core';
+import {Component, Directive, ElementRef, OnDestroy} from 'angular2/core';
 import {InternalServerErrorService, InternalServerErrorInfo} from './internalServerError.service';
+import {Subscription} from 'rxjs/Subscription';
 
 /**
  * Displays internal server errors in bootstrap modal dialog
@@ -84,8 +85,15 @@ import {InternalServerErrorService, InternalServerErrorInfo} from './internalSer
         </div>
     </div>`
 })
-export class InternalServerErrorComponent
+export class InternalServerErrorComponent implements OnDestroy
 {
+    //######################### private fields #########################
+    
+    /**
+     * Subscription for internalServerErrorService changed event
+     */
+    private _subscription: Subscription = null;
+    
     //######################### public properties #########################
 
     /**
@@ -96,7 +104,7 @@ export class InternalServerErrorComponent
     //######################### constructor #########################
     constructor(internalServerErrorService: InternalServerErrorService)
     {
-        internalServerErrorService.internalServerErrorOccured.subscribe((itm: InternalServerErrorInfo) =>
+        this._subscription = internalServerErrorService.internalServerErrorOccured.subscribe((itm: InternalServerErrorInfo) =>
         {
             itm.errorHtml = 'data:text/html;charset=utf-8,' + encodeURI(itm.errorHtml).replace(/#/g, "%23");
 
@@ -112,6 +120,20 @@ export class InternalServerErrorComponent
         if(index >= 0)
         {
             this.errorsHtml.splice(index, 1);
+        }
+    }
+    
+    //######################### public methods - implementation of OnDestroy #########################
+    
+    /**
+     * Called when component is destroyed
+     */
+    public ngOnDestroy()
+    {
+        if(this._subscription)
+        {
+            this._subscription.unsubscribe();
+            this._subscription = null;
         }
     }
 }

@@ -97,7 +97,10 @@ export class ServerValidationMessagesDirective implements OnDestroy, OnInit
      */
     public ngOnDestroy()
     {
-        this._subscription.unsubscribe();
-        this._subscription = null;
+        if(this._subscription)
+        {
+            this._subscription.unsubscribe();
+            this._subscription = null;
+        }
     }
 }
