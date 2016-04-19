@@ -1,6 +1,6 @@
 {
     "name": "ng2-error-handling",
-    "version": "1.0.7",
+    "version": "1.1.0",
     "description": "Angular 2 module used for handling http api error handling",
     "scripts":
     {
@@ -14,6 +14,7 @@
         "tsc:debug": "tsc --sourceMap",
         "prepublish": "npm run bundle:package",
         "postpublish": "npm run clean",
+        "republish": "npm unpublish --force && npm publish",
         "bundle": "tsc --outFile bundle/ng2-error-handling.dev.js",
         "bundle:update": "nab bundle/ng2-error-handling.dev.js && uglifyjs -o bundle/ng2-error-handling.min.js -- bundle/ng2-error-handling.dev.js",
         "bundle:package": "npm run clean && npm run build && npm run bundle && npm run bundle:update",
@@ -30,22 +31,22 @@
     "license": "MIT",
     "dependencies":
     {
-        "angular2": "2.0.0-beta.8",
-        "es6-promise": "^3.0.2",
-        "es6-shim": "^0.33.3",
+        "angular2": "2.0.0-beta.15",
+        "es6-promise": "^3.1.2",
+        "es6-shim": "^0.35.0",
         "reflect-metadata": "0.1.2",
-        "zone.js": "0.5.15",
+        "zone.js": "0.6.10",
         "rxjs": "5.0.0-beta.2",
         "bootstrap": "~3.3.6",
-        "ng2-common": "latest",
-        "ng2-notifications": "latest",
-        "ng2-http-extensions": "latest"
+        "ng2-common": "1.1.0",
+        "ng2-notifications": "1.1.0",
+        "ng2-http-extensions": "1.1.0"
     },
     "devDependencies":
     {
-        "rimraf": "~2.5.1",
-        "typescript": "~1.8.2",
-        "typings":"^0.6.8",
+        "rimraf": "~2.5.2",
+        "typescript": "1.8.10",
+        "typings":"^0.7.12",
         "uglify-js": "~2.6.2",
         "npm-publish-package": "1.2.0",
         "npm-angular2-bundle": "1.0.0"
