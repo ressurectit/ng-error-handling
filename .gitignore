@@ -1,7 +1,10 @@
 /node_modules
 /bundle
+/exceptionHandling
+/tsTypings
 /typings
 *.d.ts
 *.js
 *.map
 *.log
+!gulpfile.js

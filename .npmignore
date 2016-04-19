@@ -1,9 +1,11 @@
 /.vscode
 /src
+/tsTypings
 /typings
 .jsbeautifyrc
 tsconfig.json
 typings.json
+gulpfile.js
 *.ts
 *.map
 *.log
