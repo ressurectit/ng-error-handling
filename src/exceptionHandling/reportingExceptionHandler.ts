@@ -74,7 +74,7 @@ class ReportingExceptionHandler implements IExceptionHandler
             this._globalNotifications.error(message);
         }
         
-        if(isPresent(stackTrace))
+        if(stackTrace)
         {
             if(isArray(stackTrace))
             {
@@ -116,6 +116,12 @@ class ReportingExceptionHandler implements IExceptionHandler
                 this._loggingService.sendReport(message, stack, html, "");
             }
         }
+        
+        if(this._options.debugMode)
+        {
+            console.error(`ERROR MESSAGE:${message}`);
+            console.error(`ERROR STACKTRACE:${stack}`);
+        }
     }
     
     //######################### private methods #########################
@@ -140,8 +146,31 @@ class ReportingExceptionHandler implements IExceptionHandler
      */
     private _takeHtmlSnapshot(includeForms: boolean): string
     {
-        //TODO - include forms
+        //TODO - dorobit podporu pre nastavenie selected pre zvolenu polozku, alebo to otestovat pre SELECT
         var processedHtml = $("html").clone(false);
+        
+        if(this._options.captureHtmlInputs)
+        {
+            $(":input", processedHtml).each(function()
+            {
+                var $this = $(this);
+
+                if($this.is("input"))
+                {
+                    if(this.type == "checkbox" || this.type == "radio")
+                    {
+                        if(this.checked)
+                        {
+                            $this.attr("checked", "checked");
+                        }
+                    }
+                    else
+                    {
+                        $this.attr("value", $this.val());
+                    }
+                }
+            });
+        }
         
         return `<html>${processedHtml.html()}</html>`;
     }

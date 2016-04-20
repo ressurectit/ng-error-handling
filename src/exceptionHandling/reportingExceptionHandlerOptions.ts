@@ -26,17 +26,23 @@ export class ReportingExceptionHandlerOptions
      * Indication whether should be server logging enabled or not
      */
     public enableServerLogging: boolean;
+    
+    /**
+     * Indication whether should logger log errors also in browser console
+     */
+    public debugMode: boolean;
 
     //######################### constructor #########################
 
     /**
      * Creates instance of ReportingExceptionHandlerOptions
+     * @param  {boolean} debugMode Indication whether should logger log errors also in browser console
      * @param  {boolean} captureScreenImage Indication that screenshot should be taken when error occurs
      * @param  {boolean} captureScreenHtml Indication that current html snapshot should be captured
      * @param  {boolean} captureHtmlInputs Indication that current html inputs state should be transformed into html
      * @param  {enableServerLogging} captureHtmlInputs Indication whether should be server logging enabled or not
      */
-    constructor(captureScreenImage?: boolean, captureScreenHtml?: boolean, captureHtmlInputs?: boolean, enableServerLogging?: boolean)
+    constructor(debugMode?: boolean, captureScreenImage?: boolean, captureScreenHtml?: boolean, captureHtmlInputs?: boolean, enableServerLogging?: boolean)
     {
         if(isBlank(captureScreenHtml))
         {
@@ -56,6 +62,11 @@ export class ReportingExceptionHandlerOptions
         if(isBlank(enableServerLogging))
         {
             this.enableServerLogging = true;
+        }
+        
+        if(isBlank(debugMode))
+        {
+            this.debugMode = false;
         }
     }
 }
