@@ -1,4 +1,4 @@
-import {isBlank} from 'angular2/src/facade/lang';
+import {isPresent} from 'angular2/src/facade/lang';
 
 /**
  * Options that are used within ReportingExceptionHandler
@@ -10,27 +10,27 @@ export class ReportingExceptionHandlerOptions
     /**
      * Indication that screenshot should be taken when error occurs
      */
-    public captureScreenImage: boolean;
+    public captureScreenImage: boolean = true;
 
     /**
      * Indication that current html snapshot should be captured
      */
-    public captureScreenHtml: boolean;
+    public captureScreenHtml: boolean = true;
 
     /**
      * Indication that current html inputs state should be transformed into html
      */
-    public captureHtmlInputs: boolean;
+    public captureHtmlInputs: boolean = true;
 
     /**
      * Indication whether should be server logging enabled or not
      */
-    public enableServerLogging: boolean;
+    public enableServerLogging: boolean = true;
     
     /**
      * Indication whether should logger log errors also in browser console
      */
-    public debugMode: boolean;
+    public debugMode: boolean = false;
 
     //######################### constructor #########################
 
@@ -44,29 +44,29 @@ export class ReportingExceptionHandlerOptions
      */
     constructor(debugMode?: boolean, captureScreenImage?: boolean, captureScreenHtml?: boolean, captureHtmlInputs?: boolean, enableServerLogging?: boolean)
     {
-        if(isBlank(captureScreenHtml))
+        if(isPresent(captureScreenHtml))
         {
-            this.captureScreenHtml = true;
+            this.captureScreenHtml = captureScreenHtml;
         }
 
-        if(isBlank(captureScreenImage))
+        if(isPresent(captureScreenImage))
         {
-            this.captureScreenImage = true;
+            this.captureScreenImage = captureScreenImage;
         }
 
-        if(isBlank(captureHtmlInputs))
+        if(isPresent(captureHtmlInputs))
         {
-            this.captureHtmlInputs = true;
+            this.captureHtmlInputs = captureHtmlInputs;
         }
 
-        if(isBlank(enableServerLogging))
+        if(isPresent(enableServerLogging))
         {
-            this.enableServerLogging = true;
+            this.enableServerLogging = enableServerLogging;
         }
         
-        if(isBlank(debugMode))
+        if(isPresent(debugMode))
         {
-            this.debugMode = false;
+            this.debugMode = debugMode;
         }
     }
 }
