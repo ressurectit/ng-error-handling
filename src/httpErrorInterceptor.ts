@@ -2,13 +2,14 @@ import {Injectable, Inject, Optional, provide, Provider, OpaqueToken} from 'angu
 import {Response} from 'angular2/http';
 import {HttpInterceptor, HTTP_INTERCEPTORS} from 'ng2-http-extensions/interceptableHttp';
 import {HttpErrorInterceptorOptions} from './httpErrorInterceptorOptions';
-import {Observable} from 'rxjs/Observable';
 import {InternalServerErrorService} from './internalServerError.service';
 import {GlobalNotificationsService} from 'ng2-notifications/common';
 import {ServerValidationService} from './serverValidation.service';
 import {StringMapWrapper} from 'angular2/src/facade/collection';
 import {isFunction} from 'angular2/src/facade/lang';
 import {BadRequestDetail} from './badRequestDetail';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/do';
 
 const ERROR_RESPONSE_MAP_PROVIDER: OpaqueToken = new OpaqueToken("ErrorResponseMapProvider");
 

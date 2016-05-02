@@ -1,6 +1,6 @@
 {
     "name": "ng2-error-handling",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "description": "Angular 2 module used for handling http api error handling",
     "scripts":
     {
@@ -31,17 +31,16 @@
     "license": "MIT",
     "dependencies":
     {
-        "angular2": "2.0.0-beta.15",
+        "angular2": "2.0.0-beta.17",
         "es6-promise": "^3.1.2",
         "es6-shim": "^0.35.0",
         "reflect-metadata": "0.1.2",
-        "zone.js": "0.6.10",
-        "rxjs": "5.0.0-beta.2",
+        "zone.js": "0.6.12",
+        "rxjs": "5.0.0-beta.6",
         "bootstrap": "~3.3.6",
-        "ng2-common": "1.1.0",
-        "ng2-notifications": "1.1.0",
-        "ng2-http-extensions": "1.1.0",
-        "ng2-tstypings": "1.0.4",
+        "ng2-common": "1.2.0",
+        "ng2-notifications": "1.2.0",
+        "ng2-http-extensions": "1.2.0",
         "jquery": "~2.2.1",
         "html2canvas": "~0.5.0-beta4"
     },
@@ -53,6 +52,7 @@
         "gulp": "~3.9.1",
         "through2": "~2.0.1",
         "uglify-js": "~2.6.2",
+        "ng2-tstypings": "1.0.4",
         "npm-publish-package": "1.2.0",
         "npm-angular2-bundle": "1.0.0"
     }
