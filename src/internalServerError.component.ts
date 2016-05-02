@@ -51,7 +51,7 @@ import {Subscription} from 'rxjs/Subscription';
         <div class="notification" data-toggle="collapse" data-target="#internalServerErrorsList" [hidden]="errorsHtml.length < 1">!</div>
 
         <div id="internalServerErrorsList" class="collapse">
-            <div *ngFor="#error of errorsHtml">
+            <div *ngFor="let error of errorsHtml">
                 <span style="padding-left: 8px;">{{error.requestUrl}}</span>
                 <button type="button" class="btn btn-link" data-toggle="modal" [attr.data-target]="'#myModal' + error.id">show</button>
                 <button type="button" class="btn btn-link" title="Remove report" (click)="removeReport(error)">
@@ -61,7 +61,7 @@ import {Subscription} from 'rxjs/Subscription';
         </div>
     </div>
 
-    <div *ngFor="#error of errorsHtml">
+    <div *ngFor="let error of errorsHtml">
         <div class="modal fade" [id]="'myModal' + error.id" tabindex="-1">
             <div class="modal-dialog" style="width: 80%;">
                 <div class="modal-content">
