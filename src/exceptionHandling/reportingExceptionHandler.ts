@@ -43,7 +43,7 @@ class ReportingExceptionHandler implements IExceptionHandler
         var message = null;
         var stack = "";
         
-        if(isPresent(isPresent(exception)))
+        if(isPresent(exception))
         {
             if(isPresent(exception.wrapperMessage))
             {
@@ -59,6 +59,11 @@ class ReportingExceptionHandler implements IExceptionHandler
                 {
                     message = exception.toString();
                 }
+            }
+            
+            if(isPresent(exception.originalException))
+            {
+                message += "\r\nOriginal Exception: " + exception.originalException;
             }
         }
         
