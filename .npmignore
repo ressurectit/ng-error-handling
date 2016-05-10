@@ -10,4 +10,4 @@ gulpfile.js
 *.map
 *.log
 !*.d.ts
-/bundle/ng2-error-handling.dev.d.ts
+index.dev.d.ts

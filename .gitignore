@@ -1,8 +1,10 @@
 /node_modules
-/bundle
-/exceptionHandling
 /tsTypings
 /typings
+/exceptionHandling
+/httpErrorInterceptor
+/internalServerError
+/serverValidation
 *.d.ts
 *.js
 *.map

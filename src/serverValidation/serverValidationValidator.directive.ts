@@ -1,12 +1,12 @@
 import {NG_VALIDATORS,
         Control, 
-        Validator} from 'angular2/common';
+        Validator} from '@angular/common';
 import {Attribute,
         Provider,
         forwardRef,
         TemplateRef,
         ViewContainerRef,
-        Directive} from 'angular2/core';
+        Directive} from '@angular/core';
 import {ServerValidationService} from './serverValidation.service';
 
 /**

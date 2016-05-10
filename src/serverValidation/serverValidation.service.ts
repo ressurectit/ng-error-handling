@@ -1,7 +1,7 @@
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
-import utils from 'ng2-common/utils'
+import {Utils} from '@ng2/common'
 
 /**
  * Service that is used for distribution of server validations
@@ -39,7 +39,7 @@ export class ServerValidationService
      */
     public addServerValidationErrors(validationErrors: {[key: string]: string[]})
     {
-        utils.common.extend(this.serverValidations, validationErrors);
+        Utils.common.extend(this.serverValidations, validationErrors);
         this._serverValidationsChangedSubject.next(true);
     }
     

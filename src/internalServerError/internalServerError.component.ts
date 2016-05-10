@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, OnDestroy} from 'angular2/core';
+import {Component, Directive, ElementRef, OnDestroy} from '@angular/core';
 import {InternalServerErrorService, InternalServerErrorInfo} from './internalServerError.service';
 import {Subscription} from 'rxjs/Subscription';
 

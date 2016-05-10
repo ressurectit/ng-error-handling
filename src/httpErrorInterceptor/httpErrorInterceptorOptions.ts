@@ -1,5 +1,5 @@
-import {Injectable} from 'angular2/core';
-import {isPresent} from 'angular2/src/facade/lang';
+import {Injectable} from '@angular/core';
+import {isPresent} from '@angular/core/src/facade/lang';
 
 /**
  * Options for HttpErrorInterceptor

@@ -1,5 +1,5 @@
-import {NgControlName, NgFormControl, Control} from 'angular2/common';
-import {Directive, TemplateRef, ViewContainerRef, Input, OnDestroy, OnInit} from 'angular2/core';
+import {NgControlName, NgFormControl, Control} from '@angular/common';
+import {Directive, TemplateRef, ViewContainerRef, Input, OnDestroy, OnInit} from '@angular/core';
 import {ServerValidationService} from './serverValidation.service';
 import {SERVER_VALIDATIONS} from './serverValidationValidator.directive';
 import {Subscription} from 'rxjs/Subscription';
@@ -46,7 +46,7 @@ export class ServerValidationMessagesDirective implements OnDestroy, OnInit
     /**
      * Creates instance of MessageTemplate
      */
-    constructor(private _template: TemplateRef,
+    constructor(private _template: TemplateRef<{$implicit: string}>,
                 private _viewContainer: ViewContainerRef,
                 private _serverValidationService: ServerValidationService)
     {
@@ -80,8 +80,7 @@ export class ServerValidationMessagesDirective implements OnDestroy, OnInit
                 {
                     (<string[]>this._controlDirective.control.errors[SERVER_VALIDATIONS]).forEach(message =>
                     {
-                        var view = this._viewContainer.createEmbeddedView(this._template);
-                        view.setLocal('\$implicit', message);
+                        var view = this._viewContainer.createEmbeddedView(this._template, { $implicit: message });
 
                         this._viewContainer.insert(view);
                     })

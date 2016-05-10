@@ -1,10 +1,10 @@
-import {provide, Provider, Optional} from 'angular2/core';
-import {ExceptionHandler} from 'angular2/src/facade/exception_handler';
+import {provide, Provider, Optional} from '@angular/core';
+import {ExceptionHandler} from '@angular/core/src/facade/exception_handler';
 import {IExceptionHandler} from './exceptionHandler.interface';
 import {ReportingExceptionHandlerOptions} from './reportingExceptionHandlerOptions';
 import {ReportingExceptionHandlerService} from './reportingExceptionHandler.service';
-import {GlobalNotificationsService} from 'ng2-notifications/common';
-import {isBlank, isArray, isString, isPresent, isFunction} from 'angular2/src/facade/lang';
+import {GlobalNotificationsService} from '@ng2/notifications';
+import {isBlank, isArray, isString, isPresent, isFunction} from '@angular/core/src/facade/lang';
 import html2canvas from 'tshtml2canvas';
 import $ from 'tsjquery';
 
