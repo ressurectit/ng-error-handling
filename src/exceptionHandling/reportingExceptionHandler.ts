@@ -1,6 +1,4 @@
-import {provide, Provider, Optional} from '@angular/core';
-import {ExceptionHandler} from '@angular/core/src/facade/exception_handler';
-import {IExceptionHandler} from './exceptionHandler.interface';
+import {provide, Provider, Optional, ExceptionHandler} from '@angular/core';
 import {ReportingExceptionHandlerOptions} from './reportingExceptionHandlerOptions';
 import {ReportingExceptionHandlerService} from './reportingExceptionHandler.service';
 import {GlobalNotificationsService} from '@ng2/notifications';
@@ -11,13 +9,15 @@ import $ from 'tsjquery';
 /**
  * Exception handler that is capable of reporting and logging occured exceptions
  */
-class ReportingExceptionHandler implements IExceptionHandler 
+class ReportingExceptionHandler extends ExceptionHandler 
 {
     //######################### constructor #########################
     constructor(@Optional() private _options: ReportingExceptionHandlerOptions,
                 @Optional() private _loggingService: ReportingExceptionHandlerService,
                 @Optional() private _globalNotifications: GlobalNotificationsService)
     {
+        super(null);
+        
         if(isBlank(_options))
         {
             this._options = new ReportingExceptionHandlerOptions();
@@ -124,8 +124,8 @@ class ReportingExceptionHandler implements IExceptionHandler
         
         if(this._options.debugMode)
         {
-            console.error(`ERROR MESSAGE:${message}`);
-            console.error(`ERROR STACKTRACE:${stack}`);
+            console.error(ExceptionHandler.exceptionToString(exception, stackTrace, reason));
+            alert(message);
         }
     }
     

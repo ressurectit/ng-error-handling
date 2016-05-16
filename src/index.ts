@@ -9,7 +9,6 @@ export {InternalServerErrorComponent} from './internalServerError/internalServer
 export {ServerValidationService} from './serverValidation/serverValidation.service';
 export {ServerValidationValidatorDirective} from './serverValidation/serverValidationValidator.directive';
 export {ServerValidationMessagesDirective} from './serverValidation/serverValidationMessages.directive';
-export {IExceptionHandler} from './exceptionHandling/exceptionHandler.interface';
 export {REPORTING_EXCEPTION_HANDLER_PROVIDER} from './exceptionHandling/reportingExceptionHandler';
 export {ReportingExceptionHandlerService} from './exceptionHandling/reportingExceptionHandler.service';
 export {ReportingExceptionHandlerOptions} from './exceptionHandling/reportingExceptionHandlerOptions';
