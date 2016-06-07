@@ -12,7 +12,7 @@ import {ServerValidationService} from './serverValidation.service';
 /**
  * Name of server validations as error
  */
-export const SERVER_VALIDATIONS = "serverValidations";
+export const SERVER_VALIDATIONS = "serverValidation";
 
 /**
  * Validator that is injected with directive ServerValidationValidator
