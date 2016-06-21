@@ -39,7 +39,7 @@ export class InternalServerErrorService
     /**
      * Subject used for emitting internalServerErrorOccuredin
      */
-    private _internalServerErrorOccuredSubject: Subject<InternalServerErrorInfo> = new Subject();
+    private _internalServerErrorOccuredSubject: Subject<InternalServerErrorInfo> = new Subject<InternalServerErrorInfo>();
     
     //######################### public properties #########################
     

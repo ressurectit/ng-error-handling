@@ -14,7 +14,7 @@ export class ServerValidationService
     /**
      * Subject that enables emiting server validation has changed, parameter indicates whether there are errors present, or not
      */
-    private _serverValidationsChangedSubject: Subject<boolean> = new Subject();
+    private _serverValidationsChangedSubject: Subject<boolean> = new Subject<boolean>();
     
     //######################### public properties #########################
     
