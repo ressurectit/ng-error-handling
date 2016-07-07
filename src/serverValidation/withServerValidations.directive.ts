@@ -1,5 +1,5 @@
 import {Directive, Optional, OnDestroy} from '@angular/core';
-import {ControlGroup, NgForm, NgFormModel} from '@angular/common';
+import {ControlContainer, FormGroup, FormArray} from '@angular/forms';
 import {ServerValidationService} from './serverValidation.service';
 import {Subscription} from 'rxjs/Subscription';
 
@@ -15,9 +15,9 @@ export class WithServerValidationsDirective implements OnDestroy
     //######################### private fields #########################
 
     /**
-     * Form group that contains controls that needs to be validated
+     * Form group or form array containing controls
      */
-    private _form: ControlGroup;
+    private _form: FormGroup | FormArray;
 
     /**
      * Subscription of changes in server validations
@@ -26,23 +26,19 @@ export class WithServerValidationsDirective implements OnDestroy
 
     //######################### constructor #########################
     constructor(serviceValidationSvc: ServerValidationService,
-                @Optional() ngForm: NgForm,
-                @Optional() ngFormModel: NgFormModel)
+                @Optional() form: ControlContainer)
     {
-        if(ngForm)
-        {
-            this._form = ngForm.form;
-        }
-
-        if(ngFormModel)
-        {
-            this._form = ngFormModel.form;
-        }
-
-        if(!this._form)
+        if(!form)
         {
             throw new Error("There is no form directive!");
         }
+
+        if(!(form.control instanceof FormArray) && !(form.control instanceof FormGroup))
+        {
+            throw new Error("Wrong type of control type should be 'FormGroup' or 'FormArray'!");
+        }
+
+        this._form = <FormGroup|FormArray>form.control;
 
         this._subscription = serviceValidationSvc.serverValidationsChanged.subscribe(changes =>
         {

@@ -1,4 +1,5 @@
-import {NgControlName, NgFormControl, Control, AsyncPipe} from '@angular/common';
+import {AsyncPipe} from '@angular/common';
+import {NgControl} from '@angular/forms';
 import {Component, TemplateRef, ViewContainerRef, Input, OnInit, DoCheck, OnDestroy, ChangeDetectorRef, KeyValueDiffers, KeyValueDiffer, ViewChild, ContentChild, AfterViewInit} from '@angular/core';
 import {SERVER_VALIDATIONS} from './serverValidationValidator.directive';
 import {Subject} from 'rxjs/Subject';
@@ -29,7 +30,7 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, OnDes
     /**
      * Control which server validation errors are displayed
      */
-    private _controlDirective: {control: Control};
+    private _controlDirective: NgControl;
 
     /**
      * Tracks changes of errors
@@ -66,9 +67,9 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, OnDes
      * Control which server validation errors are displayed
      */
     @Input()
-    public set serverValidations(control: any)
+    public set serverValidations(control: NgControl)
     {
-        if(!(control instanceof NgControlName) && !(control instanceof NgFormControl))
+        if(!(control instanceof NgControl))
         {
             throw new Error("Unable to assign 'serverValidations', because it is not NgFormControl or NgControlName instance");
         }
