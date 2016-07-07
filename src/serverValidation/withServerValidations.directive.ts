@@ -26,13 +26,8 @@ export class WithServerValidationsDirective implements OnDestroy
 
     //######################### constructor #########################
     constructor(serviceValidationSvc: ServerValidationService,
-                @Optional() form: ControlContainer)
+                form: ControlContainer)
     {
-        if(!form)
-        {
-            throw new Error("There is no form directive!");
-        }
-
         if(!(form.control instanceof FormArray) && !(form.control instanceof FormGroup))
         {
             throw new Error("Wrong type of control type should be 'FormGroup' or 'FormArray'!");
