@@ -24,7 +24,7 @@ const SERVER_VALIDATIONS_VALIDATOR = new Provider(NG_VALIDATORS, {useExisting: f
  */
 @Directive(
 {
-    selector: "input[serverValidation][formControlName],input[serverValidation][formControl],input[serverValidation][ngModel]",
+    selector: "[serverValidation][formControlName],[serverValidation][formControl],[serverValidation][ngModel]",
     providers: [SERVER_VALIDATIONS_VALIDATOR]
 })
 export class ServerValidationValidatorDirective implements Validator

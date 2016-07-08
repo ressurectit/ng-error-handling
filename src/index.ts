@@ -3,7 +3,7 @@ import {ServerValidationMessagesComponent} from './serverValidation/serverValida
 import {WithServerValidationsDirective} from './serverValidation/withServerValidations.directive';
 
 export {BadRequestDetail} from './httpErrorInterceptor/badRequestDetail';
-export {HttpErrorInterceptor, ERROR_HANDLING_INTERCEPTOR_PROVIDER, createResponseMapperProvider} from './httpErrorInterceptor/httpErrorInterceptor';
+export {HttpErrorInterceptor, ERROR_HANDLING_INTERCEPTOR_PROVIDER, provideResponseMapper} from './httpErrorInterceptor/httpErrorInterceptor';
 export {HttpErrorInterceptorOptions} from './httpErrorInterceptor/httpErrorInterceptorOptions';
 export {InternalServerErrorService} from './internalServerError/internalServerError.service';
 export {InternalServerErrorComponent} from './internalServerError/internalServerError.component';

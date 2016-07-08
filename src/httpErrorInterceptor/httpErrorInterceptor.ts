@@ -18,7 +18,7 @@ const ERROR_RESPONSE_MAP_PROVIDER: OpaqueToken = new OpaqueToken("ErrorResponseM
  * @param  {(err:any)=>BadRequestDetail} mappingFuncion Function that maps response to BadRequestDetail
  * @returns Provider
  */
-export function createResponseMapperProvider(mappingFuncion: (err: any) => BadRequestDetail): Provider
+export function provideResponseMapper(mappingFuncion: (err: any) => BadRequestDetail): Provider
 {
     return provide(ERROR_RESPONSE_MAP_PROVIDER,
     {
