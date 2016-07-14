@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {SafeResourceUrl} from '@angular/platform-browser';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 
@@ -15,7 +16,7 @@ export class InternalServerErrorInfo
     /**
      * Html displaying info about error
      */
-    errorHtml: string;
+    errorHtml: SafeResourceUrl;
     
     /**
      * Request url that was called and caused error

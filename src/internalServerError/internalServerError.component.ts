@@ -1,4 +1,5 @@
 import {Component, Directive, ElementRef, OnDestroy} from '@angular/core';
+import {DomSanitizationService} from '@angular/platform-browser';
 import {InternalServerErrorService, InternalServerErrorInfo} from './internalServerError.service';
 import {Subscription} from 'rxjs/Subscription';
 
@@ -102,11 +103,12 @@ export class InternalServerErrorComponent implements OnDestroy
     public errorsHtml: InternalServerErrorInfo[] = [];
 
     //######################### constructor #########################
-    constructor(internalServerErrorService: InternalServerErrorService)
+    constructor(internalServerErrorService: InternalServerErrorService,
+                sanitizationService: DomSanitizationService)
     {
         this._subscription = internalServerErrorService.internalServerErrorOccured.subscribe((itm: InternalServerErrorInfo) =>
         {
-            itm.errorHtml = 'data:text/html;charset=utf-8,' + encodeURI(itm.errorHtml).replace(/#/g, "%23");
+            itm.errorHtml = sanitizationService.bypassSecurityTrustResourceUrl('data:text/html;charset=utf-8,' + encodeURI(<string>itm.errorHtml).replace(/#/g, "%23"));
 
             this.errorsHtml.push(itm);
         });
