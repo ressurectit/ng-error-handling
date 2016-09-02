@@ -1,7 +1,3 @@
-import {ServerValidationValidatorDirective} from './serverValidation/serverValidationValidator.directive';
-import {ServerValidationMessagesComponent} from './serverValidation/serverValidationMessages.component';
-import {WithServerValidationsDirective} from './serverValidation/withServerValidations.directive';
-
 export {BadRequestDetail} from './httpErrorInterceptor/badRequestDetail';
 export {HttpErrorInterceptor, ERROR_HANDLING_INTERCEPTOR_PROVIDER, provideResponseMapper} from './httpErrorInterceptor/httpErrorInterceptor';
 export {HttpErrorInterceptorOptions} from './httpErrorInterceptor/httpErrorInterceptorOptions';
@@ -14,5 +10,4 @@ export {REPORTING_EXCEPTION_HANDLER_PROVIDER} from './exceptionHandling/reportin
 export {ReportingExceptionHandlerService} from './exceptionHandling/reportingExceptionHandler.service';
 export {ReportingExceptionHandlerOptions} from './exceptionHandling/reportingExceptionHandlerOptions';
 export {WithServerValidationsDirective} from './serverValidation/withServerValidations.directive';
-
-export const SERVER_VALIDATION_DIRECTIVES = [ServerValidationValidatorDirective, ServerValidationMessagesComponent, WithServerValidationsDirective];
+export {ErrorHandlingModule} from './modules/errorHandling.module';

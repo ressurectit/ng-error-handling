@@ -1,4 +1,4 @@
-import {provide, Provider, Optional, ExceptionHandler} from '@angular/core';
+import {ClassProvider, Optional, ErrorHandler} from '@angular/core';
 import {ReportingExceptionHandlerOptions} from './reportingExceptionHandlerOptions';
 import {ReportingExceptionHandlerService} from './reportingExceptionHandler.service';
 import {GlobalNotificationsService} from '@ng2/notifications';
@@ -9,15 +9,13 @@ import $ from 'tsjquery';
 /**
  * Exception handler that is capable of reporting and logging occured exceptions
  */
-class ReportingExceptionHandler extends ExceptionHandler 
+class ReportingExceptionHandler implements ErrorHandler 
 {
     //######################### constructor #########################
     constructor(@Optional() private _options: ReportingExceptionHandlerOptions,
                 @Optional() private _loggingService: ReportingExceptionHandlerService,
                 @Optional() private _globalNotifications: GlobalNotificationsService)
     {
-        super(null);
-        
         if(isBlank(_options))
         {
             this._options = new ReportingExceptionHandlerOptions();
@@ -33,37 +31,36 @@ class ReportingExceptionHandler extends ExceptionHandler
     
     /**
      * Method called when exception occurs
-     * @param  {any} exception Occured exception object
+     * @param  {any} error Occured exception object
      * @param  {any} stackTrace? Stacktrace for occured exception
      * @param  {string} reason? Reason of exception
      */
-    public call(exception: any, stackTrace?: any, reason?: string) 
+    public handleError(error: any, stackTrace?: any, reason?: string): void
     {
-        //TODO - add option to log only exception with message
         var message = null;
         var stack = "";
         
-        if(isPresent(exception))
+        if(isPresent(error))
         {
-            if(isPresent(exception.wrapperMessage))
+            if(isPresent(error.wrapperMessage))
             {
-                message = exception.wrapperMessage;
+                message = error.wrapperMessage;
             }
-            else if(isPresent(exception.message))
+            else if(isPresent(error.message))
             {
-                message = exception.message;
+                message = error.message;
             }
             else
             {
-                if(isPresent(exception.toString) && isFunction(exception.toString))
+                if(isPresent(error.toString) && isFunction(error.toString))
                 {
-                    message = exception.toString();
+                    message = error.toString();
                 }
             }
             
-            if(isPresent(exception.originalException))
+            if(isPresent(error.originalException))
             {
-                message += "\r\nOriginal Exception: " + exception.originalException;
+                message += "\r\nOriginal Exception: " + error.originalException;
             }
         }
         
@@ -94,9 +91,9 @@ class ReportingExceptionHandler extends ExceptionHandler
                 stack = stackTrace;
             }
         }
-        else if(isPresent(exception.originalStack))
+        else if(isPresent(error.originalStack))
         {
-            stack = exception.originalStack;
+            stack = error.originalStack;
         }
         
         if(this._options.enableServerLogging)
@@ -124,8 +121,7 @@ class ReportingExceptionHandler extends ExceptionHandler
         
         if(this._options.debugMode)
         {
-            console.error(ExceptionHandler.exceptionToString(exception, stackTrace, reason));
-            alert(message);
+            console.error(error);
         }
     }
     
@@ -184,7 +180,8 @@ class ReportingExceptionHandler extends ExceptionHandler
 /**
  * Reporting exception handler provider
  */
-export const REPORTING_EXCEPTION_HANDLER_PROVIDER = provide(ExceptionHandler,
-                                                            {
-                                                                useClass: ReportingExceptionHandler
-                                                            });
+export const REPORTING_EXCEPTION_HANDLER_PROVIDER: ClassProvider = 
+{
+    provide: ErrorHandler,
+    useClass: ReportingExceptionHandler
+};

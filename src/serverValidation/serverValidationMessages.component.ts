@@ -18,7 +18,6 @@ export interface ImplicitString
 @Component(
 {
     selector: "[serverValidations]",
-    pipes: [AsyncPipe],
     template: `<template #viewTemplate let-message><div class="alert alert-danger {{itemCssClass}}">{{message}}</div></template>
                <template ngFor [ngForTemplate]="itemTemplate | async" [ngForOf]="_errors"></template>
                <ng-content></ng-content>`

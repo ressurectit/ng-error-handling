@@ -1,4 +1,4 @@
-import {Injectable, Inject, Optional, provide, Provider, OpaqueToken} from '@angular/core';
+import {Injectable, Inject, Optional, ClassProvider, ValueProvider, OpaqueToken} from '@angular/core';
 import {Response} from '@angular/http';
 import {HttpInterceptor, HTTP_INTERCEPTORS} from '@ng2/http-extensions';
 import {HttpErrorInterceptorOptions} from './httpErrorInterceptorOptions';
@@ -18,12 +18,12 @@ const ERROR_RESPONSE_MAP_PROVIDER: OpaqueToken = new OpaqueToken("ErrorResponseM
  * @param  {(err:any)=>BadRequestDetail} mappingFuncion Function that maps response to BadRequestDetail
  * @returns Provider
  */
-export function provideResponseMapper(mappingFuncion: (err: any) => BadRequestDetail): Provider
+export function provideResponseMapper(mappingFuncion: (err: any) => BadRequestDetail): ValueProvider
 {
-    return provide(ERROR_RESPONSE_MAP_PROVIDER,
-    {
+    return {
+        provide: ERROR_RESPONSE_MAP_PROVIDER,
         useValue: mappingFuncion
-    });
+    };
 }
 
 /**
@@ -109,8 +109,9 @@ export class HttpErrorInterceptor extends HttpInterceptor
 /**
  * Provider for proper use of HttpErrorInterceptor, use this provider to inject this interceptor
  */
-export const ERROR_HANDLING_INTERCEPTOR_PROVIDER = provide(HTTP_INTERCEPTORS,
+export const ERROR_HANDLING_INTERCEPTOR_PROVIDER: ClassProvider = 
 {
+    provide: HTTP_INTERCEPTORS,
     multi: true,
     useClass: HttpErrorInterceptor
-});
+};

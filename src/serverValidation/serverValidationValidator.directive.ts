@@ -2,7 +2,7 @@ import {NG_VALIDATORS,
         AbstractControl, 
         Validator} from '@angular/forms';
 import {Attribute,
-        Provider,
+        ExistingProvider,
         forwardRef,
         TemplateRef,
         ViewContainerRef,
@@ -17,7 +17,12 @@ export const SERVER_VALIDATIONS = "serverValidation";
 /**
  * Validator that is injected with directive ServerValidationValidator
  */
-const SERVER_VALIDATIONS_VALIDATOR = new Provider(NG_VALIDATORS, {useExisting: forwardRef(() => ServerValidationValidatorDirective), multi: true});
+const SERVER_VALIDATIONS_VALIDATOR: ExistingProvider = 
+{
+    provide: NG_VALIDATORS, 
+    useExisting: forwardRef(() => ServerValidationValidatorDirective), 
+    multi: true
+};
 
 /**
  * Server validation directive injecting server validations validator
