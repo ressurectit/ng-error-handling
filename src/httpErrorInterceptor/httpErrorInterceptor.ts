@@ -11,6 +11,9 @@ import {BadRequestDetail} from './badRequestDetail';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 
+/**
+ * Token for map function provider
+ */
 const ERROR_RESPONSE_MAP_PROVIDER: OpaqueToken = new OpaqueToken("ErrorResponseMapProvider");
 
 /**
@@ -109,7 +112,7 @@ export class HttpErrorInterceptor extends HttpInterceptor
 /**
  * Provider for proper use of HttpErrorInterceptor, use this provider to inject this interceptor
  */
-export const ERROR_HANDLING_INTERCEPTOR_PROVIDER: ClassProvider = 
+export const HTTP_ERROR_INTERCEPTOR_PROVIDER: ClassProvider = 
 {
     provide: HTTP_INTERCEPTORS,
     multi: true,

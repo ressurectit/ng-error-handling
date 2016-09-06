@@ -1,6 +1,6 @@
 {
     "name": "@ng2/error-handling",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "Angular 2 module used for handling http api error handling",
     "main": "index.js",
     "typings": "index.d.ts",
@@ -8,7 +8,7 @@
     {
         "prebuild": "typings install && gulp copy-tstypings",
         "build": "npm run tsc",
-        "clean": "rimraf ./*.d.ts ./index.js ./index.dev.js ./index.min.js ./*.map ./*.log ./exceptionHandling ./httpErrorInterceptor ./internalServerError ./serverValidation",
+        "clean": "rimraf ./*.d.ts ./index.js ./index.dev.js ./index.min.js ./*.map ./*.log ./exceptionHandling ./httpErrorInterceptor ./internalServerError ./serverValidation ./modules",
         "clean:deps": "rimraf ./node_modules ./typings ./tsTypings",
         "clean:all": "npm run clean && npm run clean:deps",
         "tsc": "tsc",

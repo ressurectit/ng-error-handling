@@ -2,6 +2,8 @@ import {ClassProvider, Optional, ErrorHandler} from '@angular/core';
 import {ReportingExceptionHandlerOptions} from './reportingExceptionHandlerOptions';
 import {ReportingExceptionHandlerService} from './reportingExceptionHandler.service';
 import {GlobalNotificationsService} from '@ng2/notifications';
+import {ErrorWithStack} from './errorWithStack';
+import {AngularError} from './angularError';
 import {isBlank, isArray, isString, isPresent, isFunction} from '@angular/core/src/facade/lang';
 import html2canvas from 'tshtml2canvas';
 import $ from 'tsjquery';
@@ -31,69 +33,22 @@ class ReportingExceptionHandler implements ErrorHandler
     
     /**
      * Method called when exception occurs
-     * @param  {any} error Occured exception object
-     * @param  {any} stackTrace? Stacktrace for occured exception
-     * @param  {string} reason? Reason of exception
+     * @param  {AngularError} error Occured exception object
      */
-    public handleError(error: any, stackTrace?: any, reason?: string): void
+    public handleError(error: AngularError): void
     {
-        var message = null;
-        var stack = "";
-        
-        if(isPresent(error))
-        {
-            if(isPresent(error.wrapperMessage))
-            {
-                message = error.wrapperMessage;
-            }
-            else if(isPresent(error.message))
-            {
-                message = error.message;
-            }
-            else
-            {
-                if(isPresent(error.toString) && isFunction(error.toString))
-                {
-                    message = error.toString();
-                }
-            }
-            
-            if(isPresent(error.originalException))
-            {
-                message += "\r\nOriginal Exception: " + error.originalException;
-            }
-        }
-        
-        if(isBlank(message))
-        {
-            console.warn("Unable to obtain error message");
-            
-            return;
-        }
+        var message = error.message;
+        var stack = error.stack;
         
         if(this._globalNotifications)
         {
             this._globalNotifications.error(message);
         }
-        
-        if(stackTrace)
+
+        if(error.rejection)
         {
-            if(isArray(stackTrace))
-            {
-                stackTrace.forEach(trace =>
-                {
-                    stack += trace;
-                    trace += "\n\n-------------------------------------------------\n\n";
-                });
-            }
-            else if(isString(stackTrace))
-            {
-                stack = stackTrace;
-            }
-        }
-        else if(isPresent(error.originalStack))
-        {
-            stack = error.originalStack;
+            stack += `--------------------------PROMISE STACK--------------------------------
+${error.rejection.stack}`;
         }
         
         if(this._options.enableServerLogging)
@@ -121,7 +76,18 @@ class ReportingExceptionHandler implements ErrorHandler
         
         if(this._options.debugMode)
         {
-            console.error(error);
+            console.error(`
+MESSAGE: ${error.message}
+STACKTRACE: ${error.stack}`, error);
+
+            if(error.rejection)
+            {
+                console.error(`
+PROMISE ERROR MESSAGE: ${error.rejection.message}
+PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
+            }
+
+            alert(message);
         }
     }
     
