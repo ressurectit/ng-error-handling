@@ -1,6 +1,6 @@
 {
     "name": "@ng2/error-handling",
-    "version": "1.4.1",
+    "version": "1.5.0",
     "description": "Angular 2 module used for handling http api error handling",
     "main": "index.js",
     "typings": "index.d.ts",
@@ -33,19 +33,19 @@
     "license": "MIT",
     "dependencies":
     {
-        "@angular/core": "2.0.0-rc.6",
-        "@angular/common": "2.0.0-rc.6",
-        "@angular/compiler": "2.0.0-rc.6",
-        "@angular/platform-browser": "2.0.0-rc.6",
-        "@angular/http": "2.0.0-rc.6",
-        "@angular/forms": "2.0.0-rc.6",
+        "@angular/core": "~2.0.0",
+        "@angular/common": "~2.0.0",
+        "@angular/compiler": "~2.0.0",
+        "@angular/platform-browser": "~2.0.0",
+        "@angular/http": "~2.0.0",
+        "@angular/forms": "~2.0.0",
         "core-js": "~2.4.1",
-        "reflect-metadata": "0.1.3",
-        "zone.js": "0.6.17",
-        "rxjs": "5.0.0-beta.11",
-        "@ng2/common": "~1.4.0",
-        "@ng2/notifications": "~1.4.0",
-        "@ng2/http-extensions": "~1.4.0"
+        "reflect-metadata": "~0.1.3",
+        "zone.js": "~0.6.23",
+        "rxjs": "5.0.0-beta.12",
+        "@ng2/common": "~1.5.0",
+        "@ng2/notifications": "~1.5.0",
+        "@ng2/http-extensions": "~1.5.0"
     },
     "peerDependencies":
     {
