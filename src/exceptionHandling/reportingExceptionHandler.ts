@@ -5,8 +5,8 @@ import {GlobalNotificationsService} from '@ng2/notifications';
 import {ErrorWithStack} from './errorWithStack';
 import {AngularError} from './angularError';
 import {isBlank, isArray, isString, isPresent, isFunction} from '@angular/core/src/facade/lang';
-import html2canvas from 'tshtml2canvas';
-import $ from 'tsjquery';
+import * as html2canvas from 'html2canvas';
+import * as $ from 'jquery';
 
 /**
  * Exception handler that is capable of reporting and logging occured exceptions

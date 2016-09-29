@@ -1,12 +1,4 @@
 /node_modules
-/tsTypings
-/typings
-/exceptionHandling
-/httpErrorInterceptor
-/internalServerError
-/serverValidation
-*.d.ts
-*.js
-*.map
+/dist
+
 *.log
-!gulpfile.js
