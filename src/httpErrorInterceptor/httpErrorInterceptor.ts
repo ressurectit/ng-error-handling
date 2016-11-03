@@ -60,7 +60,7 @@ export class HttpErrorInterceptor extends HttpInterceptor
     {
         return response.do(() => {}, (err: Response) =>
         {
-            if(err.status == 400 || err.status >= 404)
+            if(this._options.shouldHandlePredicate(err))
             {
                 if(this._options.debug && err.status >= 500 && err.status <= 599)
                 {
