@@ -30,7 +30,7 @@ export function provideResponseMapper(mappingFuncion: (err: any) => BadRequestDe
 }
 
 /**
- * Interceptor that is used for handling http errors with codes 400, 404..599
+ * Interceptor that is used for handling http errors with default codes 400, 405..599
  */
 @Injectable()
 export class HttpErrorInterceptor extends HttpInterceptor
