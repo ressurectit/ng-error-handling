@@ -2,9 +2,10 @@ import {ClassProvider, Optional, ErrorHandler} from '@angular/core';
 import {ReportingExceptionHandlerOptions} from './reportingExceptionHandlerOptions';
 import {ReportingExceptionHandlerService} from './reportingExceptionHandler.service';
 import {GlobalNotificationsService} from '@ng2/notifications';
+import {isArray, isString, isFunction} from '@ng2/common';
 import {ErrorWithStack} from './errorWithStack';
 import {AngularError} from './angularError';
-import {isBlank, isArray, isString, isPresent, isFunction} from '@angular/core/src/facade/lang';
+import {isBlank, isPresent} from '@angular/core/src/facade/lang';
 import * as html2canvas from 'html2canvas';
 import * as $ from 'jquery';
 

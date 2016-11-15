@@ -6,7 +6,7 @@ import {InternalServerErrorService} from '../internalServerError/internalServerE
 import {GlobalNotificationsService} from '@ng2/notifications';
 import {ServerValidationService} from '../serverValidation//serverValidation.service';
 import {StringMapWrapper} from '@angular/core/src/facade/collection';
-import {isFunction} from '@angular/core/src/facade/lang';
+import {isFunction, isArray} from '@ng2/common';
 import {BadRequestDetail} from './badRequestDetail';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
@@ -93,9 +93,12 @@ export class HttpErrorInterceptor extends HttpInterceptor
                         }
                         else
                         {
-                            StringMapWrapper.forEach(errorDetail.validationErrors, (errors: string[]) =>
+                            Object.keys(errorDetail.validationErrors).forEach((errorInputName: string) =>
                             {
-                                errors.forEach(errorMessage => this._notifications.error(errorMessage));
+                                if(isArray(errorDetail.validationErrors[errorInputName]))
+                                {
+                                    errorDetail.validationErrors[errorInputName].forEach(errorMessage => this._notifications.error(errorMessage));
+                                }
                             });
                         }
                     }
