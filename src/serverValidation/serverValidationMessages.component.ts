@@ -1,6 +1,6 @@
 import {AsyncPipe} from '@angular/common';
 import {NgControl} from '@angular/forms';
-import {Component, TemplateRef, ViewContainerRef, Input, OnInit, DoCheck, OnDestroy, ChangeDetectorRef, KeyValueDiffers, KeyValueDiffer, ViewChild, ContentChild, AfterViewInit} from '@angular/core';
+import {Component, TemplateRef, ViewContainerRef, Input, OnInit, DoCheck, ChangeDetectorRef, KeyValueDiffers, KeyValueDiffer, ViewChild, ContentChild, AfterViewInit} from '@angular/core';
 import {SERVER_VALIDATIONS} from './serverValidationValidator.directive';
 import {Subject} from 'rxjs/Subject';
 
@@ -22,7 +22,7 @@ export interface ImplicitString
                <template ngFor [ngForTemplate]="itemTemplate | async" [ngForOf]="_errors"></template>
                <ng-content></ng-content>`
 })
-export class ServerValidationMessagesComponent implements OnInit, DoCheck, OnDestroy, AfterViewInit
+export class ServerValidationMessagesComponent implements OnInit, DoCheck, AfterViewInit
 {
     //######################### private fields #########################
 
@@ -34,7 +34,7 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, OnDes
     /**
      * Tracks changes of errors
      */
-    private _errorsDiffer: KeyValueDiffer;
+    private _errorsDiffer: KeyValueDiffer<{}, {}>;
 
     /**
      * Errors that are displayed
@@ -173,19 +173,6 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, OnDes
         else
         {
             throw new Error("No template found!");
-        }
-    }
-
-    //######################### public methods - implementation of OnDestroy #########################
-
-    /**
-     * Called when component is destroyed
-     */
-    public ngOnDestroy()
-    {
-        if(this._errorsDiffer)
-        {
-            this._errorsDiffer.onDestroy();
         }
     }
 }

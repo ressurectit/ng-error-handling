@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {isPresent} from '@angular/core/src/facade/lang';
+import {isPresent} from '@anglr/common';
 import {Response} from '@angular/http';
 
 /**

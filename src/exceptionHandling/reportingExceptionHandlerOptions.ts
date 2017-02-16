@@ -1,4 +1,4 @@
-import {isPresent} from '@angular/core/src/facade/lang';
+import {isPresent} from '@anglr/common';
 
 /**
  * Options that are used within ReportingExceptionHandler

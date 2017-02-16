@@ -1,12 +1,11 @@
 import {Injectable, Inject, Optional, ClassProvider, ValueProvider, OpaqueToken} from '@angular/core';
 import {Response} from '@angular/http';
-import {HttpInterceptor, HTTP_INTERCEPTORS} from '@ng2/http-extensions';
+import {HttpInterceptor, HTTP_INTERCEPTORS} from '@anglr/http-extensions';
 import {HttpErrorInterceptorOptions} from './httpErrorInterceptorOptions';
 import {InternalServerErrorService} from '../internalServerError/internalServerError.service';
-import {GlobalNotificationsService} from '@ng2/notifications';
+import {GlobalNotificationsService} from '@anglr/notifications';
 import {ServerValidationService} from '../serverValidation//serverValidation.service';
-import {StringMapWrapper} from '@angular/core/src/facade/collection';
-import {isFunction, isArray} from '@ng2/common';
+import {isFunction, isArray} from '@anglr/common';
 import {BadRequestDetail} from './badRequestDetail';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/do';

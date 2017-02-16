@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
-import {Utils} from '@ng2/common'
+import {Utils} from '@anglr/common'
 
 /**
  * Service that is used for distribution of server validations

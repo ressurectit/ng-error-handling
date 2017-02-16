@@ -1,5 +1,5 @@
 var webpack = require('webpack');
-var projectName = require('./package.json').name.replace("@ng2/", "").replace("-", "");
+var projectName = require('./package.json').name.replace("@anglr/", "").replace("-", "");
 
 module.exports = function(options)
 {
@@ -17,7 +17,7 @@ module.exports = function(options)
         [
             "jquery",
             "html2canvas",
-            /^@ng2\/.*$/,
+            /^@ng\/.*$/,
             /^@angular\/.*$/,
             /^rxjs\/.*$/
         ],
@@ -29,11 +29,11 @@ module.exports = function(options)
         config.plugins.push(new webpack.optimize.UglifyJsPlugin(
         {
             compress: true,
-            mangle: false,
+            mangle: true,
             sourceMap: false
         }));
 
-        config.output.filename = "index.dev.min.js";
+        config.output.filename = "index.min.js";
     }
 
     return config;

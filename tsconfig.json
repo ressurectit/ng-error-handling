@@ -21,7 +21,7 @@
         ],
         "typeRoots": 
         [
-            "node_modules/@ng2/types"
+            "node_modules/@anglr/types"
         ]
     },
     "exclude": 
