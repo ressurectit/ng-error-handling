@@ -1,11 +1,9 @@
-import {Injectable} from '@angular/core';
 import {isPresent} from '@anglr/common';
 import {Response} from '@angular/http';
 
 /**
  * Options for HttpErrorInterceptor
  */
-@Injectable()
 export class HttpErrorInterceptorOptions
 {
     //######################### public properties #########################

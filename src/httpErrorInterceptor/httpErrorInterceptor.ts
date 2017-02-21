@@ -16,11 +16,16 @@ import 'rxjs/add/operator/do';
 const ERROR_RESPONSE_MAP_PROVIDER: OpaqueToken = new OpaqueToken("ErrorResponseMapProvider");
 
 /**
+ * Type of mapper function
+ */
+export type ResponseMapperFunction = (err: any) => BadRequestDetail;
+
+/**
  * Creates response mapping function for http error interceptor
  * @param  {(err:any)=>BadRequestDetail} mappingFuncion Function that maps response to BadRequestDetail
  * @returns Provider
  */
-export function provideResponseMapper(mappingFuncion: (err: any) => BadRequestDetail): ValueProvider
+export function provideResponseMapper(mappingFuncion: ResponseMapperFunction): ValueProvider
 {
     return {
         provide: ERROR_RESPONSE_MAP_PROVIDER,
@@ -34,21 +39,30 @@ export function provideResponseMapper(mappingFuncion: (err: any) => BadRequestDe
 @Injectable()
 export class HttpErrorInterceptor extends HttpInterceptor
 {
+    //######################### private fields #########################
+
+    /**
+     * Response mapper function
+     */
+    private _responseMapper: ResponseMapperFunction;
+
     //######################### constructor #########################
     constructor(@Optional() private _options: HttpErrorInterceptorOptions,
                 @Optional() private _internalServerErrorService: InternalServerErrorService,
                 @Optional() private _serverValidationService: ServerValidationService,
-                @Optional() @Inject(ERROR_RESPONSE_MAP_PROVIDER) private _responseMapper: (err: any) => BadRequestDetail,
+                @Optional() @Inject(ERROR_RESPONSE_MAP_PROVIDER) responseMapper: any,
                 private _notifications: GlobalNotificationsService)
     {
         super();
+
+        this._responseMapper = responseMapper;
         
         if(!_options)
         {
             this._options = new HttpErrorInterceptorOptions();
         }
         
-        if(!_responseMapper || !isFunction(_responseMapper))
+        if(!this._responseMapper || !isFunction(this._responseMapper))
         {
             this._responseMapper = itm => itm;
         }

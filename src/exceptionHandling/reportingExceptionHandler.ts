@@ -1,4 +1,4 @@
-import {ClassProvider, Optional, ErrorHandler} from '@angular/core';
+import {ClassProvider, Optional, ErrorHandler, Injectable} from '@angular/core';
 import {ReportingExceptionHandlerOptions} from './reportingExceptionHandlerOptions';
 import {ReportingExceptionHandlerService} from './reportingExceptionHandler.service';
 import {GlobalNotificationsService} from '@anglr/notifications';
@@ -11,6 +11,7 @@ import * as $ from 'jquery';
 /**
  * Exception handler that is capable of reporting and logging occured exceptions
  */
+@Injectable()
 class ReportingExceptionHandler implements ErrorHandler 
 {
     //######################### constructor #########################

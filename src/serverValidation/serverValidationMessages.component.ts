@@ -19,7 +19,7 @@ export interface ImplicitString
 {
     selector: "[serverValidations]",
     template: `<template #viewTemplate let-message><div class="alert alert-danger {{itemCssClass}}">{{message}}</div></template>
-               <template ngFor [ngForTemplate]="itemTemplate | async" [ngForOf]="_errors"></template>
+               <template ngFor [ngForTemplate]="itemTemplate | async" [ngForOf]="errors"></template>
                <ng-content></ng-content>`
 })
 export class ServerValidationMessagesComponent implements OnInit, DoCheck, AfterViewInit
@@ -36,31 +36,30 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, After
      */
     private _errorsDiffer: KeyValueDiffer<{}, {}>;
 
+    //######################### public properties #########################
+
     /**
      * Errors that are displayed
      */
-    private _errors: string[] = [];
+    public errors: string[] = [];
+
+    /**
+     * Gets template for rendering single item
+     */
+    public itemTemplate: Subject<TemplateRef<ImplicitString>> = new Subject<TemplateRef<ImplicitString>>();
 
     /**
      * Item render template from content
      */
     @ContentChild(TemplateRef)
-    private _contentTemplate: TemplateRef<ImplicitString>;
+    public contentTemplate: TemplateRef<ImplicitString>;
 
     /**
      * Item render template from view
      */
     @ViewChild("viewTemplate")
-    private _viewTemplate: TemplateRef<ImplicitString>;
+    public viewTemplate: TemplateRef<ImplicitString>;
 
-    //######################### private properties #########################
-
-    /**
-     * Gets template for rendering single item
-     */
-    private itemTemplate: Subject<TemplateRef<ImplicitString>> = new Subject<TemplateRef<ImplicitString>>();
-
-    //######################### private fields #########################
 
     /**
      * Control which server validation errors are displayed
@@ -140,11 +139,11 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, After
                 {
                     if(this._controlDirective.control.errors[SERVER_VALIDATIONS])
                     {
-                        this._errors = this._controlDirective.control.errors[SERVER_VALIDATIONS];
+                        this.errors = this._controlDirective.control.errors[SERVER_VALIDATIONS];
                     }
                     else
                     {
-                        this._errors = [];
+                        this.errors = [];
                     }
                 }
             });
@@ -158,17 +157,17 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, After
      */
     public ngAfterViewInit()
     {
-        if(this._contentTemplate)
+        if(this.contentTemplate)
         {
-            this.itemTemplate.next(this._contentTemplate);
+            this.itemTemplate.next(this.contentTemplate);
         }
         else if(this.errorTemplate)
         {
             this.itemTemplate.next(this.errorTemplate);
         }
-        else if(this._viewTemplate)
+        else if(this.viewTemplate)
         {
-            this.itemTemplate.next(this._viewTemplate);
+            this.itemTemplate.next(this.viewTemplate);
         }
         else
         {
