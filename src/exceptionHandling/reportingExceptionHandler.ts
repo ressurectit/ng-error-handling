@@ -1,4 +1,5 @@
-import {ClassProvider, Optional, ErrorHandler, Injectable} from '@angular/core';
+import {ClassProvider, Optional, ErrorHandler, Injectable, Inject, PLATFORM_ID} from '@angular/core';
+import {isPlatformBrowser} from '@angular/common';
 import {ReportingExceptionHandlerOptions} from './reportingExceptionHandlerOptions';
 import {ReportingExceptionHandlerService} from './reportingExceptionHandler.service';
 import {GlobalNotificationsService} from '@anglr/notifications';
@@ -14,11 +15,21 @@ import * as $ from 'jquery';
 @Injectable()
 class ReportingExceptionHandler implements ErrorHandler 
 {
+    //######################### private fields #########################
+
+    /**
+     * Indication that code runs in browser
+     */
+    private _isBrowser: boolean = false;
+
     //######################### constructor #########################
     constructor(@Optional() private _options: ReportingExceptionHandlerOptions,
                 @Optional() private _loggingService: ReportingExceptionHandlerService,
-                @Optional() private _globalNotifications: GlobalNotificationsService)
+                @Optional() private _globalNotifications: GlobalNotificationsService,
+                @Inject(PLATFORM_ID) platformId: string)
     {
+        this._isBrowser = isPlatformBrowser(platformId);
+
         if(isBlank(_options))
         {
             this._options = new ReportingExceptionHandlerOptions();
@@ -38,10 +49,10 @@ class ReportingExceptionHandler implements ErrorHandler
      */
     public handleError(error: AngularError): void
     {
-        var message = error.message;
-        var stack = error.stack;
+        var message = error.message || "";
+        var stack = error.stack || "";
         
-        if(this._globalNotifications)
+        if(this._globalNotifications && isPresent(error.message))
         {
             this._globalNotifications.error(message);
         }
@@ -52,7 +63,7 @@ class ReportingExceptionHandler implements ErrorHandler
 ${error.rejection.stack}`;
         }
         
-        if(this._options.enableServerLogging)
+        if(this._options.enableServerLogging && this._isBrowser)
         {
             var html: string = "";
             

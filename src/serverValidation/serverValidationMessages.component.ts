@@ -18,8 +18,8 @@ export interface ImplicitString
 @Component(
 {
     selector: "[serverValidations]",
-    template: `<template #viewTemplate let-message><div class="alert alert-danger {{itemCssClass}}">{{message}}</div></template>
-               <template ngFor [ngForTemplate]="itemTemplate | async" [ngForOf]="errors"></template>
+    template: `<ng-template #viewTemplate let-message><div class="alert alert-danger {{itemCssClass}}">{{message}}</div></ng-template>
+               <ng-template ngFor [ngForTemplate]="itemTemplate | async" [ngForOf]="errors"></ng-template>
                <ng-content></ng-content>`
 })
 export class ServerValidationMessagesComponent implements OnInit, DoCheck, AfterViewInit

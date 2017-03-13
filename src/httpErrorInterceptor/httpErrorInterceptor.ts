@@ -1,4 +1,4 @@
-import {Injectable, Inject, Optional, ClassProvider, ValueProvider, OpaqueToken} from '@angular/core';
+import {Injectable, Inject, Optional, ClassProvider, ValueProvider, InjectionToken} from '@angular/core';
 import {Response} from '@angular/http';
 import {HttpInterceptor, HTTP_INTERCEPTORS} from '@anglr/http-extensions';
 import {HttpErrorInterceptorOptions} from './httpErrorInterceptorOptions';
@@ -8,12 +8,6 @@ import {ServerValidationService} from '../serverValidation//serverValidation.ser
 import {isFunction, isArray} from '@anglr/common';
 import {BadRequestDetail} from './badRequestDetail';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/do';
-
-/**
- * Token for map function provider
- */
-const ERROR_RESPONSE_MAP_PROVIDER: OpaqueToken = new OpaqueToken("ErrorResponseMapProvider");
 
 /**
  * Type of mapper function
@@ -32,6 +26,11 @@ export function provideResponseMapper(mappingFuncion: ResponseMapperFunction): V
         useValue: mappingFuncion
     };
 }
+
+/**
+ * Token for map function provider
+ */
+const ERROR_RESPONSE_MAP_PROVIDER: InjectionToken<ResponseMapperFunction> = new InjectionToken<ResponseMapperFunction>("ErrorResponseMapProvider");
 
 /**
  * Interceptor that is used for handling http errors with default codes 400, 405..599
