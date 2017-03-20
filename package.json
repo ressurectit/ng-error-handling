@@ -1,6 +1,6 @@
 {
     "name": "@anglr/error-handling",
-    "version": "3.0.0-beta.2",
+    "version": "3.0.0-beta.3",
     "description": "Angular module used for handling http api error handling",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
@@ -30,17 +30,17 @@
     "license": "MIT",
     "dependencies":
     {
-        "@angular/core": ">=4.0.0-rc.2",
-        "@angular/common": ">=4.0.0-rc.2",
-        "@angular/http": ">=4.0.0-rc.2",
-        "@angular/platform-browser": ">=4.0.0-rc.2",
-        "@angular/forms": ">=4.0.0-rc.2",
+        "@angular/core": ">=4.0.0-rc.5",
+        "@angular/common": ">=4.0.0-rc.5",
+        "@angular/http": ">=4.0.0-rc.5",
+        "@angular/platform-browser": ">=4.0.0-rc.5",
+        "@angular/forms": ">=4.0.0-rc.5",
         "core-js": "~2.4.1",
-        "zone.js": "^0.8.0",
-        "rxjs": "5.1.1",
-        "@anglr/common": ">=3.0.0-beta.2",
+        "zone.js": "^0.8.4",
+        "rxjs": "5.2.0",
+        "@anglr/common": ">=3.0.0-beta.6",
         "@anglr/notifications": ">=3.0.0-beta.3",
-        "@anglr/http-extensions": ">=3.0.0-beta.3"
+        "@anglr/http-extensions": ">=3.0.0-beta.4"
     },
     "peerDependencies":
     {
@@ -52,9 +52,9 @@
     {
         "@types/jquery": "~2.0.40",
         "@anglr/types": "1.1.0",
-        "@angular/compiler-cli": ">=4.0.0-rc.2",
-        "@angular/compiler": ">=4.0.0-rc.2",
-        "rimraf": "~2.5.4",
+        "@angular/compiler-cli": ">=4.0.0-rc.5",
+        "@angular/compiler": ">=4.0.0-rc.5",
+        "rimraf": "~2.6.1",
         "typescript": "2.2.1",
         "webpack": "2.2.1",
         "npm-publish-package": "~1.2.0"
