@@ -49,7 +49,7 @@ import {Subscription} from 'rxjs/Subscription';
     `],
     template:
    `<div class="internal-server-error-notification">
-        <div class="notification" data-toggle="collapse" data-target="#internalServerErrorsList" [hidden]="errorsHtml.length < 1">!</div>
+        <div class="notification" data-toggle="collapse" data-target="#internalServerErrorsList" *ngIf="errorsHtml.length > 0">!</div>
 
         <div id="internalServerErrorsList" class="collapse">
             <div *ngFor="let error of errorsHtml">
