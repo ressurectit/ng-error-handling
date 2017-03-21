@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {NgModule, ModuleWithProviders, ValueProvider, ClassProvider, Type} from '@angular/core';
+import {NgModule, ModuleWithProviders, FactoryProvider, ClassProvider, Type} from '@angular/core';
 import {REPORTING_EXCEPTION_HANDLER_PROVIDER} from '../exceptionHandling/reportingExceptionHandler';
 import {ReportingExceptionHandlerOptions} from '../exceptionHandling/reportingExceptionHandlerOptions';
 import {ReportingExceptionHandlerService} from '../exceptionHandling/reportingExceptionHandler.service';
@@ -15,20 +15,34 @@ export class ExceptionHandlingModule
     //######################### public methods #########################
     
     /**
-     * Returns module with reporting exception handler
-     * @param {ReportingExceptionHandlerOptions} options Options passed to handler
+     * Returns module with reporting exception handler with default options
      */
-    public static forRoot(options?: ReportingExceptionHandlerOptions): ModuleWithProviders 
+    public static forRoot(): ModuleWithProviders 
+    {
+        return {
+            ngModule: ExceptionHandlingModule,
+            providers: 
+            [
+                REPORTING_EXCEPTION_HANDLER_PROVIDER
+            ]
+        };
+    }
+
+    /**
+     * Returns module with reporting exception handler
+     * @param {() =>ReportingExceptionHandlerOptions} options Options passed to handler
+     */
+    public static forRootWithOptions(options: () => ReportingExceptionHandlerOptions): ModuleWithProviders 
     {
         return {
             ngModule: ExceptionHandlingModule,
             providers: 
             [
                 REPORTING_EXCEPTION_HANDLER_PROVIDER,
-                <ValueProvider>
+                <FactoryProvider>
                 {
                     provide: ReportingExceptionHandlerOptions,
-                    useValue: options
+                    useFactory: options
                 }
             ]
         };
@@ -36,20 +50,40 @@ export class ExceptionHandlingModule
 
     /**
      * Returns module with reporting exception handler with reporting service
-     * @param {ReportingExceptionHandlerOptions} options Options passed to handler
      * @param {Type<ReportingExceptionHandlerService>} reportingService Service used for reporting errors
      */
-    public static forRootWithReportingService(reportingService: Type<ReportingExceptionHandlerService>, options?: ReportingExceptionHandlerOptions): ModuleWithProviders 
+    public static forRootWithReportingService(reportingService: Type<ReportingExceptionHandlerService>): ModuleWithProviders 
     {
         return {
             ngModule: ExceptionHandlingModule,
             providers: 
             [
                 REPORTING_EXCEPTION_HANDLER_PROVIDER,
-                <ValueProvider>
+                <ClassProvider>
+                {
+                    provide: ReportingExceptionHandlerService,
+                    useClass: reportingService
+                }
+            ]
+        };
+    }
+
+    /**
+     * Returns module with reporting exception handler with reporting service
+     * @param {Type<ReportingExceptionHandlerService>} reportingService Service used for reporting errors
+     * @param {() => ReportingExceptionHandlerOptions} options Options passed to handler
+     */
+    public static forRootWithReportingServiceAndOptions(reportingService: Type<ReportingExceptionHandlerService>, options: () => ReportingExceptionHandlerOptions): ModuleWithProviders 
+    {
+        return {
+            ngModule: ExceptionHandlingModule,
+            providers: 
+            [
+                REPORTING_EXCEPTION_HANDLER_PROVIDER,
+                <FactoryProvider>
                 {
                     provide: ReportingExceptionHandlerOptions,
-                    useValue: options
+                    useFactory: options
                 },
                 <ClassProvider>
                 {

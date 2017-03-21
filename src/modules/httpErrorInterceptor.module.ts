@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {NgModule, ModuleWithProviders, ValueProvider} from '@angular/core';
+import {NgModule, ModuleWithProviders, FactoryProvider, ValueProvider} from '@angular/core';
 import {ERROR_RESPONSE_MAP_PROVIDER, HTTP_ERROR_INTERCEPTOR_PROVIDER, ResponseMapperFunction} from '../httpErrorInterceptor/httpErrorInterceptor';
 import {HttpErrorInterceptorOptions} from '../httpErrorInterceptor/httpErrorInterceptorOptions';
 
@@ -49,19 +49,19 @@ export class HttpErrorInterceptorModule
 
     /**
      * Returns module with http interceptor with specified options
-     * @param {HttpErrorInterceptorOptions} options Options used for http error interceptor
+     * @param {() => HttpErrorInterceptorOptions} options Options used for http error interceptor
      */
-    public static forRootWithOptions(options: HttpErrorInterceptorOptions): ModuleWithProviders
+    public static forRootWithOptions(options: () => HttpErrorInterceptorOptions): ModuleWithProviders
     {
         return {
             ngModule: HttpErrorInterceptorModule,
             providers:
             [
                 HTTP_ERROR_INTERCEPTOR_PROVIDER,
-                <ValueProvider>
+                <FactoryProvider>
                 {
                     provide: HttpErrorInterceptorOptions,
-                    useValue: options
+                    useFactory: options
                 }
             ]
         };
@@ -69,20 +69,20 @@ export class HttpErrorInterceptorModule
 
     /**
      * Returns module with http interceptor with specified options and mapping function
-     * @param {HttpErrorInterceptorOptions} options Options used for http error interceptor
+     * @param {() => HttpErrorInterceptorOptions} options Options used for http error interceptor
      * @param {ResponseMapperFunction} mappingFunction Mapping function that maps error response from server to appropriate type
      */
-    public static forRootWithMapFunctionAndOptions(options: HttpErrorInterceptorOptions, mappingFunction: ResponseMapperFunction): ModuleWithProviders
+    public static forRootWithMapFunctionAndOptions(options: () => HttpErrorInterceptorOptions, mappingFunction: ResponseMapperFunction): ModuleWithProviders
     {
         return {
             ngModule: HttpErrorInterceptorModule,
             providers:
             [
                 HTTP_ERROR_INTERCEPTOR_PROVIDER,
-                <ValueProvider>
+                <FactoryProvider>
                 {
                     provide: HttpErrorInterceptorOptions,
-                    useValue: options
+                    useFactory: options
                 },
                 <ValueProvider>
                 {
