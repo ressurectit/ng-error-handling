@@ -17,7 +17,7 @@ export const SERVER_VALIDATIONS = "serverValidation";
 /**
  * Validator that is injected with directive ServerValidationValidator
  */
-const SERVER_VALIDATIONS_VALIDATOR: ExistingProvider = 
+export const SERVER_VALIDATIONS_VALIDATOR: ExistingProvider = 
 {
     provide: NG_VALIDATORS, 
     useExisting: forwardRef(() => ServerValidationValidatorDirective), 

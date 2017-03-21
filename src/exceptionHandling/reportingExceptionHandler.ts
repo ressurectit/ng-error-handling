@@ -13,7 +13,7 @@ import * as $ from 'jquery';
  * Exception handler that is capable of reporting and logging occured exceptions
  */
 @Injectable()
-class ReportingExceptionHandler implements ErrorHandler 
+export class ReportingExceptionHandler implements ErrorHandler 
 {
     //######################### private fields #########################
 
@@ -26,7 +26,7 @@ class ReportingExceptionHandler implements ErrorHandler
     constructor(@Optional() private _options: ReportingExceptionHandlerOptions,
                 @Optional() private _loggingService: ReportingExceptionHandlerService,
                 @Optional() private _globalNotifications: GlobalNotificationsService,
-                @Inject(PLATFORM_ID) platformId: string)
+                @Inject(PLATFORM_ID) platformId: Object)
     {
         this._isBrowser = isPlatformBrowser(platformId);
 
