@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/do';
 
 export {BadRequestDetail} from './httpErrorInterceptor/badRequestDetail';
-export {HttpErrorInterceptor, HTTP_ERROR_INTERCEPTOR_PROVIDER, provideResponseMapper} from './httpErrorInterceptor/httpErrorInterceptor';
+export {HttpErrorInterceptor, HTTP_ERROR_INTERCEPTOR_PROVIDER, ERROR_RESPONSE_MAP_PROVIDER} from './httpErrorInterceptor/httpErrorInterceptor';
 export {HttpErrorInterceptorOptions} from './httpErrorInterceptor/httpErrorInterceptorOptions';
 export {InternalServerErrorService} from './internalServerError/internalServerError.service';
 export {InternalServerErrorComponent} from './internalServerError/internalServerError.component';
@@ -14,4 +14,7 @@ export {ReportingExceptionHandlerOptions} from './exceptionHandling/reportingExc
 export {WithServerValidationsDirective} from './serverValidation/withServerValidations.directive';
 export {AngularError} from './exceptionHandling/angularError';
 export {ErrorWithStack} from './exceptionHandling/errorWithStack';
-export {ErrorHandlingModule} from './modules/errorHandling.module';
+export {ExceptionHandlingModule} from './modules/exceptionHandling.module';
+export {HttpErrorInterceptorModule} from './modules/httpErrorInterceptor.module';
+export {InternalServerErrorModule} from './modules/internalServerError.module';
+export {ServerValidationsModule} from './modules/serverValidations.module';

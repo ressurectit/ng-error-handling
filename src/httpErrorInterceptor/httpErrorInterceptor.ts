@@ -15,22 +15,9 @@ import {Observable} from 'rxjs/Observable';
 export type ResponseMapperFunction = (err: any) => BadRequestDetail;
 
 /**
- * Creates response mapping function for http error interceptor
- * @param  {(err:any)=>BadRequestDetail} mappingFuncion Function that maps response to BadRequestDetail
- * @returns Provider
- */
-export function provideResponseMapper(mappingFuncion: ResponseMapperFunction): ValueProvider
-{
-    return {
-        provide: ERROR_RESPONSE_MAP_PROVIDER,
-        useValue: mappingFuncion
-    };
-}
-
-/**
  * Token for map function provider
  */
-const ERROR_RESPONSE_MAP_PROVIDER: InjectionToken<ResponseMapperFunction> = new InjectionToken<ResponseMapperFunction>("ErrorResponseMapProvider");
+export const ERROR_RESPONSE_MAP_PROVIDER: InjectionToken<ResponseMapperFunction> = new InjectionToken<ResponseMapperFunction>("ErrorResponseMapProvider");
 
 /**
  * Interceptor that is used for handling http errors with default codes 400, 405..599

@@ -19,6 +19,5 @@ export class ReportingExceptionHandlerService
      */
     public sendReport(exceptionMessage: string, exceptionStackTrace: string, pageHtml: string, pageScreenShotBase64: string)
     {
-        throw new Error("This is default implementation which will not work. Please override this method.");
     }
 }

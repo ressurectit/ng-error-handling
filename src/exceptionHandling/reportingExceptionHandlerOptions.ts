@@ -32,17 +32,23 @@ export class ReportingExceptionHandlerOptions
      */
     public debugMode: boolean = false;
 
+    /**
+     * Indication that also alert should show error message
+     */
+    public showAlsoAlert: boolean = false;
+
     //######################### constructor #########################
 
     /**
      * Creates instance of ReportingExceptionHandlerOptions
      * @param  {boolean} debugMode Indication whether should logger log errors also in browser console
+     * @param  {boolean} showAlsoAlert Indication that also alert should show error message
      * @param  {boolean} captureScreenImage Indication that screenshot should be taken when error occurs
      * @param  {boolean} captureScreenHtml Indication that current html snapshot should be captured
      * @param  {boolean} captureHtmlInputs Indication that current html inputs state should be transformed into html
      * @param  {enableServerLogging} captureHtmlInputs Indication whether should be server logging enabled or not
      */
-    constructor(debugMode?: boolean, captureScreenImage?: boolean, captureScreenHtml?: boolean, captureHtmlInputs?: boolean, enableServerLogging?: boolean)
+    constructor(debugMode?: boolean, showAlsoAlert?: boolean, captureScreenImage?: boolean, captureScreenHtml?: boolean, captureHtmlInputs?: boolean, enableServerLogging?: boolean)
     {
         if(isPresent(captureScreenHtml))
         {
@@ -67,6 +73,11 @@ export class ReportingExceptionHandlerOptions
         if(isPresent(debugMode))
         {
             this.debugMode = debugMode;
+        }
+
+        if(isPresent(showAlsoAlert))
+        {
+            this.showAlsoAlert = showAlsoAlert;
         }
     }
 }

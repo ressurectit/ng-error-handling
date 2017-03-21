@@ -49,10 +49,12 @@ class ReportingExceptionHandler implements ErrorHandler
      */
     public handleError(error: AngularError): void
     {
-        var message = error.message || "";
+        error = error || <any>{};
+
+        var message = error.message || (error.toString ? error.toString() : `${error}`);
         var stack = error.stack || "";
         
-        if(this._globalNotifications && isPresent(error.message))
+        if(this._globalNotifications && isPresent(message))
         {
             this._globalNotifications.error(message);
         }
@@ -89,8 +91,8 @@ ${error.rejection.stack}`;
         if(this._options.debugMode)
         {
             console.error(`
-MESSAGE: ${error.message}
-STACKTRACE: ${error.stack}`, error);
+MESSAGE: ${message}
+STACKTRACE: ${stack}`, error);
 
             if(error.rejection)
             {
@@ -99,7 +101,10 @@ PROMISE ERROR MESSAGE: ${error.rejection.message}
 PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
             }
 
-            alert(message);
+            if(this._options.showAlsoAlert)
+            {
+                alert(message);
+            }
         }
     }
     
