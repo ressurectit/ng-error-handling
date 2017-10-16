@@ -1,18 +1,18 @@
-import {Injectable, Inject, Optional, ClassProvider, ValueProvider, InjectionToken} from '@angular/core';
-import {Response} from '@angular/http';
-import {HttpInterceptor, HTTP_INTERCEPTORS} from '@anglr/http-extensions';
+import {Injectable, Inject, Optional, ClassProvider, InjectionToken} from '@angular/core';
+import {HttpInterceptor, HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpRequest, HttpErrorResponse} from '@angular/common/http';
+import {GlobalNotificationsService} from '@anglr/notifications';
+import {isFunction, isArray} from '@anglr/common';
+import {Observable} from 'rxjs/Observable';
+
 import {HttpErrorInterceptorOptions} from './httpErrorInterceptorOptions';
 import {InternalServerErrorService} from '../internalServerError/internalServerError.service';
-import {GlobalNotificationsService} from '@anglr/notifications';
 import {ServerValidationService} from '../serverValidation//serverValidation.service';
-import {isFunction, isArray} from '@anglr/common';
 import {BadRequestDetail} from './badRequestDetail';
-import {Observable} from 'rxjs/Observable';
 
 /**
  * Type of mapper function
  */
-export type ResponseMapperFunction = (err: any) => BadRequestDetail;
+export type ResponseMapperFunction = (err: HttpErrorResponse) => BadRequestDetail;
 
 /**
  * Token for map function provider
@@ -23,26 +23,15 @@ export const ERROR_RESPONSE_MAP_PROVIDER: InjectionToken<ResponseMapperFunction>
  * Interceptor that is used for handling http errors with default codes 400, 405..599
  */
 @Injectable()
-export class HttpErrorInterceptor extends HttpInterceptor
+export class HttpErrorInterceptor implements HttpInterceptor
 {
-    //######################### private fields #########################
-
-    /**
-     * Response mapper function
-     */
-    private _responseMapper: ResponseMapperFunction;
-
     //######################### constructor #########################
     constructor(@Optional() private _options: HttpErrorInterceptorOptions,
                 @Optional() private _internalServerErrorService: InternalServerErrorService,
                 @Optional() private _serverValidationService: ServerValidationService,
-                @Optional() @Inject(ERROR_RESPONSE_MAP_PROVIDER) responseMapper: any,
+                @Optional() @Inject(ERROR_RESPONSE_MAP_PROVIDER) private _responseMapper: ResponseMapperFunction,
                 private _notifications: GlobalNotificationsService)
     {
-        super();
-
-        this._responseMapper = responseMapper;
-        
         if(!_options)
         {
             this._options = new HttpErrorInterceptorOptions();
@@ -50,64 +39,77 @@ export class HttpErrorInterceptor extends HttpInterceptor
         
         if(!this._responseMapper || !isFunction(this._responseMapper))
         {
-            this._responseMapper = itm => itm;
+            this._responseMapper = itm => JSON.parse(itm.error);
         }
     }
 
-    //######################### public methods - overriden HttpInterceptor #########################
-    interceptResponse(response: Observable<any>): Observable<any>
+    //######################### public methods - implementation of HttpInterceptor #########################
+
+    /**
+     * Intercepts http request
+     * @param {HttpRequest<any>} req Request to be intercepted
+     * @param {HttpHandler} next Next middleware that can be called for next processing
+     */
+    public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
     {
-        return response.do(() => {}, (err: Response) =>
-        {
-            if(this._options.shouldHandlePredicate(err))
+        return next.handle(req)
+            .do(() => {}, (err: HttpErrorResponse) =>
             {
-                if(this._options.debug && err.status >= 500 && err.status <= 599)
+                //client error, not response from server
+                if (err.error instanceof Error)
                 {
-                    if(this._internalServerErrorService)
-                    {
-                        this._internalServerErrorService.showInternalServerError(err.text(), err.url);
-                    }
-                    
                     return;
                 }
-                
-                try
+
+                //tests error code and allows selection of codes to be processed
+                if(this._options.shouldHandlePredicate(err))
                 {
-                    var errorDetail = this._responseMapper(err.json());
-                    
-                    if(errorDetail.errors)
+                    if(this._options.debug && err.status >= 500 && err.status <= 599)
                     {
-                        errorDetail.errors.forEach(itm =>
+                        if(this._internalServerErrorService)
                         {
-                            this._notifications.error(itm);
-                        })
+                            this._internalServerErrorService.showInternalServerError(err.error, err.url);
+                        }
+                        
+                        return;
                     }
                     
-                    
-                    if(errorDetail.validationErrors)
+                    try
                     {
-                        if(this._serverValidationService && !this._options.globalValidationMessages)
+                        var errorDetail = this._responseMapper(err);
+                        
+                        if(errorDetail.errors)
                         {
-                            this._serverValidationService.addServerValidationErrors(errorDetail.validationErrors);
-                        }
-                        else
-                        {
-                            Object.keys(errorDetail.validationErrors).forEach((errorInputName: string) =>
+                            errorDetail.errors.forEach(itm =>
                             {
-                                if(isArray(errorDetail.validationErrors[errorInputName]))
+                                this._notifications.error(itm);
+                            })
+                        }
+                        
+                        if(errorDetail.validationErrors)
+                        {
+                            if(this._serverValidationService && !this._options.globalValidationMessages)
+                            {
+                                this._serverValidationService.addServerValidationErrors(errorDetail.validationErrors);
+                            }
+                            else
+                            {
+                                Object.keys(errorDetail.validationErrors).forEach((errorInputName: string) =>
                                 {
-                                    errorDetail.validationErrors[errorInputName].forEach(errorMessage => this._notifications.error(errorMessage));
-                                }
-                            });
+                                    if(isArray(errorDetail.validationErrors[errorInputName]))
+                                    {
+                                        errorDetail.validationErrors[errorInputName].forEach(errorMessage => this._notifications.error(errorMessage));
+                                    }
+                                });
+                            }
                         }
                     }
+                    catch(error)
+                    {
+                        this._notifications.error(`Request '${err.url}' ended with error code: ${err.status}`);
+                    }
                 }
-                catch(error)
-                {
-                    this._notifications.error(`Request '${err.url}' ended with error code: ${err.status}`);
-                }
-            }
-        });
+            });
     }
 }
 

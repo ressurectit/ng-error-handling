@@ -2,7 +2,7 @@
     "compilerOptions":
     {
         "target": "es5",
-        "module": "es2015",
+        "module": "esnext",
         "sourceMap": false,
         "declaration": true,
         "emitDecoratorMetadata": true,
@@ -12,7 +12,8 @@
         "outDir": "dist",
         "lib": 
         [
-            "es6", "dom"
+            "es2016", 
+            "dom"
         ],
         "types": 
         [
@@ -22,11 +23,21 @@
         "typeRoots": 
         [
             "node_modules/@anglr/types"
+        ],
+        "plugins": 
+        [
+            {
+                "name": "@angular/language-service"
+            }
         ]
     },
     "exclude": 
     [
-        "node_modules"
+        "node_modules",
+        "dist",
+        "testing",
+        "*.spec.ts",
+        "karma-test-shim.ts"
     ],
     "angularCompilerOptions": 
     {

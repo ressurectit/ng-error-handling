@@ -1,24 +1,26 @@
 {
     "name": "@anglr/error-handling",
-    "version": "3.0.1",
+    "version": "4.0.0-beta.0",
     "description": "Angular module used for handling http api error handling",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
-    "scripts":
-    {
+    "scripts": {
         "build": "npm run ngc",
-        "clean": "rimraf dist",
+        "postbuild": "copyfiles -u 2 dist/src/**/*.* dist && copyfiles -u 2 dist/testing/**/*.* testing && rimraf dist/src dist/dist dist/node_modules dist/testing",
+        "clean": "rimraf dist testing tests",
         "clean:deps": "rimraf node_modules",
         "clean:all": "npm run clean && npm run clean:deps",
         "ngc": "ngc",
-        "prepublish": "npm run bundle:package",
+        "prepublishOnly": "npm run bundle",
         "postpublish": "npm run clean",
         "republish": "npm publish --force",
-        "bundle": "webpack",
-        "bundle:min": "webpack --env.minify",
-        "bundle:package": "npm run clean && npm run build && npm run bundle && npm run bundle:min",
+        "bundle": "npm run clean && npm run build",
         "deploy:stable": "npp -b",
-        "deploy:next": "npp -p -b -s \"beta\" -t \"next\""
+        "deploy:next": "npp -p -b -s \"beta\" -t \"next\"",
+        "deploy:stable:local": "npp -b --registry http://local:4873",
+        "deploy:next:local": "npp -p -b -s \"beta\" -t \"next\" --registry http://local:4873",
+        "pretest": "webpack",
+        "test": "karma start karma.conf.js"
     },
     "keywords": [
         "angular",
@@ -28,35 +30,50 @@
     ],
     "author": "kukjevov",
     "license": "MIT",
-    "dependencies":
-    {
-        "@angular/core": "^4.0.0",
-        "@angular/common": "^4.0.0",
-        "@angular/http": "^4.0.0",
-        "@angular/platform-browser": "^4.0.0",
-        "@angular/forms": "^4.0.0",
-        "core-js": "~2.4.1",
-        "zone.js": "^0.8.5",
-        "rxjs": "^5.2.0",
-        "@anglr/common": "^3.0.0",
-        "@anglr/notifications": "^3.0.0",
-        "@anglr/http-extensions": "^3.0.0"
+    "dependencies": {
+        "@angular/core": "^4.4.0",
+        "@angular/common": "^4.4.0",
+        "@angular/platform-browser": "^4.4.0",
+        "@angular/forms": "^4.4.0",
+        "core-js": "~2.5.1",
+        "zone.js": "^0.8.18",
+        "rxjs": "^5.4.3",
+        "@anglr/common": "^3.0.11",
+        "@anglr/notifications": "^3.0.0"
     },
-    "peerDependencies":
-    {
+    "peerDependencies": {
         "jquery": "~2.2.1",
         "bootstrap": "~3.3.7",
         "html2canvas": "~0.5.0-beta4"
     },
-    "devDependencies":
-    {
+    "devDependencies": {
         "@types/jquery": "~2.0.40",
-        "@anglr/types": "1.1.0",
-        "@angular/compiler-cli": "^4.0.0",
-        "@angular/compiler": "^4.0.0",
-        "rimraf": "~2.6.1",
-        "typescript": "2.2.1",
-        "webpack": "2.3.2",
+        "@types/jasmine": "~2.6.0",
+        "@anglr/types": "1.1.8",
+        "@angular/compiler-cli": "^4.4.0",
+        "@angular/compiler": "^4.4.0",
+        "@angular/language-service": "^4.4.0",
+        "@angular/platform-browser-dynamic": "^4.4.0",
+        "phantomjs-prebuilt": "~2.1.15",
+        "karma-cli": "~1.0.1",
+        "karma": "~1.7.1",
+        "karma-jasmine": "~1.1.0",
+        "karma-phantomjs-launcher": "~1.0.4",
+        "karma-chrome-launcher": "~2.2.0",
+        "karma-webpack": "~2.0.5",
+        "karma-jasmine-html-reporter": "~0.2.2",
+        "jasmine": "~2.8.0",
+        "awesome-typescript-loader": "~3.2.3",
+        "angular2-template-loader": "0.6.2",
+        "raw-loader": "~0.5.1",
+        "sass-loader": "~6.0.6",
+        "css-loader": "~0.28.7",
+        "file-loader": "~1.1.5",
+        "style-loader": "~0.19.0",
+        "rimraf": "~2.6.2",
+        "copyfiles": "~1.2.0",
+        "typescript": "2.5.3",
+        "webpack": "3.6.0",
         "npm-publish-package": "~1.2.0"
     }
 }

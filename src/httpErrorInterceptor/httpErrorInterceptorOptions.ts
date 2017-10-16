@@ -1,5 +1,5 @@
+import {HttpErrorResponse} from '@angular/common/http';
 import {isPresent} from '@anglr/common';
-import {Response} from '@angular/http';
 
 /**
  * Options for HttpErrorInterceptor
@@ -21,7 +21,7 @@ export class HttpErrorInterceptorOptions
     /**
      * Predicate that is used for testing whether response should be handled by HttpErrorInterceptor
      */
-    public shouldHandlePredicate: (response: Response) => boolean = response => response.status == 400 || response.status > 404;
+    public shouldHandlePredicate: (response: HttpErrorResponse) => boolean = response => response.status == 400 || response.status > 404;
     
     //######################### constructor #########################
     
@@ -30,9 +30,9 @@ export class HttpErrorInterceptorOptions
      * Creates instance of HttpErrorInterceptorOptions
      * @param  {boolean} debug Indication whether run this interceptor in debug mode
      * @param  {boolean} globalValidationMessages Indication whether display validation messages globally
-     * @param  {(response: Response) => boolean} shouldHandlePredicate Predicate that is used for testing whether response should be handled by HttpErrorInterceptor
+     * @param  {(response: HttpErrorResponse) => boolean} shouldHandlePredicate Predicate that is used for testing whether response should be handled by HttpErrorInterceptor
      */
-    constructor(debug?: boolean, globalValidationMessages?: boolean, shouldHandlePredicate?: (response: Response) => boolean)
+    constructor(debug?: boolean, globalValidationMessages?: boolean, shouldHandlePredicate?: (response: HttpErrorResponse) => boolean)
     {
         if(isPresent(debug))
         {
