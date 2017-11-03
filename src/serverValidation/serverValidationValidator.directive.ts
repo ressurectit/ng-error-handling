@@ -1,11 +1,8 @@
 import {NG_VALIDATORS,
-        AbstractControl, 
         Validator} from '@angular/forms';
 import {Attribute,
         ExistingProvider,
         forwardRef,
-        TemplateRef,
-        ViewContainerRef,
         Directive} from '@angular/core';
 import {ServerValidationService} from './serverValidation.service';
 
@@ -47,11 +44,11 @@ export class ServerValidationValidatorDirective implements Validator
      * @param  {Control} control Control that is being validated
      * @returns {[key: string]: any} validation results
      */
-    validate(control: AbstractControl): {[key: string]: any}
+    validate(): {[key: string]: any}
     {
         if(this._serverValidationService.serverValidations[this._serverValidation])
         {
-            var result = {};
+            var result: {[key: string]: any} = {};
             result[SERVER_VALIDATIONS] = this._serverValidationService.serverValidations[this._serverValidation];
 
             return result;

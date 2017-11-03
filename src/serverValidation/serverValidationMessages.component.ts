@@ -1,6 +1,5 @@
-import {AsyncPipe} from '@angular/common';
 import {NgControl} from '@angular/forms';
-import {Component, TemplateRef, ViewContainerRef, Input, OnInit, DoCheck, ChangeDetectorRef, KeyValueDiffers, KeyValueDiffer, ViewChild, ContentChild, AfterViewInit} from '@angular/core';
+import {Component, TemplateRef, Input, OnInit, DoCheck, KeyValueDiffers, KeyValueDiffer, ViewChild, ContentChild, AfterViewInit} from '@angular/core';
 import {SERVER_VALIDATIONS} from './serverValidationValidator.directive';
 import {Subject} from 'rxjs/Subject';
 
@@ -92,8 +91,7 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, After
     /**
      * Creates instance of MessageTemplate
      */
-    constructor(private _changeDetector: ChangeDetectorRef,
-                private _differs: KeyValueDiffers)
+    constructor(private _differs: KeyValueDiffers)
     {
     }
 

@@ -1,4 +1,4 @@
-import {Directive, Optional, OnDestroy} from '@angular/core';
+import {Directive, OnDestroy} from '@angular/core';
 import {ControlContainer, FormGroup, FormArray} from '@angular/forms';
 import {ServerValidationService} from './serverValidation.service';
 import {Subscription} from 'rxjs/Subscription';
@@ -35,7 +35,7 @@ export class WithServerValidationsDirective implements OnDestroy
 
         this._form = <FormGroup|FormArray>form.control;
 
-        this._subscription = serviceValidationSvc.serverValidationsChanged.subscribe(changes =>
+        this._subscription = serviceValidationSvc.serverValidationsChanged.subscribe(() =>
         {
             Object.keys(this._form.controls).forEach(controlName =>
             {

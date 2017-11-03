@@ -1,4 +1,3 @@
-import {CommonModule} from '@angular/common';
 import {NgModule, ModuleWithProviders, FactoryProvider, ValueProvider} from '@angular/core';
 import {ERROR_RESPONSE_MAP_PROVIDER, HTTP_ERROR_INTERCEPTOR_PROVIDER, ResponseMapperFunction} from '../httpErrorInterceptor/httpErrorInterceptor';
 import {HttpErrorInterceptorOptions} from '../httpErrorInterceptor/httpErrorInterceptorOptions';

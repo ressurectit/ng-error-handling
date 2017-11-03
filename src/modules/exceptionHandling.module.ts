@@ -1,4 +1,3 @@
-import {CommonModule} from '@angular/common';
 import {NgModule, ModuleWithProviders, FactoryProvider, ClassProvider, Type} from '@angular/core';
 import {REPORTING_EXCEPTION_HANDLER_PROVIDER} from '../exceptionHandling/reportingExceptionHandler';
 import {ReportingExceptionHandlerOptions} from '../exceptionHandling/reportingExceptionHandlerOptions';

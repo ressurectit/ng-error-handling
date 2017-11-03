@@ -3,8 +3,7 @@ import {isPlatformBrowser} from '@angular/common';
 import {ReportingExceptionHandlerOptions} from './reportingExceptionHandlerOptions';
 import {ReportingExceptionHandlerService} from './reportingExceptionHandler.service';
 import {GlobalNotificationsService} from '@anglr/notifications';
-import {isArray, isString, isFunction, isBlank, isPresent} from '@anglr/common';
-import {ErrorWithStack} from './errorWithStack';
+import {isBlank, isPresent} from '@anglr/common';
 import {AngularError} from './angularError';
 import * as html2canvas from 'html2canvas';
 import * as $ from 'jquery';
@@ -133,7 +132,7 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
         //TODO - dorobit podporu pre nastavenie selected pre zvolenu polozku, alebo to otestovat pre SELECT
         var processedHtml = $("html").clone(false);
         
-        if(this._options.captureHtmlInputs)
+        if(includeForms)
         {
             $(":input", processedHtml).each(function()
             {

@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, OnDestroy} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {InternalServerErrorService, InternalServerErrorInfo} from './internalServerError.service';
 import {Subscription} from 'rxjs/Subscription';

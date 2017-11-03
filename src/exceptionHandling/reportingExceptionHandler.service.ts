@@ -19,5 +19,6 @@ export class ReportingExceptionHandlerService
      */
     public sendReport(exceptionMessage: string, exceptionStackTrace: string, pageHtml: string, pageScreenShotBase64: string)
     {
+        console.log(exceptionMessage, exceptionStackTrace, pageHtml, pageScreenShotBase64);
     }
 }
