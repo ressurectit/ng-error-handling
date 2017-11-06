@@ -1,5 +1,3 @@
-import 'rxjs/add/operator/do';
-
 export {BadRequestDetail} from './httpErrorInterceptor/badRequestDetail';
 export {HttpErrorInterceptor, HTTP_ERROR_INTERCEPTOR_PROVIDER, ERROR_RESPONSE_MAP_PROVIDER} from './httpErrorInterceptor/httpErrorInterceptor';
 export {HttpErrorInterceptorOptions} from './httpErrorInterceptor/httpErrorInterceptorOptions';

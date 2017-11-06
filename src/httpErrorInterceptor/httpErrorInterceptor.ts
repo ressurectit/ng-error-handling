@@ -3,6 +3,7 @@ import {HttpInterceptor, HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpRequest,
 import {GlobalNotificationsService} from '@anglr/notifications';
 import {isFunction, isArray} from '@anglr/common';
 import {Observable} from 'rxjs/Observable';
+import {tap} from 'rxjs/operators';
 
 import {HttpErrorInterceptorOptions} from './httpErrorInterceptorOptions';
 import {InternalServerErrorService} from '../internalServerError/internalServerError.service';
@@ -53,7 +54,7 @@ export class HttpErrorInterceptor implements HttpInterceptor
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
     {
         return next.handle(req)
-            .do(() => {}, (err: HttpErrorResponse) =>
+            .pipe(tap(() => {}, (err: HttpErrorResponse) =>
             {
                 //client error, not response from server
                 if (err.error instanceof Error)
@@ -109,7 +110,7 @@ export class HttpErrorInterceptor implements HttpInterceptor
                         this._notifications.error(`Request '${err.url}' ended with error code: ${err.status}`);
                     }
                 }
-            });
+            }));
     }
 }
 
