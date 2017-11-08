@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 4.0.2
+ - added compiled outputs for Angular JIT
+
 ## Version 4.0.1
  - fixed rxjs operators, now using pipe
 
