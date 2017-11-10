@@ -12,13 +12,12 @@ export class ReportingExceptionHandlerService
     
     /**
      * Sends report to server for loging purposes 
-     * @param  {string} exceptionMessage Message of occured exception
-     * @param  {string} exceptionStackTrace Stack trace to occured exception
-     * @param  {string} pageHtml Html of captured page state in time of exception
-     * @param  {string} pageScreenShotBase64 Screenshot of captured page in time of exception as of base64 string
+     * @param  {string} _exceptionMessage Message of occured exception
+     * @param  {string} _exceptionStackTrace Stack trace to occured exception
+     * @param  {string} _pageHtml Html of captured page state in time of exception
+     * @param  {string} _pageScreenShotBase64 Screenshot of captured page in time of exception as of base64 string
      */
-    public sendReport(exceptionMessage: string, exceptionStackTrace: string, pageHtml: string, pageScreenShotBase64: string)
+    public sendReport(_exceptionMessage: string, _exceptionStackTrace: string, _pageHtml: string, _pageScreenShotBase64: string)
     {
-        console.log(exceptionMessage, exceptionStackTrace, pageHtml, pageScreenShotBase64);
     }
 }
