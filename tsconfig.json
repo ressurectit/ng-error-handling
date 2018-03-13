@@ -4,7 +4,7 @@
         "target": "es5",
         "module": "esnext",
         "moduleResolution": "node",
-        "sourceMap": false,
+        "sourceMap": true,
         "declaration": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
@@ -22,10 +22,13 @@
         "types": 
         [
             "jquery",
-            "html2canvas"
+            "html2canvas",
+            "scrollmagic",
+            "sourcemapped-stacktrace"
         ],
         "typeRoots": 
         [
+            "node_modules/@types",
             "node_modules/@anglr/types"
         ],
         "plugins": 

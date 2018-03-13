@@ -5,6 +5,7 @@ import {ReportingExceptionHandlerService} from './reportingExceptionHandler.serv
 import {GlobalNotificationsService} from '@anglr/notifications';
 import {isBlank, isPresent} from '@anglr/common';
 import {AngularError} from './angularError';
+import * as sourceMap from 'sourcemapped-stacktrace';
 import * as html2canvas from 'html2canvas';
 import * as $ from 'jquery';
 
@@ -46,12 +47,13 @@ export class ReportingExceptionHandler implements ErrorHandler
      * Method called when exception occurs
      * @param  {AngularError} error Occured exception object
      */
-    public handleError(error: AngularError): void
+    public async handleError(error: AngularError)
     {
         error = error || <any>{};
 
-        var message = error.message || (error.toString ? error.toString() : `${error}`);
-        var stack = error.stack || "";
+        let message = error.message || (error.toString ? error.toString() : `${error}`);
+        let originalStack = error.stack || "";
+        let stack = await this._fromSourceMap(originalStack);
         
         if(this._globalNotifications && isPresent(message))
         {
@@ -60,8 +62,13 @@ export class ReportingExceptionHandler implements ErrorHandler
 
         if(error.rejection)
         {
-            stack += `--------------------------PROMISE STACK--------------------------------
+            originalStack += `--------------------------PROMISE STACK--------------------------------
 ${error.rejection.stack}`;
+
+            let rejectionStack = await this._fromSourceMap(error.rejection.stack);
+
+            stack += `--------------------------PROMISE STACK--------------------------------
+${rejectionStack}`;
         }
         
         if(this._options.enableServerLogging && this._isBrowser)
@@ -72,26 +79,23 @@ ${error.rejection.stack}`;
             {
                 html = this._takeHtmlSnapshot(this._options.captureHtmlInputs);
             }
+
+            let screenshot = "";
             
             if(this._options.captureScreenImage)
             {
-                this._takeScreenShot()
-                    .then(screenshot =>
-                    {
-                        this._loggingService.sendReport(message, stack, html, screenshot);
-                    });
+                screenshot = await this._takeScreenShot();
             }
-            else
-            {
-                this._loggingService.sendReport(message, stack, html, "");
-            }
+                
+            this._loggingService.sendReport(message, stack, html, screenshot);
         }
         
         if(this._options.debugMode)
         {
             console.error(`
 MESSAGE: ${message}
-STACKTRACE: ${stack}`, error);
+STACKTRACE: ${stack}
+ORIGINAL STACKTRACE: ${originalStack}}`, error);
 
             if(error.rejection)
             {
@@ -156,6 +160,18 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
         }
         
         return `<html>${processedHtml.html()}</html>`;
+    }
+
+    /**
+     * Converts stacktrace using source map
+     * @param {string|string[]} stack Current stacktrace
+     */
+    private _fromSourceMap(stack: string|string[]): Promise<string>
+    {
+        return new Promise(resolve =>
+        {
+            sourceMap.mapStackTrace(stack, sourceStack => resolve(sourceStack.join("\n")), {cacheGlobally: true});
+        });
     }
 }
 
