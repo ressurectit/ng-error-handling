@@ -1,7 +1,7 @@
 import {Component, OnDestroy} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {InternalServerErrorService, InternalServerErrorInfo} from './internalServerError.service';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 
 /**
  * Displays internal server errors in bootstrap modal dialog

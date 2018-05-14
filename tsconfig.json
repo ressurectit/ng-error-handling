@@ -16,14 +16,13 @@
         "outDir": "dist",
         "lib": 
         [
-            "es2015", 
+            "es2016", 
             "dom"
         ],
         "types": 
         [
             "jquery",
             "html2canvas",
-            "scrollmagic",
             "sourcemapped-stacktrace"
         ],
         "typeRoots": 
@@ -42,14 +41,10 @@
     [
         "node_modules",
         "dist",
-        "testing",
-        "*.spec.ts",
-        "karma-test-shim.ts"
+        "testing"
     ],
     "angularCompilerOptions": 
     {
-        "skipMetadataEmit": false,
-        "strictMetadataEmit": false,
         "fullTemplateTypeCheck": true,
         "preserveWhitespaces": false
     }

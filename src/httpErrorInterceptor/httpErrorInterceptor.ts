@@ -2,7 +2,7 @@ import {Injectable, Inject, Optional, ClassProvider, InjectionToken} from '@angu
 import {HttpInterceptor, HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpRequest, HttpErrorResponse} from '@angular/common/http';
 import {GlobalNotificationsService} from '@anglr/notifications';
 import {isFunction, isArray} from '@anglr/common';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 
 import {HttpErrorInterceptorOptions} from './httpErrorInterceptorOptions';

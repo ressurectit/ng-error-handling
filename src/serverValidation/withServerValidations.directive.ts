@@ -1,7 +1,8 @@
 import {Directive, OnDestroy} from '@angular/core';
 import {ControlContainer, FormGroup, FormArray} from '@angular/forms';
+import {Subscription} from 'rxjs';
+
 import {ServerValidationService} from './serverValidation.service';
-import {Subscription} from 'rxjs/Subscription';
 
 /**
  * Directive that runs form validations when server validation has changed

@@ -138,7 +138,7 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
         
         if(includeForms)
         {
-            $(":input", processedHtml).each(function()
+            $(":input", processedHtml).each(function(this: any)
             {
                 var $this = $(this);
 
@@ -153,7 +153,7 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
                     }
                     else
                     {
-                        $this.attr("value", $this.val());
+                        $this.attr("value", <any>$this.val());
                     }
                 }
             });
