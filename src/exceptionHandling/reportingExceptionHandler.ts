@@ -168,10 +168,15 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
      */
     private _fromSourceMap(stack: string|string[]): Promise<string>
     {
-        return new Promise(resolve =>
+        if(this._isBrowser)
         {
-            sourceMap.mapStackTrace(stack, sourceStack => resolve(sourceStack.join("\n")), {cacheGlobally: true});
-        });
+            return new Promise(resolve =>
+            {
+                sourceMap.mapStackTrace(stack, sourceStack => resolve(sourceStack.join("\n")), {cacheGlobally: true});
+            });
+        }
+
+        return Promise.resolve(stack as string);
     }
 }
 

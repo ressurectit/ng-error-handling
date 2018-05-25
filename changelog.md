@@ -1,5 +1,21 @@
 # Changelog
 
+## Version 5.0.0-beta.2
+ - `@anglr/error-handling` is now marked as *sideEffects* free
+ - removed `forRoot` methods from `ServerValidationsModule`
+ - removed `forRoot` methods from `InternalServerErrorModule`
+ - removed `ExceptionHandlingModule`
+ - removed `HttpErrorInterceptorModule`
+ - service `ServerValidationService` is made *tree-shakeable*
+ - service `InternalServerErrorService` is made *tree-shakeable*
+ - provider `REPORTING_EXCEPTION_HANDLER_PROVIDER` must be provided explicitly
+ - provider `HTTP_ERROR_INTERCEPTOR_PROVIDER` must be provided explicitly
+ - provider `ERROR_RESPONSE_MAP_PROVIDER` must be provided explicitly
+ - service `ReportingExceptionHandlerService` must be provided explicitly
+ - options factory `ReportingExceptionHandlerOptions` must be provided explicitly
+ - options factory `HttpErrorInterceptorOptions` must be provided explicitly
+ - *sourceMap* library should be ignored during SSR
+
 ## Version 5.0.0-beta.1
  - aktualizácia balíčkov `Angular` na `6`
  - aktualizácia `Webpack` na verziu `4`

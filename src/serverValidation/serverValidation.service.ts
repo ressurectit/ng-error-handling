@@ -5,7 +5,7 @@ import {Subject, Observable} from 'rxjs';
 /**
  * Service that is used for distribution of server validations
  */
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ServerValidationService
 {
     //######################### private fields #########################

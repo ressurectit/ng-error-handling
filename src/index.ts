@@ -12,7 +12,5 @@ export {ReportingExceptionHandlerOptions} from './exceptionHandling/reportingExc
 export {WithServerValidationsDirective} from './serverValidation/withServerValidations.directive';
 export {AngularError} from './exceptionHandling/angularError';
 export {ErrorWithStack} from './exceptionHandling/errorWithStack';
-export {ExceptionHandlingModule} from './modules/exceptionHandling.module';
-export {HttpErrorInterceptorModule} from './modules/httpErrorInterceptor.module';
 export {InternalServerErrorModule} from './modules/internalServerError.module';
 export {ServerValidationsModule} from './modules/serverValidations.module';

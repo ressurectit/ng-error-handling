@@ -26,7 +26,7 @@ export class InternalServerErrorInfo
 /**
  * Service that is used for displaying internal server errors in InternalServerError component
  */
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class InternalServerErrorService
 {
     //######################### private fields #########################
