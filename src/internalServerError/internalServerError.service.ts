@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
+import {isString} from '@anglr/common';
 import {Observable, Subject} from 'rxjs';
 
 /**
@@ -60,6 +61,11 @@ export class InternalServerErrorService
      */
     public showInternalServerError(errorHtml: string, requestUrl: string)
     {
+        if(!isString(errorHtml))
+        {
+            errorHtml = JSON.stringify(errorHtml);
+        }
+
         this._internalServerErrorOccuredSubject.next(
         {
             errorHtml: errorHtml,

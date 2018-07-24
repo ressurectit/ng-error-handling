@@ -14,3 +14,5 @@ export {AngularError} from './exceptionHandling/angularError';
 export {ErrorWithStack} from './exceptionHandling/errorWithStack';
 export {InternalServerErrorModule} from './modules/internalServerError.module';
 export {ServerValidationsModule} from './modules/serverValidations.module';
+export * from './httpGatewayTimeoutInterceptor';
+export * from './noConnectionInterceptor';

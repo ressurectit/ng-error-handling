@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 5.0.1
+ - added `HttpGatewayTimeoutInterceptor` and `HttpGatewayTimeoutInterceptorOptions` for handling 504 http status code
+ - added `NoConnectionInterceptor` and `NoConnectionInterceptorOptions` for handling 0 http status code
+ - updated `InternalServerErrorService` that should correctly serialize non `string` internal server error responses
+
 ## Version 5.0.0
  - stabilized for angular v6
 
