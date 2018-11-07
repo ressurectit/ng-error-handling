@@ -16,3 +16,4 @@ export {InternalServerErrorModule} from './modules/internalServerError.module';
 export {ServerValidationsModule} from './modules/serverValidations.module';
 export * from './httpGatewayTimeoutInterceptor';
 export * from './noConnectionInterceptor';
+export * from './serviceUnavailableInterceptor';

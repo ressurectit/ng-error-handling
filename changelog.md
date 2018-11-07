@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 5.0.2
+ - added `ServiceUnavailableInterceptor` and `ServiceUnavailableInterceptorOptions` for handling 503 http status code
+ - updated `NoConnectionInterceptorOptions` default `text` property value 
+
 ## Version 5.0.1
  - added `HttpGatewayTimeoutInterceptor` and `HttpGatewayTimeoutInterceptorOptions` for handling 504 http status code
  - added `NoConnectionInterceptor` and `NoConnectionInterceptorOptions` for handling 0 http status code

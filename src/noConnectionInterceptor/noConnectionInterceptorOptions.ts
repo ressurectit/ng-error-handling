@@ -16,7 +16,7 @@ export class NoConnectionInterceptorOptions
     /**
      * Text displayed
      */
-    text?: string = "Server is offline. You will be redirected to Asseco Centra Europe homepage.";
+    text?: string = "Server is offline. Try again later.";
 
     /**
      * Action called when 0 status code received
