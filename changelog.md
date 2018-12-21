@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 5.0.3
+ - fixed `ReportingExceptionHandler` when obtaining stack, if stack was not defined
+
 ## Version 5.0.2
  - added `ServiceUnavailableInterceptor` and `ServiceUnavailableInterceptorOptions` for handling 503 http status code
  - updated `NoConnectionInterceptorOptions` default `text` property value 

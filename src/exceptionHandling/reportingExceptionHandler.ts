@@ -168,7 +168,7 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
      */
     private _fromSourceMap(stack: string|string[]): Promise<string>
     {
-        if(this._isBrowser)
+        if(this._isBrowser && !!stack)
         {
             return new Promise(resolve =>
             {
