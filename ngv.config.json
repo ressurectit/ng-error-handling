@@ -1,7 +1,7 @@
 {
     "buildNumber": -1,
     "tagPrefix": "v",
-    "ignoreBranchPrefix": "[a-z]+/|[a-z]+-\\d+/|[a-z]-[a-z]+-\\d+/",
+    "ignoreBranchPrefix": "[a-z]+/|(?:[a-z]+-)+\\d+/",
     "pre": true,
     "suffix": "beta"
 }

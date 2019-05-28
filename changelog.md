@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 6.0.0-beta
+
+- Angular IVY ready (APF compliant package)
+- added support for ES2015 compilation
+
 ## Version 5.0.3
  - fixed `ReportingExceptionHandler` when obtaining stack, if stack was not defined
 
