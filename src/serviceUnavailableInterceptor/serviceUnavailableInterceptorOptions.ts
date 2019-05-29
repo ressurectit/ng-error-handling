@@ -1,5 +1,5 @@
 import {Injector} from "@angular/core";
-import {isPresent} from "@anglr/common";
+import {isPresent} from "@jscrpt/common";
 import {GlobalNotificationsService} from "@anglr/notifications";
 import {Observer} from "rxjs";
 
@@ -41,8 +41,8 @@ export class ServiceUnavailableInterceptorOptions
 
     /**
      * Creates instance of ServiceUnavailableInterceptorOptions
-     * @param  {string} text Text displayed
-     * @param  {HttpGatewayTimeoutAction} action Action called when 503 status code received
+     * @param text Text displayed
+     * @param action Action called when 503 status code received
      **/
     constructor(text?: string, action?: ServiceUnavailableAction)
     {

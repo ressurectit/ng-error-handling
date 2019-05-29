@@ -1,13 +1,14 @@
 import {ClassProvider, Optional, ErrorHandler, Injectable, Inject, PLATFORM_ID} from '@angular/core';
 import {isPlatformBrowser} from '@angular/common';
-import {ReportingExceptionHandlerOptions} from './reportingExceptionHandlerOptions';
-import {ReportingExceptionHandlerService} from './reportingExceptionHandler.service';
+import {isBlank, isPresent} from '@jscrpt/common';
 import {GlobalNotificationsService} from '@anglr/notifications';
-import {isBlank, isPresent} from '@anglr/common';
-import {AngularError} from './angularError';
 import * as sourceMap from 'sourcemapped-stacktrace';
 import * as html2canvas from 'html2canvas';
 import * as $ from 'jquery';
+
+import {ReportingExceptionHandlerOptions} from './reportingExceptionHandlerOptions';
+import {ReportingExceptionHandlerService} from './reportingExceptionHandler.service';
+import {AngularError} from './angularError';
 
 /**
  * Exception handler that is capable of reporting and logging occured exceptions
@@ -45,7 +46,7 @@ export class ReportingExceptionHandler implements ErrorHandler
     
     /**
      * Method called when exception occurs
-     * @param  {AngularError} error Occured exception object
+     * @param error Occured exception object
      */
     public async handleError(error: AngularError)
     {
@@ -129,7 +130,7 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
     
     /**
      * Creates snapshot of current html
-     * @param  {boolean} includeForms Indication whether include forms data in captured html
+     * @param includeForms Indication whether include forms data in captured html
      */
     private _takeHtmlSnapshot(includeForms: boolean): string
     {
@@ -164,7 +165,7 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
 
     /**
      * Converts stacktrace using source map
-     * @param {string|string[]} stack Current stacktrace
+     * @param stack Current stacktrace
      */
     private _fromSourceMap(stack: string|string[]): Promise<string>
     {

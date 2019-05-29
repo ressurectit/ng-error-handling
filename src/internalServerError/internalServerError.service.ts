@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
-import {isString} from '@anglr/common';
+import {isString} from '@jscrpt/common';
 import {Observable, Subject} from 'rxjs';
 
 /**
@@ -56,8 +56,8 @@ export class InternalServerErrorService
     
     /**
      * Displays internal server error as dialog 
-     * @param  {string} errorHtml Html that will be displayed in dialog
-     * @param  {string} requestUrl Url of request that ended with internal server error
+     * @param errorHtml Html that will be displayed in dialog
+     * @param requestUrl Url of request that ended with internal server error
      */
     public showInternalServerError(errorHtml: string, requestUrl: string)
     {

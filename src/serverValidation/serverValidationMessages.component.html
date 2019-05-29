@@ -1,0 +1,3 @@
+<ng-template #viewTemplate let-message><div class="alert alert-danger {{itemCssClass}}">{{message}}</div></ng-template>
+<ng-template ngFor [ngForTemplate]="itemTemplate | async" [ngForOf]="errors"></ng-template>
+<ng-content></ng-content>

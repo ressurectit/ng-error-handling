@@ -1,6 +1,6 @@
 import {Injector} from "@angular/core";
 import {GlobalNotificationsService} from "@anglr/notifications";
-import {isPresent} from "@anglr/common";
+import {isPresent} from "@jscrpt/common";
 import {Observer} from "rxjs";
 
 /**
@@ -41,8 +41,8 @@ export class NoConnectionInterceptorOptions
 
     /**
      * Creates instance of NoConnectionInterceptorOptions
-     * @param  {string} text Text displayed
-     * @param  {NoConnectionAction} action Action called when 0 status code received
+     * @param text Text displayed
+     * @param action Action called when 0 status code received
      **/
     constructor(text?: string, action?: NoConnectionAction)
     {

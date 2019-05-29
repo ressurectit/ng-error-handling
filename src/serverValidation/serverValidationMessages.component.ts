@@ -1,5 +1,5 @@
-import {NgControl} from '@angular/forms';
 import {Component, TemplateRef, Input, OnInit, DoCheck, KeyValueDiffers, KeyValueDiffer, ViewChild, ContentChild, AfterViewInit} from '@angular/core';
+import {NgControl} from '@angular/forms';
 import {Subject} from 'rxjs';
 
 import {SERVER_VALIDATIONS} from './serverValidationValidator.directive';
@@ -18,9 +18,7 @@ export interface ImplicitString
 @Component(
 {
     selector: "[serverValidations]",
-    template: `<ng-template #viewTemplate let-message><div class="alert alert-danger {{itemCssClass}}">{{message}}</div></ng-template>
-               <ng-template ngFor [ngForTemplate]="itemTemplate | async" [ngForOf]="errors"></ng-template>
-               <ng-content></ng-content>`
+    templateUrl: 'serverValidationMessages.component.html'
 })
 export class ServerValidationMessagesComponent implements OnInit, DoCheck, AfterViewInit
 {
@@ -51,13 +49,13 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, After
     /**
      * Item render template from content
      */
-    @ContentChild(TemplateRef)
+    @ContentChild(TemplateRef, {static: false})
     public contentTemplate: TemplateRef<ImplicitString>;
 
     /**
      * Item render template from view
      */
-    @ViewChild("viewTemplate")
+    @ViewChild("viewTemplate", {static: false})
     public viewTemplate: TemplateRef<ImplicitString>;
 
 

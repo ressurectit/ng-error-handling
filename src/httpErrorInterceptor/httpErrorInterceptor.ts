@@ -1,7 +1,7 @@
 import {Injectable, Inject, Optional, ClassProvider, InjectionToken} from '@angular/core';
 import {HttpInterceptor, HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpRequest, HttpErrorResponse} from '@angular/common/http';
 import {GlobalNotificationsService} from '@anglr/notifications';
-import {isFunction, isArray} from '@anglr/common';
+import {isFunction, isArray} from '@jscrpt/common';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 
@@ -48,8 +48,8 @@ export class HttpErrorInterceptor implements HttpInterceptor
 
     /**
      * Intercepts http request
-     * @param {HttpRequest<any>} req Request to be intercepted
-     * @param {HttpHandler} next Next middleware that can be called for next processing
+     * @param req Request to be intercepted
+     * @param next Next middleware that can be called for next processing
      */
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
     {

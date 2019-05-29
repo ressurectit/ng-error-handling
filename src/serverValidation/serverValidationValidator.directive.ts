@@ -1,9 +1,6 @@
-import {NG_VALIDATORS,
-        Validator} from '@angular/forms';
-import {Attribute,
-        ExistingProvider,
-        forwardRef,
-        Directive} from '@angular/core';
+import {Attribute, ExistingProvider, forwardRef, Directive} from '@angular/core';
+import {NG_VALIDATORS, Validator} from '@angular/forms';
+
 import {ServerValidationService} from './serverValidation.service';
 
 /**
@@ -41,8 +38,8 @@ export class ServerValidationValidatorDirective implements Validator
 
     /**
      * Validates input and returns validation result
-     * @param  {Control} control Control that is being validated
-     * @returns {[key: string]: any} validation results
+     * @param control Control that is being validated
+     * @returns validation results
      */
     validate(): {[key: string]: any}
     {

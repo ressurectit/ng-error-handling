@@ -1,7 +1,8 @@
 import {Component, OnDestroy} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
-import {InternalServerErrorService, InternalServerErrorInfo} from './internalServerError.service';
 import {Subscription} from 'rxjs';
+
+import {InternalServerErrorService, InternalServerErrorInfo} from './internalServerError.service';
 
 /**
  * Displays internal server errors in bootstrap modal dialog
@@ -47,44 +48,7 @@ import {Subscription} from 'rxjs';
             100% { opacity: 1; }
         }
     `],
-    template:
-   `<div class="internal-server-error-notification">
-        <div class="notification" data-toggle="collapse" data-target="#internalServerErrorsList" *ngIf="errorsHtml.length > 0">!</div>
-
-        <div id="internalServerErrorsList" class="collapse">
-            <div *ngFor="let error of errorsHtml">
-                <span style="padding-left: 8px;">{{error.requestUrl}}</span>
-                <button type="button" class="btn btn-link" data-toggle="modal" [attr.data-target]="'#myModal' + error.id">show</button>
-                <button type="button" class="btn btn-link" title="Remove report" (click)="removeReport(error)">
-                    <span class="glyphicon glyphicon-remove" style="color: #FF0000;"></span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div *ngFor="let error of errorsHtml">
-        <div class="modal fade" [id]="'myModal' + error.id" tabindex="-1">
-            <div class="modal-dialog" style="width: 80%;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Internal server error - {{error.requestUrl}}</h4>
-                    </div>
-
-                    <div class="modal-body">
-                        <iframe style="height: 450px; width: 100%; border: 0 none;" [src]="error.errorHtml"></iframe>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="removeReport(error)">
-                            <span class="glyphicon glyphicon-trash"></span>
-                            <span>Delete report</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>`
+    templateUrl: 'internalServerError.component.html'
 })
 export class InternalServerErrorComponent implements OnDestroy
 {
@@ -115,6 +79,11 @@ export class InternalServerErrorComponent implements OnDestroy
     }
 
     //######################### public methods #########################
+    
+    /**
+     * Removes displayed report
+     * @param itm Report to be removed
+     */
     public removeReport(itm: InternalServerErrorInfo)
     {
         var index = this.errorsHtml.indexOf(itm);

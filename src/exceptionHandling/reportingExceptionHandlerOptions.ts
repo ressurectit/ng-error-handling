@@ -1,4 +1,4 @@
-import {isPresent} from '@anglr/common';
+import {isPresent} from '@jscrpt/common';
 
 /**
  * Options that are used within ReportingExceptionHandler
@@ -41,12 +41,12 @@ export class ReportingExceptionHandlerOptions
 
     /**
      * Creates instance of ReportingExceptionHandlerOptions
-     * @param  {boolean} debugMode Indication whether should logger log errors also in browser console
-     * @param  {boolean} showAlsoAlert Indication that also alert should show error message
-     * @param  {boolean} captureScreenImage Indication that screenshot should be taken when error occurs
-     * @param  {boolean} captureScreenHtml Indication that current html snapshot should be captured
-     * @param  {boolean} captureHtmlInputs Indication that current html inputs state should be transformed into html
-     * @param  {enableServerLogging} captureHtmlInputs Indication whether should be server logging enabled or not
+     * @param debugMode Indication whether should logger log errors also in browser console
+     * @param showAlsoAlert Indication that also alert should show error message
+     * @param captureScreenImage Indication that screenshot should be taken when error occurs
+     * @param captureScreenHtml Indication that current html snapshot should be captured
+     * @param captureHtmlInputs Indication that current html inputs state should be transformed into html
+     * @param captureHtmlInputs Indication whether should be server logging enabled or not
      */
     constructor(debugMode?: boolean, showAlsoAlert?: boolean, captureScreenImage?: boolean, captureScreenHtml?: boolean, captureHtmlInputs?: boolean, enableServerLogging?: boolean)
     {

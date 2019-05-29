@@ -1,5 +1,5 @@
 import {HttpErrorResponse} from '@angular/common/http';
-import {isPresent} from '@anglr/common';
+import {isPresent} from '@jscrpt/common';
 
 /**
  * Options for HttpErrorInterceptor
@@ -28,9 +28,9 @@ export class HttpErrorInterceptorOptions
     
     /**
      * Creates instance of HttpErrorInterceptorOptions
-     * @param  {boolean} debug Indication whether run this interceptor in debug mode
-     * @param  {boolean} globalValidationMessages Indication whether display validation messages globally
-     * @param  {(response: HttpErrorResponse) => boolean} shouldHandlePredicate Predicate that is used for testing whether response should be handled by HttpErrorInterceptor
+     * @param debug Indication whether run this interceptor in debug mode
+     * @param globalValidationMessages Indication whether display validation messages globally
+     * @param shouldHandlePredicate Predicate that is used for testing whether response should be handled by HttpErrorInterceptor
      */
     constructor(debug?: boolean, globalValidationMessages?: boolean, shouldHandlePredicate?: (response: HttpErrorResponse) => boolean)
     {

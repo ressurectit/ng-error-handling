@@ -27,8 +27,8 @@ export class NoConnectionInterceptor implements HttpInterceptor
 
     /**
      * Intercepts http request
-     * @param {HttpRequestIgnoredInterceptorId<any>} req Request to be intercepted
-     * @param {HttpHandler} next Next middleware that can be called for next processing
+     * @param req Request to be intercepted
+     * @param next Next middleware that can be called for next processing
      */
     public intercept(req: HttpRequestIgnoredInterceptorId<any>, next: HttpHandler): Observable<HttpEvent<any>>
     {
