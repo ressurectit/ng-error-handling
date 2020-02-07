@@ -10,8 +10,7 @@ import {InternalServerErrorService, InternalServerErrorInfo} from './internalSer
 @Component(
 {
     selector: "internal-server-error",
-    styles:
-    [`
+    styles: [`
         .internal-server-error-notification
         {
             position: absolute;
@@ -82,7 +81,7 @@ export class InternalServerErrorComponent implements OnDestroy
     
     /**
      * Removes displayed report
-     * @param itm Report to be removed
+     * @param itm - Report to be removed
      */
     public removeReport(itm: InternalServerErrorInfo)
     {

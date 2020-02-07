@@ -48,8 +48,8 @@ export class HttpErrorInterceptor implements HttpInterceptor
 
     /**
      * Intercepts http request
-     * @param req Request to be intercepted
-     * @param next Next middleware that can be called for next processing
+     * @param req - Request to be intercepted
+     * @param next - Next middleware that can be called for next processing
      */
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
     {

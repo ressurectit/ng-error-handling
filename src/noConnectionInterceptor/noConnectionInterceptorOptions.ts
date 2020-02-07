@@ -41,8 +41,8 @@ export class NoConnectionInterceptorOptions
 
     /**
      * Creates instance of NoConnectionInterceptorOptions
-     * @param text Text displayed
-     * @param action Action called when 0 status code received
+     * @param text - Text displayed
+     * @param action - Action called when 0 status code received
      **/
     constructor(text?: string, action?: NoConnectionAction)
     {

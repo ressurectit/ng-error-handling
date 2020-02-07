@@ -28,9 +28,9 @@ export class HttpErrorInterceptorOptions
     
     /**
      * Creates instance of HttpErrorInterceptorOptions
-     * @param debug Indication whether run this interceptor in debug mode
-     * @param globalValidationMessages Indication whether display validation messages globally
-     * @param shouldHandlePredicate Predicate that is used for testing whether response should be handled by HttpErrorInterceptor
+     * @param debug - Indication whether run this interceptor in debug mode
+     * @param globalValidationMessages - Indication whether display validation messages globally
+     * @param shouldHandlePredicate - Predicate that is used for testing whether response should be handled by HttpErrorInterceptor
      */
     constructor(debug?: boolean, globalValidationMessages?: boolean, shouldHandlePredicate?: (response: HttpErrorResponse) => boolean)
     {

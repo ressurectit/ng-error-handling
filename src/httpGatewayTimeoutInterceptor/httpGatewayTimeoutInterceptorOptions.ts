@@ -41,8 +41,8 @@ export class HttpGatewayTimeoutInterceptorOptions
 
     /**
      * Creates instance of HttpGatewayTimeoutInterceptorOptions
-     * @param text Text displayed
-     * @param action Action called when 504 status code received
+     * @param text - Text displayed
+     * @param action - Action called when 504 status code received
      **/
     constructor(text?: string, action?: HttpGatewayTimeoutAction)
     {

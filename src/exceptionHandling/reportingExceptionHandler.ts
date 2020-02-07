@@ -46,7 +46,7 @@ export class ReportingExceptionHandler implements ErrorHandler
     
     /**
      * Method called when exception occurs
-     * @param error Occured exception object
+     * @param error - Occured exception object
      */
     public async handleError(error: AngularError)
     {
@@ -130,7 +130,7 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
     
     /**
      * Creates snapshot of current html
-     * @param includeForms Indication whether include forms data in captured html
+     * @param includeForms - Indication whether include forms data in captured html
      */
     private _takeHtmlSnapshot(includeForms: boolean): string
     {
@@ -165,7 +165,7 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
 
     /**
      * Converts stacktrace using source map
-     * @param stack Current stacktrace
+     * @param stack - Current stacktrace
      */
     private _fromSourceMap(stack: string|string[]): Promise<string>
     {

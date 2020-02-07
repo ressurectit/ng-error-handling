@@ -41,8 +41,8 @@ export class ServiceUnavailableInterceptorOptions
 
     /**
      * Creates instance of ServiceUnavailableInterceptorOptions
-     * @param text Text displayed
-     * @param action Action called when 503 status code received
+     * @param text - Text displayed
+     * @param action - Action called when 503 status code received
      **/
     constructor(text?: string, action?: ServiceUnavailableAction)
     {

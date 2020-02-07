@@ -56,8 +56,8 @@ export class InternalServerErrorService
     
     /**
      * Displays internal server error as dialog 
-     * @param errorHtml Html that will be displayed in dialog
-     * @param requestUrl Url of request that ended with internal server error
+     * @param errorHtml - Html that will be displayed in dialog
+     * @param requestUrl - Url of request that ended with internal server error
      */
     public showInternalServerError(errorHtml: string, requestUrl: string)
     {

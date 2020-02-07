@@ -34,7 +34,7 @@ export class ServerValidationService
     
     /**
      * Adds server validation errors
-     * @param validationErrors List of validation errors
+     * @param validationErrors - List of validation errors
      */
     public addServerValidationErrors(validationErrors: {[key: string]: string[]})
     {

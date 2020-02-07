@@ -38,7 +38,7 @@ export class ServerValidationValidatorDirective implements Validator
 
     /**
      * Validates input and returns validation result
-     * @param control Control that is being validated
+     * @param control - Control that is being validated
      * @returns validation results
      */
     validate(): {[key: string]: any}

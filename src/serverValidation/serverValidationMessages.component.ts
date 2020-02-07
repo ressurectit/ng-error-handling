@@ -49,13 +49,13 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, After
     /**
      * Item render template from content
      */
-    @ContentChild(TemplateRef, {static: false})
+    @ContentChild(TemplateRef)
     public contentTemplate: TemplateRef<ImplicitString>;
 
     /**
      * Item render template from view
      */
-    @ViewChild("viewTemplate", {static: false})
+    @ViewChild("viewTemplate")
     public viewTemplate: TemplateRef<ImplicitString>;
 
 
