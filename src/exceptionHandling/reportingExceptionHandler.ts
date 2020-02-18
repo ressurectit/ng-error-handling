@@ -3,7 +3,6 @@ import {isPlatformBrowser} from '@angular/common';
 import {isBlank, isPresent} from '@jscrpt/common';
 import {GlobalNotificationsService} from '@anglr/notifications';
 import * as sourceMap from 'sourcemapped-stacktrace';
-import * as html2canvas from 'html2canvas';
 import * as $ from 'jquery';
 
 import {ReportingExceptionHandlerOptions} from './reportingExceptionHandlerOptions';
@@ -121,7 +120,7 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
     {
         return new Promise(resolve =>
         {
-            html2canvas(document.body).then(canvas => 
+            require('html2canvas')(document.body).then(canvas => 
             {
                 resolve(canvas.toDataURL().replace("data:image/png;base64,", ""));
             });

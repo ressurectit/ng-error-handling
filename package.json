@@ -68,6 +68,7 @@
         "@anglr/notifications": "^7.0.0",
         "@anglr/animations": "^7.0.0",
         "@anglr/types": "1.1.18",
+        "@types/node": "11.15.6",
         "@types/jasmine": "~2.8.7",
         "@types/jquery": "~3.3.32",
         "@angular/forms": "^9.0.0",

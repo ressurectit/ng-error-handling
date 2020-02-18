@@ -19,6 +19,7 @@
         ],
         "types": 
         [
+            "node",
             "jquery",
             "html2canvas",
             "sourcemapped-stacktrace"

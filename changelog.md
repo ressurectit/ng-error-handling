@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 7.0.1
+
+- changed way of loading `html2canvas`, enables using of lib in environments without `document`
+
 ## Version 7.0.0
 
 - updated to latest stable *Angular* 9
