@@ -15,6 +15,7 @@
         "ngc": "ngc",
         "version:placeholder": "replace-in-file /\\\"version\\\":\\s\\\".*?\\\"/g \"\\\"version\\\": \\\"0.0.0-placeholder\\\"\" package.json --isRegex",
         "version:git": "ngv -e \"replace-in-file 0.0.0-placeholder $GIT_VERSION package.json && echo $GIT_VERSION > version.bak\"",
+        "version:build": "ngv -e \"echo $GIT_VERSION > version.bak\"",
         "prepublishOnly": "npm run bundle && npm run version:placeholder && npm run version:git",
         "postpublish": "npm run doc && npm run version:placeholder && npm run clean",
         "bundle": "npm run clean && npm run build && npm run clean:duplicates",

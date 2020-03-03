@@ -12,20 +12,33 @@ cache:
   - node_modules
 
 install:
-  - cmd: echo %APPVEYOR_REPO_TAG%
-  - cmd: git checkout %APPVEYOR_REPO_BRANCH%
   - cmd: npm install --loglevel error
 
 build: off
 
 deploy_script:
   - ps: |
+      $env:NGV_BUILD_NUMBER = $env:APPVEYOR_BUILD_NUMBER
+      
       if($env:APPVEYOR_REPO_TAG -eq "true")
       {
+        $env:APPVEYOR_REPO_TAG_NAME -match "^v(\d+\.\d+)\.\d+"
+        git checkout "$($Matches[1])" -q
+
+        npm run version:build
+        Update-AppveyorBuild -Version "$(cat version.bak)"
+
+        $env:NGV_BUILD_NUMBER = -1
         npm run deploy
       }
       else
       {
+        git checkout $env:APPVEYOR_REPO_BRANCH -q
+
+        npm run version:build
+        Update-AppveyorBuild -Version "$(cat version.bak)"
+
+        $env:NGV_BUILD_NUMBER = -1
         npm run deploy:next
       }
       
