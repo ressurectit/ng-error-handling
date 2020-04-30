@@ -1,0 +1,9 @@
+  
+{
+    "name": "@anglr/error-handling-material",
+    "module": "./dist/es5/material/index.js",
+    "esm2015": "./dist/es2015/material/index.js",
+    "esm5": "./dist/es5/material/index.js",
+    "typings": "./index.d.ts",
+    "sideEffects": false
+}

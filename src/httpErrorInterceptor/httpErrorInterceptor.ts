@@ -1,6 +1,7 @@
 import {Injectable, Inject, Optional, ClassProvider, InjectionToken} from '@angular/core';
 import {HttpInterceptor, HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpRequest, HttpErrorResponse} from '@angular/common/http';
 import {GlobalNotificationsService} from '@anglr/notifications';
+import {Logger, LOGGER} from '@anglr/common';
 import {isFunction, isArray} from '@jscrpt/common';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
@@ -31,7 +32,8 @@ export class HttpErrorInterceptor implements HttpInterceptor
                 @Optional() private _internalServerErrorService: InternalServerErrorService,
                 @Optional() private _serverValidationService: ServerValidationService,
                 @Optional() @Inject(ERROR_RESPONSE_MAP_PROVIDER) private _responseMapper: ResponseMapperFunction,
-                private _notifications: GlobalNotificationsService)
+                private _notifications: GlobalNotificationsService,
+                @Inject(LOGGER) private _logger: Logger)
     {
         if(!_options)
         {
@@ -67,6 +69,8 @@ export class HttpErrorInterceptor implements HttpInterceptor
                 {
                     if(this._options.debug && err.status >= 500 && err.status <= 599)
                     {
+                        this._logger.error(`HTTP_ERROR 5xx: url: ${err.url} error:${err.error}`);
+
                         if(this._internalServerErrorService)
                         {
                             this._internalServerErrorService.showInternalServerError(err.error, err.url);
@@ -83,6 +87,8 @@ export class HttpErrorInterceptor implements HttpInterceptor
                         {
                             errorDetail.errors.forEach(itm =>
                             {
+                                this._logger.error(`HTTP_ERROR 4xx: ${itm}`);
+
                                 this._notifications.error(itm);
                             })
                         }

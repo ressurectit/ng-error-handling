@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 8.0.0 (2020-04-30)
+
+### Features
+
+- added `Logger` into `HttpErrorInterceptor`
+
 ## Version 7.0.1
 
 - changed way of loading `html2canvas`, enables using of lib in environments without `document`

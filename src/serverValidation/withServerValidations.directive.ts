@@ -52,10 +52,7 @@ export class WithServerValidationsDirective implements OnDestroy
      */
     public ngOnDestroy()
     {
-        if(this._subscription)
-        {
-            this._subscription.unsubscribe();
-            this._subscription = null;
-        }
+        this._subscription?.unsubscribe();
+        this._subscription = null;
     }
 }
