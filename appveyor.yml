@@ -35,7 +35,7 @@ deploy_script:
         Update-AppveyorBuild -Version "$(cat version.bak)"
 
         $env:NGV_BUILD_NUMBER = -1
-        npm run deploy
+        # npm run deploy
       }
       else
       {
@@ -45,7 +45,7 @@ deploy_script:
         Update-AppveyorBuild -Version "$(cat version.bak)"
 
         $env:NGV_BUILD_NUMBER = -1
-        npm run deploy:next
+        # npm run deploy:next
       }
       
   - ps: Update-AppveyorBuild -Version "$(cat version.bak)"
