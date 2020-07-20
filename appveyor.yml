@@ -1,7 +1,12 @@
 image: Visual Studio 2019
 
 environment:
-  nodejs_version: "11"
+  nodejs_version: "10"
+
+branches:
+  only:
+    - /^\d+\.\d+/
+    - /^v\d+\.\d+\.\d+/
 
 init:
   - ps: |
@@ -13,6 +18,7 @@ cache:
 
 install:
   - cmd: npm install --loglevel error
+  - cmd: npm run clean
 
 build: off
 
