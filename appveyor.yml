@@ -22,7 +22,7 @@ install:
 
 build: off
 
-before_deploy:
+build_script:
   - ps: |
       $env:NGV_BUILD_NUMBER = $env:APPVEYOR_BUILD_NUMBER
       
@@ -36,14 +36,13 @@ before_deploy:
         Update-AppveyorBuild -Version "$(cat version.bak)"
 
         $env:NGV_BUILD_NUMBER = -1
-        # npm run deploy
+        npm run deploy
 
         #release on github
         $match = [System.Text.RegularExpressions.Regex]::Match((Get-Content "./changelog.md" -Encoding UTF8 | Out-String).TrimEnd(), "## Version \d+\.\d+\.\d+ (?<date>\(\d+-\d+-\d+\))(?<content>.*?)(?:## Version|`$)", [System.Text.RegularExpressions.RegexOptions]::Singleline)
 
-        write-host $match.Success
-        write-host $match.Groups["date"].trim()
-        write-host $match.Groups["content"].trim()
+        Set-AppveyorBuildVariable 'Changelog' $match.Groups["content"].Value
+        Set-AppveyorBuildVariable 'ChangeDate' $match.Groups["date"].Value
       }
       else
       {
@@ -53,15 +52,14 @@ before_deploy:
         Update-AppveyorBuild -Version "$(cat version.bak)"
 
         $env:NGV_BUILD_NUMBER = -1
-        # npm run deploy:next
+        npm run deploy:next
       }
       
   - ps: Update-AppveyorBuild -Version "$(cat version.bak)"
 
 deploy:
   - provider: GitHub
-    artifact: /.*\.never/
-    description: 'Stable version release'
+    description: '$(Changelog)'
     auth_token:
       secure: FOD7P4H4NF3p30wWrc/CUbtuP1YDUtMGeJgiHGo9P8uwpf+fBcKLxLZ/CLCjTsx1
     force_update: true
