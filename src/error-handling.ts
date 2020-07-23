@@ -6,8 +6,9 @@ export {InternalServerErrorComponent} from './internalServerError/internalServer
 export {ServerValidationService} from './serverValidation/serverValidation.service';
 export {ServerValidationValidatorDirective} from './serverValidation/serverValidationValidator.directive';
 export {ServerValidationMessagesComponent, ImplicitString} from './serverValidation/serverValidationMessages.component';
-export {ANGLR_EXCEPTION_EXTENDERS, AnglrExceptionExtender} from './exceptionHandling/anglrExceptionExtender';
+export {ANGLR_EXCEPTION_EXTENDERS, AnglrExceptionExtender, ErrorWithUrl, ErrorWithScreenShot} from './exceptionHandling/anglrExceptionExtender';
 export {ANGLR_EXCEPTION_HANDLER_PROVIDER, AnglrExceptionHandler} from './exceptionHandling/anglrExceptionHandler';
+export {errorWithUrlExtender, ERROR_WITH_URL_EXTENDER} from './exceptionHandling/errorWithUrlExtender';
 export {AnglrExceptionHandlerOptions} from './exceptionHandling/anglrExceptionHandlerOptions';
 export {WithServerValidationsDirective} from './serverValidation/withServerValidations.directive';
 export {AngularError} from './exceptionHandling/angularError';

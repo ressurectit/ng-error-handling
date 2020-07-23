@@ -12,6 +12,12 @@
 - new `InternalServerErrorRenderer` interface used as definition for renderer that displays *internal server error*
 - new `INTERNAL_SERVER_ERROR_RENDERER` injection token that allows injecting of implementation `InternalServerErrorRenderer`, defaults to *dummy* implementation
 - `InternalServerErrorComponent` with bit changed design
+- added new `errorWithUrlExtender` that implements `AnglrExceptionExtender` and adding (application url) data to error defined in `ErrorWithUrl`
+- added new `ERROR_WITH_URL_EXTENDER` provider used for providing `errorWithUrlExtender` 
+- new *subpackage* `@anglr/select/html2canvas`
+- *subpackage* `@anglr/select/html2canvas`
+    - added new `errorWithScreenShotExtender` that implements `AnglrExceptionExtender` and adding (screenshot) data to error defined in `ErrorWithScreenShot`
+    - added new `ERROR_WITH_SCREENSHOT_EXTENDER` provider used for providing `errorWithScreenShotExtender` 
 - new *subpackage* `@anglr/select/material`
 - *subpackage* `@anglr/select/material`
     - added new `DialogInternalServerErrorRenderer` as implementation of `InternalServerErrorRenderer` which displays internal server error in *material dialog*
