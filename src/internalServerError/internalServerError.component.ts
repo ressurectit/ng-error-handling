@@ -1,53 +1,18 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, ChangeDetectionStrategy, Inject} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Subscription} from 'rxjs';
 
-import {InternalServerErrorService, InternalServerErrorInfo} from './internalServerError.service';
+import {InternalServerErrorService, InternalServerErrorInfo, INTERNAL_SERVER_ERROR_RENDERER, InternalServerErrorRenderer} from './internalServerError.service';
 
 /**
- * Displays internal server errors in bootstrap modal dialog
+ * Displays internal server errors in modal dialog
  */
 @Component(
 {
     selector: "internal-server-error",
-    styles: [`
-        .internal-server-error-notification
-        {
-            position: absolute;
-            top: 0;
-            right: 0;
-            z-index: 1000;
-        }
-
-        .internal-server-error-notification > .notification
-        {
-            color: #ff0000;
-            float: right;
-            font-size: 3em;
-            font-weight: bold;
-            padding: 4px 16px;
-            animation-name: notification-blink;
-            animation-duration: 500ms;
-            animation-iteration-count: infinite;
-            cursor: pointer;
-        }
-        
-        .internal-server-error-notification > #internalServerErrorsList
-        {
-            background-color: #fff;
-            box-shadow: 0 0 3px #000;
-            float: left;
-            margin-top: 18px;
-        }
-
-        @keyframes notification-blink
-        {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-    `],
-    templateUrl: 'internalServerError.component.html'
+    templateUrl: 'internalServerError.component.html',
+    styleUrls: ['internalServerError.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InternalServerErrorComponent implements OnDestroy
 {
@@ -67,7 +32,8 @@ export class InternalServerErrorComponent implements OnDestroy
 
     //######################### constructor #########################
     constructor(internalServerErrorService: InternalServerErrorService,
-                sanitizerService: DomSanitizer)
+                sanitizerService: DomSanitizer,
+                @Inject(INTERNAL_SERVER_ERROR_RENDERER) private _renderer: InternalServerErrorRenderer)
     {
         this._subscription = internalServerErrorService.internalServerErrorOccured.subscribe((itm: InternalServerErrorInfo) =>
         {
@@ -77,22 +43,6 @@ export class InternalServerErrorComponent implements OnDestroy
         });
     }
 
-    //######################### public methods #########################
-    
-    /**
-     * Removes displayed report
-     * @param itm - Report to be removed
-     */
-    public removeReport(itm: InternalServerErrorInfo)
-    {
-        var index = this.errorsHtml.indexOf(itm);
-
-        if(index >= 0)
-        {
-            this.errorsHtml.splice(index, 1);
-        }
-    }
-    
     //######################### public methods - implementation of OnDestroy #########################
     
     /**
@@ -100,10 +50,32 @@ export class InternalServerErrorComponent implements OnDestroy
      */
     public ngOnDestroy()
     {
-        if(this._subscription)
+        this._subscription?.unsubscribe();
+        this._subscription = null;
+    }
+
+    //######################### public methods - template bindings #########################
+
+    /**
+     * Shows error info in provided renderer
+     * @param errorInfo - Error info to be displayed
+     */
+    public show(errorInfo: InternalServerErrorInfo)
+    {
+        this._renderer.show(errorInfo, this.removeReport.bind(this));
+    }
+
+    /**
+     * Removes displayed report
+     * @param errorInfo - Report to be removed
+     */
+    public removeReport(errorInfo: InternalServerErrorInfo)
+    {
+        let index = this.errorsHtml.indexOf(errorInfo);
+
+        if(index >= 0)
         {
-            this._subscription.unsubscribe();
-            this._subscription = null;
+            this.errorsHtml.splice(index, 1);
         }
     }
 }

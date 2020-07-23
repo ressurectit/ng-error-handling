@@ -1,10 +1,31 @@
 # Changelog
 
-## Version 8.0.0 (2020-04-30)
+## Version 8.0.0 (2020-07-23)
 
 ### Features
 
 - added `Logger` into `HttpErrorInterceptor`
+- new `AnglrExceptionExtender` that allows extending error with custom data
+- new `AnglrExceptionHandler` used as `ErrorHandler`
+    - now using also `Logger` for logging errors
+    - now using `AnglrExceptionExtender` to add additional data to *error*
+- new `InternalServerErrorRenderer` interface used as definition for renderer that displays *internal server error*
+- new `INTERNAL_SERVER_ERROR_RENDERER` injection token that allows injecting of implementation `InternalServerErrorRenderer`, defaults to *dummy* implementation
+
+### BREAKING CHANGES
+
+- removed `jquery` as dependency
+- removed `ReportingExceptionHandlerService`, now should be implemented as custom logger *sink*
+- renamed `ReportingExceptionHandlerOptions` to `AnglrExceptionHandlerOptions`
+    - dropped `captureScreenImage` option
+    - dropped `captureScreenHtml` option
+    - dropped `captureHtmlInputs` option
+    - dropped `enableServerLogging` option
+- renamed `ReportingExceptionHandler` to `AnglrExceptionHandler`
+    - html and image capturing now should be done using `AnglrExceptionExtender`
+- `html2canvas` is now as dependency of new submodule
+- added dependency on `@angular/material` and `@angular/cdk`
+- `InternalServerErrorComponent` is now using `InternalServerErrorRenderer` implementation for displaying internal server error and not displaying error directly
 
 ## Version 7.0.1
 

@@ -1,9 +1,9 @@
 {
     "extends": "../tsconfig.json",
-    "compilerOptions":
+    "compilerOptions": 
     {
         "baseUrl": ".",
-        "paths":
+        "paths": 
         {
             "@anglr/error-handling": ["../src/error-handling"]
         }
