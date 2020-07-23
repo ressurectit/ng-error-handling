@@ -10,12 +10,27 @@
 {
     display: flex;
     flex-direction: row;
+    border-bottom: 1px solid #333;
 }
 
 .ise-title .ise-title-text
 {
     flex: 1;
     min-width: 0;
+    font-weight: bold;
+    user-select: text;
+}
+
+.ise-title .remove-btn
+{
+    color: #FF0000;
+    margin: 0 4px;
+}
+
+.ise-title .remove-btn,
+.ise-title .close-btn
+{
+    cursor: pointer;
 }
 
 .ise-content
