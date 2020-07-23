@@ -19,7 +19,6 @@
         ],
         "types": 
         [
-            "node",
             "html2canvas",
             "sourcemapped-stacktrace"
         ],
