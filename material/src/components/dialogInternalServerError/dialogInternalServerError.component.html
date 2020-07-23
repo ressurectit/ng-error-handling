@@ -1,0 +1,13 @@
+<div class="ise-title">
+    <div class="ise-title-text">INTERNAL SERVER ERROR: {{data?.errorInfo?.requestUrl}}</div>
+
+    <a (click)="data?.deleteCallback(data?.errorInfo); dialog?.close()">
+        <span class="fas fa-trash-alt"></span>
+    </a>
+
+    <a>
+        <span class="fas fa-times" (click)="dialog?.close()"></span>
+    </a>
+</div>
+
+<iframe class="ise-content" [src]="data?.errorInfo.errorHtml"></iframe>

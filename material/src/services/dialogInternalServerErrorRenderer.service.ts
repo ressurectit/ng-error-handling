@@ -1,15 +1,18 @@
-import {Injectable} from '@angular/core';
-import {} from '@angular/material';
-import {InternalServerErrorInfo, InternalServerErrorRenderer} from '@anglr/error-handling';
+import {Injectable, ClassProvider} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {InternalServerErrorInfo, InternalServerErrorRenderer, INTERNAL_SERVER_ERROR_RENDERER} from '@anglr/error-handling';
+
+import {DialogInternalServerErrorComponent} from '../components/dialogInternalServerError/dialogInternalServerError.component';
+import {DialogInternalServerErrorData} from '../components/dialogInternalServerError/dialogInternalServerError.interface';
 
 /**
- * 
+ * Renderer that is using angular material for displaying internal server error
  */
 @Injectable()
 export class DialogInternalServerErrorRenderer implements InternalServerErrorRenderer
 {
     //######################### constructor #########################
-    constructor(private _dialogSvc: )
+    constructor(private _dialog: MatDialog)
     {
     }
 
@@ -22,6 +25,25 @@ export class DialogInternalServerErrorRenderer implements InternalServerErrorRen
      */
     public show(errorInfo: InternalServerErrorInfo, deleteCallback: (errorInfo: InternalServerErrorInfo) => void): void
     {
-        
+        this._dialog.open<DialogInternalServerErrorComponent, DialogInternalServerErrorData>(DialogInternalServerErrorComponent,
+        {
+            width: '90vw',
+            height: '90vh',
+            data:
+            {
+                errorInfo,
+                deleteCallback
+            }
+        });
     }
 }
+
+/**
+ * Provider used for setting DialogInternalServerErrorRenderer as InternalServerErrorRenderer
+ */
+export const DIALOG_INTERNAL_SERVER_ERROR_RENDERER_PROVIDER =
+<ClassProvider>
+{
+    provide: INTERNAL_SERVER_ERROR_RENDERER,
+    useClass: DialogInternalServerErrorRenderer
+};

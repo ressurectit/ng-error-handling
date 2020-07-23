@@ -1,0 +1,29 @@
+:host
+{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 10px;
+}
+
+.ise-title
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.ise-title .ise-title-text
+{
+    flex: 1;
+    min-width: 0;
+}
+
+.ise-content
+{
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    overflow-y: scroll;
+    width: 100%;
+    border: 0 none;
+}

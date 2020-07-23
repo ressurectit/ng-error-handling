@@ -1,4 +1,5 @@
 import {Component, TemplateRef, Input, OnInit, DoCheck, KeyValueDiffers, KeyValueDiffer, ViewChild, ContentChild, AfterViewInit} from '@angular/core';
+import {NgForOfContext} from '@angular/common';
 import {NgControl} from '@angular/forms';
 import {Subject} from 'rxjs';
 
@@ -7,7 +8,7 @@ import {SERVER_VALIDATIONS} from './serverValidationValidator.directive';
 /**
  * Implicit context for template
  */
-export interface ImplicitString
+export interface ImplicitString extends NgForOfContext<string, string[]>
 {
     $implicit: string;
 }

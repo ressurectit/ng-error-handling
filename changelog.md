@@ -11,6 +11,13 @@
     - now using `AnglrExceptionExtender` to add additional data to *error*
 - new `InternalServerErrorRenderer` interface used as definition for renderer that displays *internal server error*
 - new `INTERNAL_SERVER_ERROR_RENDERER` injection token that allows injecting of implementation `InternalServerErrorRenderer`, defaults to *dummy* implementation
+- `InternalServerErrorComponent` with bit changed design
+- new *subpackage* `@anglr/select/material`
+- *subpackage* `@anglr/select/material`
+    - added new `DialogInternalServerErrorRenderer` as implementation of `InternalServerErrorRenderer` which displays internal server error in *material dialog*
+    - added new `DIALOG_INTERNAL_SERVER_ERROR_RENDERER_PROVIDER` which is provider for `DialogInternalServerErrorRenderer` as `INTERNAL_SERVER_ERROR_RENDERER`
+    - added new `DialogInternalServerErrorComponent` that displays information about internal server error in iframe, used withing *material dialog*
+        - `DialogInternalServerErrorData` interface used for passing data into component
 
 ### BREAKING CHANGES
 
