@@ -21,6 +21,7 @@
 
 ### BREAKING CHANGES
 
+- minimal supported version of *Angular* is `10.0.0`
 - removed `jquery` as dependency
 - removed `ReportingExceptionHandlerService`, now should be implemented as custom logger *sink*
 - renamed `ReportingExceptionHandlerOptions` to `AnglrExceptionHandlerOptions`
