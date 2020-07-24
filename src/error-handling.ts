@@ -4,7 +4,7 @@ export {HttpErrorInterceptorOptions} from './httpErrorInterceptor/httpErrorInter
 export {InternalServerErrorService, InternalServerErrorInfo, INTERNAL_SERVER_ERROR_RENDERER, InternalServerErrorRenderer} from './internalServerError/internalServerError.service';
 export {InternalServerErrorComponent} from './internalServerError/internalServerError.component';
 export {ServerValidationService} from './serverValidation/serverValidation.service';
-export {ServerValidationValidatorDirective} from './serverValidation/serverValidationValidator.directive';
+export {ServerValidationValidatorDirective, SERVER_VALIDATIONS_VALIDATOR} from './serverValidation/serverValidationValidator.directive';
 export {ServerValidationMessagesComponent, ImplicitString} from './serverValidation/serverValidationMessages.component';
 export {ANGLR_EXCEPTION_EXTENDERS, AnglrExceptionExtender, ErrorWithUrl, ErrorWithScreenShot} from './exceptionHandling/anglrExceptionExtender';
 export {ANGLR_EXCEPTION_HANDLER_PROVIDER, AnglrExceptionHandler} from './exceptionHandling/anglrExceptionHandler';

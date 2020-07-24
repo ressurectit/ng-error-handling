@@ -7,7 +7,7 @@
     "typings": "./error-handling.d.ts",
     "sideEffects": false,
     "scripts": {
-        "build": "npm run build:error-handling && npm run build:material",
+        "build": "npm run build:error-handling && npm run build:material && npm run build:html2canvas",
         "build:error-handling": "ngc -p tsconfig.es5.json && ngc -p tsconfig.es2015.json",
         "build:html2canvas": "ngc -p html2canvas/tsconfig.es5.json && ngc -p html2canvas/tsconfig.es2015.json",
         "build:material": "ngc -p material/tsconfig.es5.json && ngc -p material/tsconfig.es2015.json",
