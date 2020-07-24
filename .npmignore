@@ -1,5 +1,4 @@
 /.vscode
-/src
 /tests
 api-extractor.json
 tsconfig.json
