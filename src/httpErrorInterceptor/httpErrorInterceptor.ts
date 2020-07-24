@@ -1,5 +1,5 @@
 import {Injectable, Inject, Optional, ClassProvider, InjectionToken} from '@angular/core';
-import {HttpInterceptor, HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpRequest, HttpErrorResponse} from '@angular/common/http';
+import {HttpInterceptor, HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpErrorResponse} from '@angular/common/http';
 import {GlobalNotificationsService} from '@anglr/notifications';
 import {Logger, LOGGER, IgnoredInterceptorsService, HttpRequestIgnoredInterceptorId} from '@anglr/common';
 import {isFunction, isArray} from '@jscrpt/common';
