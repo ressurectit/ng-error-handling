@@ -1,7 +1,7 @@
 import {Injectable, Inject, Optional, ClassProvider, InjectionToken} from '@angular/core';
 import {HttpInterceptor, HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpRequest, HttpErrorResponse} from '@angular/common/http';
 import {GlobalNotificationsService} from '@anglr/notifications';
-import {Logger, LOGGER} from '@anglr/common';
+import {Logger, LOGGER, IgnoredInterceptorsService, HttpRequestIgnoredInterceptorId} from '@anglr/common';
 import {isFunction, isArray} from '@jscrpt/common';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
@@ -31,6 +31,7 @@ export class HttpErrorInterceptor implements HttpInterceptor
     constructor(@Optional() private _options: HttpErrorInterceptorOptions,
                 @Optional() private _internalServerErrorService: InternalServerErrorService,
                 @Optional() private _serverValidationService: ServerValidationService,
+                @Optional() private _ignoredInterceptorsService: IgnoredInterceptorsService,
                 @Optional() @Inject(ERROR_RESPONSE_MAP_PROVIDER) private _responseMapper: ResponseMapperFunction,
                 private _notifications: GlobalNotificationsService,
                 @Inject(LOGGER) private _logger: Logger)
@@ -53,13 +54,14 @@ export class HttpErrorInterceptor implements HttpInterceptor
      * @param req - Request to be intercepted
      * @param next - Next middleware that can be called for next processing
      */
-    public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
+    public intercept(req: HttpRequestIgnoredInterceptorId<any>, next: HttpHandler): Observable<HttpEvent<any>>
     {
         return next.handle(req)
             .pipe(tap(() => {}, (err: HttpErrorResponse) =>
             {
-                //client error, not response from server
-                if (err.error instanceof Error)
+                //client error, not response from server, or is ignored
+                if (err.error instanceof Error || 
+                    (this._ignoredInterceptorsService && this._ignoredInterceptorsService.isIgnored(HttpErrorInterceptor, req)))
                 {
                     return;
                 }

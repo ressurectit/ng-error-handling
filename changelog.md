@@ -2,6 +2,10 @@
 
 ## Version 8.0.0 (2020-07-24)
 
+### Bug Fixes
+
+- fixed `HttpErrorInterceptor`, now can be correctly *disabled* using `IgnoredInterceptorsService`
+
 ### Features
 
 - added `Logger` into `HttpErrorInterceptor`
