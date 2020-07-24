@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 8.0.0 (2020-07-23)
+## Version 8.0.0 (2020-07-24)
 
 ### Features
 

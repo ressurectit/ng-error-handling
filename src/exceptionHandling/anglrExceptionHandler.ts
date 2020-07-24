@@ -8,6 +8,7 @@ import * as sourceMap from 'sourcemapped-stacktrace';
 import {AngularError} from './angularError';
 import {AnglrExceptionHandlerOptions} from './anglrExceptionHandlerOptions';
 import {ANGLR_EXCEPTION_EXTENDERS, AnglrExceptionExtender} from './anglrExceptionExtender';
+import {ErrorWithStack} from './errorWithStack';
 
 /**
  * Exception handler that is capable of customized handling of unhandled errors
@@ -93,16 +94,20 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
             }
         }
 
-        error.message = message;
-        error.stack = stack;
+        let logError: ErrorWithStack = 
+        {
+            message: message,
+            stack: stack,
+            name: error.name
+        };
 
         //extend error
         for(let extender of this._extenders)
         {
-            error = await extender(this._injector, error);
+            logError = await extender(this._injector, logError);
         }
 
-        this._logger.error("Unhandled error: {@error}", error);
+        this._logger.error("Unhandled error: {@error}", logError);
     }
     
     //######################### private methods #########################
