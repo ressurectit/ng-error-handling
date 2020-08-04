@@ -24,7 +24,6 @@
         "bundle": "npm run clean && npm run build && npm run clean:duplicates",
         "deploy": "npm publish --loglevel error",
         "deploy:next": "npm publish --tag next --loglevel error",
-        "pretest": "webpack",
         "doc": "path-exists docs && npm run doc:generate || echo \"No docs generated!\"",
         "doc:generate": "npm run doc:generate:error-handling && npm run doc:generate:html2canvas && npm run doc:generate:material && npm run doc:save",
         "doc:save": "cd docs && git add . && git commit -m \"INT: updated API docs ng-error-handling\" && git push && cd ..",
