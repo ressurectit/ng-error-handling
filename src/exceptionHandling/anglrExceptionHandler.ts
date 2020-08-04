@@ -3,7 +3,7 @@ import {isPlatformBrowser} from '@angular/common';
 import {isBlank, isPresent} from '@jscrpt/common';
 import {GlobalNotificationsService} from '@anglr/notifications';
 import {LOGGER, Logger} from '@anglr/common';
-import * as sourceMap from 'sourcemapped-stacktrace';
+import sourceMap from 'sourcemapped-stacktrace';
 
 import {AngularError} from './angularError';
 import {AnglrExceptionHandlerOptions} from './anglrExceptionHandlerOptions';

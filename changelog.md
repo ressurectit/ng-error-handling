@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 8.0.0 (2020-07-24)
+## Version 8.0.0 (2020-08-04)
 
 ### Bug Fixes
 
@@ -32,6 +32,7 @@
 ### BREAKING CHANGES
 
 - minimal supported version of *Angular* is `10.0.0`
+- minimal supported version of `@jscrpt/common` is `1.2.0`
 - removed `jquery` as dependency
 - removed `ReportingExceptionHandlerService`, now should be implemented as custom logger *sink*
 - renamed `ReportingExceptionHandlerOptions` to `AnglrExceptionHandlerOptions`

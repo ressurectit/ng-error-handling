@@ -1,7 +1,7 @@
 import {Injector, ValueProvider, PLATFORM_ID} from "@angular/core";
 import {DOCUMENT, isPlatformBrowser} from "@angular/common";
 import {ErrorWithStack, AnglrExceptionExtender, ErrorWithScreenShot, ANGLR_EXCEPTION_EXTENDERS} from "@anglr/error-handling";
-import * as html2canvas from 'html2canvas';
+import html2canvas from 'html2canvas';
 
 /**
  * Extends error with screenshot of current application state
