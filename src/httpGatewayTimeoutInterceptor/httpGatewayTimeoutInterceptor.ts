@@ -1,6 +1,6 @@
 import {Injectable, Optional, Injector, ClassProvider} from "@angular/core";
-import {HttpInterceptor, HttpHandler, HttpEvent, HTTP_INTERCEPTORS} from "@angular/common/http";
-import {IgnoredInterceptorsService, HttpRequestIgnoredInterceptorId} from "@anglr/common";
+import {HttpInterceptor, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpRequest} from "@angular/common/http";
+import {IgnoredInterceptorsService, AdditionalInfo, IgnoredInterceptorId} from "@anglr/common";
 import {Observable, Observer} from "rxjs";
 import {catchError} from "rxjs/operators";
 
@@ -30,7 +30,7 @@ export class HttpGatewayTimeoutInterceptor implements HttpInterceptor
      * @param req - Request to be intercepted
      * @param next - Next middleware that can be called for next processing
      */
-    public intercept(req: HttpRequestIgnoredInterceptorId<any>, next: HttpHandler): Observable<HttpEvent<any>>
+    public intercept(req: HttpRequest<any> & AdditionalInfo<IgnoredInterceptorId>, next: HttpHandler): Observable<HttpEvent<any>>
     {
         return next.handle(req).pipe(catchError((err) =>
         {
