@@ -61,7 +61,7 @@ export class HttpErrorInterceptor implements HttpInterceptor
             {
                 //client error, not response from server, or is ignored
                 if (err.error instanceof Error || 
-                    (this._ignoredInterceptorsService && this._ignoredInterceptorsService.isIgnored(HttpErrorInterceptor, req)))
+                    (this._ignoredInterceptorsService && this._ignoredInterceptorsService.isIgnored(HttpErrorInterceptor, req.additionalInfo)))
                 {
                     return;
                 }

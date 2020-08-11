@@ -38,7 +38,7 @@ export class HttpGatewayTimeoutInterceptor implements HttpInterceptor
             {
                 //client error, not response from server, or is ignored
                 if (err.error instanceof Error ||
-                    (this._ignoredInterceptorsService && this._ignoredInterceptorsService.isIgnored(HttpGatewayTimeoutInterceptor, req)))
+                    (this._ignoredInterceptorsService && this._ignoredInterceptorsService.isIgnored(HttpGatewayTimeoutInterceptor, req.additionalInfo)))
                 {
                     observer.error(err);
                     observer.complete();

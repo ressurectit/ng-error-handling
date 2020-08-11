@@ -38,7 +38,7 @@ export class NoConnectionInterceptor implements HttpInterceptor
             {
                 //client error, not response from server, or is ignored
                 if (err.error instanceof Error ||
-                    (this._ignoredInterceptorsService && this._ignoredInterceptorsService.isIgnored(NoConnectionInterceptor, req)))
+                    (this._ignoredInterceptorsService && this._ignoredInterceptorsService.isIgnored(NoConnectionInterceptor, req.additionalInfo)))
                 {
                     observer.error(err);
                     observer.complete();
