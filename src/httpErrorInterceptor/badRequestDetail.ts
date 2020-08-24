@@ -1,3 +1,5 @@
+import {Dictionary} from '@jscrpt/common';
+
 /**
  * Information about error, formatted for REST api
  */
@@ -11,5 +13,5 @@ export interface BadRequestDetail
     /**
      * Gets or sets validation error messages to be displayed
      */
-    validationErrors: {[key: string]: string[]}; 
+    validationErrors: Dictionary<string[]>; 
 }
