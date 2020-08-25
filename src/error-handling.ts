@@ -10,7 +10,6 @@ export {ANGLR_EXCEPTION_EXTENDERS, AnglrExceptionExtender, ErrorWithUrl, ErrorWi
 export {ANGLR_EXCEPTION_HANDLER_PROVIDER, AnglrExceptionHandler} from './exceptionHandling/anglrExceptionHandler';
 export {errorWithUrlExtender, ERROR_WITH_URL_EXTENDER} from './exceptionHandling/errorWithUrlExtender';
 export {AnglrExceptionHandlerOptions} from './exceptionHandling/anglrExceptionHandlerOptions';
-export {WithServerValidationsDirective} from './serverValidation/withServerValidations.directive';
 export {AngularError} from './exceptionHandling/angularError';
 export {ErrorWithStack} from './exceptionHandling/errorWithStack';
 export {InternalServerErrorModule} from './modules/internalServerError.module';

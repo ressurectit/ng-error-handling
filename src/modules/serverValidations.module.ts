@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 
 import {ServerValidationValidatorDirective} from '../serverValidation/serverValidationValidator.directive';
 import {ServerValidationMessagesComponent} from '../serverValidation/serverValidationMessages.component';
-import {WithServerValidationsDirective} from '../serverValidation/withServerValidations.directive';
 
 /**
  * Module for server validations
@@ -11,8 +10,8 @@ import {WithServerValidationsDirective} from '../serverValidation/withServerVali
 @NgModule(
 {
     imports: [CommonModule],
-    declarations: [ServerValidationValidatorDirective, ServerValidationMessagesComponent, WithServerValidationsDirective],
-    exports: [ServerValidationValidatorDirective, ServerValidationMessagesComponent, WithServerValidationsDirective]
+    declarations: [ServerValidationValidatorDirective, ServerValidationMessagesComponent],
+    exports: [ServerValidationValidatorDirective, ServerValidationMessagesComponent]
 })
 export class ServerValidationsModule
 {

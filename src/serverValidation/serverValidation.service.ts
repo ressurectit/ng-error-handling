@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {extend} from '@jscrpt/common';
+import {extend, Dictionary} from '@jscrpt/common';
 import {Subject, Observable} from 'rxjs';
 
 /**
@@ -36,7 +36,7 @@ export class ServerValidationService
      * Adds server validation errors
      * @param validationErrors - List of validation errors
      */
-    public addServerValidationErrors(validationErrors: {[key: string]: string[]})
+    public addServerValidationErrors(validationErrors: Dictionary<string[]>)
     {
         extend(this.serverValidations, validationErrors);
         this._serverValidationsChangedSubject.next(true);
@@ -47,7 +47,7 @@ export class ServerValidationService
      */
     public clearServerValidationErrors()
     {
-        this.serverValidations = {};
         this._serverValidationsChangedSubject.next(false);
+        this.serverValidations = {};
     }
 }

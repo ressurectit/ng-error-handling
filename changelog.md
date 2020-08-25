@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 8.0.0 (2020-08-10)
+## Version 8.0.0 (2020-08-25)
 
 ### Bug Fixes
 
@@ -18,6 +18,7 @@
 - `InternalServerErrorComponent` with bit changed design
 - added new `errorWithUrlExtender` that implements `AnglrExceptionExtender` and adding (application url) data to error defined in `ErrorWithUrl`
 - added new `ERROR_WITH_URL_EXTENDER` provider used for providing `errorWithUrlExtender` 
+- refactored `ServerValidationValidatorDirective`, which nows also subscribes for changes of `ServerValidationService`
 - new *subpackage* `@anglr/select/html2canvas`
 - *subpackage* `@anglr/select/html2canvas`
     - added new `errorWithScreenShotExtender` that implements `AnglrExceptionExtender` and adding (screenshot) data to error defined in `ErrorWithScreenShot`
@@ -46,6 +47,7 @@
 - `html2canvas` is now as dependency of new submodule
 - added dependency on `@angular/material` and `@angular/cdk`
 - `InternalServerErrorComponent` is now using `InternalServerErrorRenderer` implementation for displaying internal server error and not displaying error directly
+- removed `WithServerValidationsDirective`, new improved `ServerValidationValidatorDirective` will cover its functionality
 
 ## Version 7.0.1
 
