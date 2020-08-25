@@ -50,7 +50,7 @@ export class ServerValidationValidatorDirective implements Validator, OnInit, On
      */
     private get control(): FormControl
     {
-        return this._control ?? (this._control = this._injector.get(FormControlDirective)?.control ?? this._injector.get(FormControlName)?.control ?? this._injector.get(NgModel).control);
+        return this._control ?? (this._control = this._injector.get(FormControlDirective, null)?.control ?? this._injector.get(FormControlName, null)?.control ?? this._injector.get(NgModel, null).control);
     }
 
     //######################### constructor #########################
