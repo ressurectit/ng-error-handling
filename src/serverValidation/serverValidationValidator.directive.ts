@@ -1,4 +1,4 @@
-import {Attribute, ExistingProvider, forwardRef, Directive, OnInit, OnDestroy, Optional} from '@angular/core';
+import {Attribute, ExistingProvider, forwardRef, Directive, OnInit, OnDestroy, Injector} from '@angular/core';
 import {NG_VALIDATORS, Validator, FormControlDirective, FormControlName, FormControl, NgModel} from '@angular/forms';
 import {Dictionary} from '@jscrpt/common';
 import {Subscription} from 'rxjs';
@@ -38,6 +38,11 @@ export class ServerValidationValidatorDirective implements Validator, OnInit, On
      */
     private _subscriptions: Subscription = new Subscription();
 
+    /**
+     * Instance of control that is used
+     */
+    private _control: FormControl;
+
     //######################### private properties #########################
 
     /**
@@ -45,15 +50,13 @@ export class ServerValidationValidatorDirective implements Validator, OnInit, On
      */
     private get control(): FormControl
     {
-        return this._formControl?.control ?? this._formControlName?.control ?? this._ngModel.control;
+        return this._control ?? (this._control = this._injector.get(FormControlDirective)?.control ?? this._injector.get(FormControlName)?.control ?? this._injector.get(NgModel).control);
     }
 
     //######################### constructor #########################
     constructor(@Attribute("serverValidation") private _serverValidation: string,
                 private _serverValidationService: ServerValidationService,
-                @Optional() private _formControl: FormControlDirective,
-                @Optional() private _formControlName: FormControlName,
-                @Optional() private _ngModel: NgModel)
+                private _injector: Injector)
     {
     }
 

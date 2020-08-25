@@ -48,6 +48,7 @@
 - added dependency on `@angular/material` and `@angular/cdk`
 - `InternalServerErrorComponent` is now using `InternalServerErrorRenderer` implementation for displaying internal server error and not displaying error directly
 - removed `WithServerValidationsDirective`, new improved `ServerValidationValidatorDirective` will cover its functionality
+- changed constructor parameters for `ServerValidationValidatorDirective`
 
 ## Version 7.0.1
 
