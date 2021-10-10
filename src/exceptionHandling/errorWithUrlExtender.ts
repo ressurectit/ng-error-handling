@@ -1,8 +1,8 @@
-import {Injector, ValueProvider} from "@angular/core";
-import {Location} from "@angular/common";
+import {Injector, ValueProvider} from '@angular/core';
+import {Location} from '@angular/common';
 
-import {ErrorWithStack} from "./errorWithStack";
-import {AnglrExceptionExtender, ErrorWithUrl, ANGLR_EXCEPTION_EXTENDERS} from "./anglrExceptionExtender";
+import {ErrorWithStack} from './errorWithStack';
+import {AnglrExceptionExtender, ErrorWithUrl, ANGLR_EXCEPTION_EXTENDERS} from './anglrExceptionExtender';
 
 /**
  * Extends error with current application URL
@@ -11,7 +11,7 @@ import {AnglrExceptionExtender, ErrorWithUrl, ANGLR_EXCEPTION_EXTENDERS} from ".
  */
 export const errorWithUrlExtender: AnglrExceptionExtender = (injector: Injector, error: ErrorWithStack): Promise<ErrorWithStack> =>
 {
-    let errorWithUrl: ErrorWithStack & ErrorWithUrl = error;
+    const errorWithUrl: ErrorWithStack & ErrorWithUrl = error;
 
     errorWithUrl.applicationUrl = injector.get(Location).path();
 

@@ -1,10 +1,10 @@
-import {Injectable, Optional, Injector, ClassProvider} from "@angular/core";
-import {HttpInterceptor, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpRequest} from "@angular/common/http";
-import {IgnoredInterceptorsService, IgnoredInterceptorId, AdditionalInfo} from "@anglr/common";
-import {catchError} from "rxjs/operators";
-import {Observable, Observer} from "rxjs";
+import {Injectable, Optional, Injector, ClassProvider} from '@angular/core';
+import {HttpInterceptor, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpRequest} from '@angular/common/http';
+import {IgnoredInterceptorsService, IgnoredInterceptorId, AdditionalInfo} from '@anglr/common';
+import {catchError} from 'rxjs/operators';
+import {Observable, Observer} from 'rxjs';
 
-import {NoConnectionInterceptorOptions} from "./noConnectionInterceptorOptions";
+import {NoConnectionInterceptorOptions} from './noConnectionInterceptorOptions';
 
 /**
  * NoConnectionInterceptor used for intercepting http responses and handling 0 statuses

@@ -1,7 +1,7 @@
-import {Injector} from "@angular/core";
-import {isPresent} from "@jscrpt/common";
-import {GlobalNotificationsService} from "@anglr/notifications";
-import {Observer} from "rxjs";
+import {Injector} from '@angular/core';
+import {GlobalNotificationsService} from '@anglr/notifications';
+import {isPresent} from '@jscrpt/common';
+import {Observer} from 'rxjs';
 
 /**
  * Action called when 504 http status code is intercepted
@@ -16,14 +16,14 @@ export class HttpGatewayTimeoutInterceptorOptions
     /**
      * Text displayed
      */
-    text?: string = "Server did not respond in defined time.";
+    text?: string = 'Server did not respond in defined time.';
 
     /**
      * Action called when 504 status code received
      */
     action?: HttpGatewayTimeoutAction = (injector: Injector, observer: Observer<any>) =>
     {
-        let notifications = injector.get(GlobalNotificationsService);
+        const notifications = injector.get(GlobalNotificationsService);
 
         if(isPresent(notifications))
         {

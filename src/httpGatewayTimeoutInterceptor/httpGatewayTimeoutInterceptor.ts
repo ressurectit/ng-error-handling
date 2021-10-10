@@ -1,10 +1,10 @@
-import {Injectable, Optional, Injector, ClassProvider} from "@angular/core";
-import {HttpInterceptor, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpRequest} from "@angular/common/http";
-import {IgnoredInterceptorsService, AdditionalInfo, IgnoredInterceptorId} from "@anglr/common";
-import {Observable, Observer} from "rxjs";
-import {catchError} from "rxjs/operators";
+import {Injectable, Optional, Injector, ClassProvider} from '@angular/core';
+import {HttpInterceptor, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpRequest} from '@angular/common/http';
+import {IgnoredInterceptorsService, AdditionalInfo, IgnoredInterceptorId} from '@anglr/common';
+import {Observable, Observer} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
-import {HttpGatewayTimeoutInterceptorOptions} from "./httpGatewayTimeoutInterceptorOptions";
+import {HttpGatewayTimeoutInterceptorOptions} from './httpGatewayTimeoutInterceptorOptions';
 
 /**
  * HttpGatewayTimeoutInterceptor used for intercepting http responses and handling 504 statuses

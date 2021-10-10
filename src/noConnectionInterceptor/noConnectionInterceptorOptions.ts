@@ -1,7 +1,7 @@
-import {Injector} from "@angular/core";
-import {GlobalNotificationsService} from "@anglr/notifications";
-import {isPresent} from "@jscrpt/common";
-import {Observer} from "rxjs";
+import {Injector} from '@angular/core';
+import {GlobalNotificationsService} from '@anglr/notifications';
+import {isPresent} from '@jscrpt/common';
+import {Observer} from 'rxjs';
 
 /**
  * Action called when 0 http status code is intercepted
@@ -16,14 +16,14 @@ export class NoConnectionInterceptorOptions
     /**
      * Text displayed
      */
-    text?: string = "Server is offline. Try again later.";
+    text?: string = 'Server is offline. Try again later.';
 
     /**
      * Action called when 0 status code received
      */
     action?: NoConnectionAction = (injector: Injector, observer: Observer<any>) =>
     {
-        let notifications = injector.get(GlobalNotificationsService);
+        const notifications = injector.get(GlobalNotificationsService);
 
         if(isPresent(notifications))
         {

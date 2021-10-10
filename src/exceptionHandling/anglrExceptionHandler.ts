@@ -1,8 +1,8 @@
 import {ClassProvider, Optional, ErrorHandler, Injectable, Inject, PLATFORM_ID, Injector} from '@angular/core';
 import {isPlatformBrowser} from '@angular/common';
-import {isBlank, isPresent} from '@jscrpt/common';
 import {GlobalNotificationsService} from '@anglr/notifications';
 import {LOGGER, Logger} from '@anglr/common';
+import {isBlank, isPresent} from '@jscrpt/common';
 import sourceMap from 'sourcemapped-stacktrace';
 
 import {AngularError} from './angularError';
@@ -50,12 +50,12 @@ export class AnglrExceptionHandler implements ErrorHandler
      * Method called when exception occurs
      * @param error - Occured exception object
      */
-    public async handleError(error: AngularError)
+    public async handleError(error: AngularError): Promise<void>
     {
         error = error || <any>{};
 
-        let message = error.message || (error.toString ? error.toString() : `${error}`);
-        let originalStack = error.stack || "";
+        const message = error.message || (error.toString ? error.toString() : `${error}`);
+        let originalStack = error.stack || '';
         let stack = await this._fromSourceMap(originalStack);
         
         if(this._globalNotifications && isPresent(message))
@@ -68,7 +68,7 @@ export class AnglrExceptionHandler implements ErrorHandler
             originalStack += `--------------------------PROMISE STACK--------------------------------
 ${error.rejection.stack}`;
 
-            let rejectionStack = await this._fromSourceMap(error.rejection.stack);
+            const rejectionStack = await this._fromSourceMap(error.rejection.stack);
 
             stack += `--------------------------PROMISE STACK--------------------------------
 ${rejectionStack}`;
@@ -102,12 +102,12 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
         };
 
         //extend error
-        for(let extender of this._extenders)
+        for(const extender of this._extenders)
         {
             logError = await extender(this._injector, logError);
         }
 
-        this._logger.error("Unhandled error: {@error}", logError);
+        this._logger.error('Unhandled error: {@error}', logError);
     }
     
     //######################### private methods #########################
@@ -122,7 +122,7 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
         {
             return new Promise(resolve =>
             {
-                sourceMap.mapStackTrace(stack, sourceStack => resolve(sourceStack.join("\n")), {cacheGlobally: true});
+                sourceMap.mapStackTrace(stack, sourceStack => resolve(sourceStack.join('\n')), {cacheGlobally: true});
             });
         }
 

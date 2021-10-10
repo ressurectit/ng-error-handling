@@ -19,7 +19,7 @@ export type ResponseMapperFunction = (err: HttpErrorResponse) => BadRequestDetai
 /**
  * Token for map function provider
  */
-export const ERROR_RESPONSE_MAP_PROVIDER: InjectionToken<ResponseMapperFunction> = new InjectionToken<ResponseMapperFunction>("ErrorResponseMapProvider");
+export const ERROR_RESPONSE_MAP_PROVIDER: InjectionToken<ResponseMapperFunction> = new InjectionToken<ResponseMapperFunction>('ErrorResponseMapProvider');
 
 /**
  * Interceptor that is used for handling http errors with default codes 400, 405..599
@@ -83,7 +83,7 @@ export class HttpErrorInterceptor implements HttpInterceptor
                     
                     try
                     {
-                        var errorDetail = this._responseMapper(err);
+                        const errorDetail = this._responseMapper(err);
                         
                         if(errorDetail.errors)
                         {
@@ -92,7 +92,7 @@ export class HttpErrorInterceptor implements HttpInterceptor
                                 this._logger.error(`HTTP_ERROR 4xx: ${itm}`);
 
                                 this._notifications.error(itm);
-                            })
+                            });
                         }
                         
                         if(errorDetail.validationErrors)

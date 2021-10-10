@@ -9,7 +9,7 @@ import {InternalServerErrorService, InternalServerErrorInfo, INTERNAL_SERVER_ERR
  */
 @Component(
 {
-    selector: "internal-server-error",
+    selector: 'internal-server-error',
     templateUrl: 'internalServerError.component.html',
     styleUrls: ['internalServerError.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -45,7 +45,7 @@ export class InternalServerErrorComponent implements OnDestroy
     {
         this._subscription = internalServerErrorService.internalServerErrorOccured.subscribe((itm: InternalServerErrorInfo) =>
         {
-            itm.errorHtml = sanitizerService.bypassSecurityTrustResourceUrl('data:text/html;charset=utf-8,' + encodeURI(<string>itm.errorHtml).replace(/#/g, "%23"));
+            itm.errorHtml = sanitizerService.bypassSecurityTrustResourceUrl('data:text/html;charset=utf-8,' + encodeURI(<string>itm.errorHtml).replace(/#/g, '%23'));
 
             this.errorsHtml.push(itm);
             _changeDetector.detectChanges();
@@ -57,7 +57,7 @@ export class InternalServerErrorComponent implements OnDestroy
     /**
      * Called when component is destroyed
      */
-    public ngOnDestroy()
+    public ngOnDestroy(): void
     {
         this._subscription?.unsubscribe();
         this._subscription = null;
@@ -69,7 +69,7 @@ export class InternalServerErrorComponent implements OnDestroy
      * Shows error info in provided renderer
      * @param errorInfo - Error info to be displayed
      */
-    public show(errorInfo: InternalServerErrorInfo)
+    public show(errorInfo: InternalServerErrorInfo): void
     {
         this._renderer.show(errorInfo, this.removeReport.bind(this));
     }
@@ -78,9 +78,9 @@ export class InternalServerErrorComponent implements OnDestroy
      * Removes displayed report
      * @param errorInfo - Report to be removed
      */
-    public removeReport(errorInfo: InternalServerErrorInfo)
+    public removeReport(errorInfo: InternalServerErrorInfo): void
     {
-        let index = this.errorsHtml.indexOf(errorInfo);
+        const index = this.errorsHtml.indexOf(errorInfo);
 
         if(index >= 0)
         {

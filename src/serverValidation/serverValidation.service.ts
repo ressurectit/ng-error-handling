@@ -36,7 +36,7 @@ export class ServerValidationService
      * Adds server validation errors
      * @param validationErrors - List of validation errors
      */
-    public addServerValidationErrors(validationErrors: Dictionary<string[]>)
+    public addServerValidationErrors(validationErrors: Dictionary<string[]>): void
     {
         extend(this.serverValidations, validationErrors);
         this._serverValidationsChangedSubject.next(true);
@@ -45,7 +45,7 @@ export class ServerValidationService
     /**
      * Clears previously set server validation errors
      */
-    public clearServerValidationErrors()
+    public clearServerValidationErrors(): void
     {
         this._serverValidationsChangedSubject.next(false);
         this.serverValidations = {};

@@ -1,7 +1,7 @@
-import {Injector} from "@angular/core";
-import {isPresent} from "@jscrpt/common";
-import {GlobalNotificationsService} from "@anglr/notifications";
-import {Observer} from "rxjs";
+import {Injector} from '@angular/core';
+import {GlobalNotificationsService} from '@anglr/notifications';
+import {isPresent} from '@jscrpt/common';
+import {Observer} from 'rxjs';
 
 /**
  * Action called when 503 http status code is intercepted
@@ -16,14 +16,14 @@ export class ServiceUnavailableInterceptorOptions
     /**
      * Text displayed
      */
-    text?: string = "Remote server is unavailable. Try again later.";
+    text?: string = 'Remote server is unavailable. Try again later.';
 
     /**
      * Action called when 504 status code received
      */
     action?: ServiceUnavailableAction = (injector: Injector, observer: Observer<any>) =>
     {
-        let notifications = injector.get(GlobalNotificationsService);
+        const notifications = injector.get(GlobalNotificationsService);
 
         if(isPresent(notifications))
         {

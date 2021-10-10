@@ -1,5 +1,5 @@
-import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
 import {ServerValidationValidatorDirective} from '../serverValidation/serverValidationValidator.directive';
 import {ServerValidationMessagesComponent} from '../serverValidation/serverValidationMessages.component';

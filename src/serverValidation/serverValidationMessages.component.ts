@@ -18,7 +18,7 @@ export interface ImplicitString extends NgForOfContext<string, string[]>
  */
 @Component(
 {
-    selector: "[serverValidations]",
+    selector: '[serverValidations]',
     templateUrl: 'serverValidationMessages.component.html'
 })
 export class ServerValidationMessagesComponent implements OnInit, DoCheck, AfterViewInit
@@ -56,7 +56,7 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, After
     /**
      * Item render template from view
      */
-    @ViewChild("viewTemplate")
+    @ViewChild('viewTemplate')
     public viewTemplate: TemplateRef<ImplicitString>;
 
 
@@ -68,7 +68,7 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, After
     {
         if(!(control instanceof NgControl))
         {
-            throw new Error("Unable to assign 'serverValidations', because it is not NgFormControl or NgControlName instance");
+            throw new Error('Unable to assign \'serverValidations\', because it is not NgFormControl or NgControlName instance');
         }
 
         this._controlDirective = control;
@@ -78,7 +78,7 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, After
      * Additional css classes that are applied to each rendered item with default template
      */
     @Input()
-    public itemCssClass: string = "";
+    public itemCssClass: string = '';
 
     /**
      * Error template that can be used for rendering items
@@ -100,11 +100,11 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, After
     /**
      * Initialize component
      */
-    public ngOnInit()
+    public ngOnInit(): void
     {
         if(!this._controlDirective)
         {
-            throw new Error("You must set 'serverValidations' before use!");
+            throw new Error('You must set \'serverValidations\' before use!');
         }
     }
 
@@ -113,7 +113,7 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, After
     /**
      * Performs checks for server validations changes
      */
-    public ngDoCheck(): any
+    public ngDoCheck(): void
     {
         if(!this._errorsDiffer)
         {
@@ -127,7 +127,7 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, After
             }
         }
 
-        var diff = this._errorsDiffer.diff(this._controlDirective.control.errors);
+        const diff = this._errorsDiffer.diff(this._controlDirective.control.errors);
 
         if(diff)
         {
@@ -153,7 +153,7 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, After
     /**
      * Called when content was initialized
      */
-    public ngAfterViewInit()
+    public ngAfterViewInit(): void
     {
         if(this.contentTemplate)
         {
@@ -169,7 +169,7 @@ export class ServerValidationMessagesComponent implements OnInit, DoCheck, After
         }
         else
         {
-            throw new Error("No template found!");
+            throw new Error('No template found!');
         }
     }
 }

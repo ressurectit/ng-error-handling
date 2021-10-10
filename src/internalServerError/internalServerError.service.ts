@@ -59,7 +59,7 @@ export class InternalServerErrorService
      * @param errorHtml - Html that will be displayed in dialog
      * @param requestUrl - Url of request that ended with internal server error
      */
-    public showInternalServerError(errorHtml: string, requestUrl: string)
+    public showInternalServerError(errorHtml: string, requestUrl: string): void
     {
         if(!isString(errorHtml))
         {

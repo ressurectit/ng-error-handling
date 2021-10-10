@@ -9,7 +9,7 @@ import {ServerValidationService} from './serverValidation.service';
 /**
  * Name of server validations as error
  */
-export const SERVER_VALIDATIONS = "serverValidation";
+export const SERVER_VALIDATIONS = 'serverValidation';
 
 /**
  * Validator that is injected with directive ServerValidationValidator
@@ -26,7 +26,7 @@ export const SERVER_VALIDATIONS_VALIDATOR: ExistingProvider =
  */
 @Directive(
 {
-    selector: "[serverValidation][formControlName],[serverValidation][formControl],[serverValidation][ngModel]",
+    selector: '[serverValidation][formControlName],[serverValidation][formControl],[serverValidation][ngModel]',
     providers: [SERVER_VALIDATIONS_VALIDATOR]
 })
 export class ServerValidationValidatorDirective implements Validator, OnInit, OnDestroy
@@ -54,7 +54,7 @@ export class ServerValidationValidatorDirective implements Validator, OnInit, On
     }
 
     //######################### constructor #########################
-    constructor(@Attribute("serverValidation") private _serverValidation: string,
+    constructor(@Attribute('serverValidation') private _serverValidation: string,
                 private _serverValidationService: ServerValidationService,
                 private _injector: Injector)
     {
@@ -65,7 +65,7 @@ export class ServerValidationValidatorDirective implements Validator, OnInit, On
     /**
      * Initialize component
      */
-    public ngOnInit()
+    public ngOnInit(): void
     {
         this._subscriptions.add(this._serverValidationService.serverValidationsChanged
                                     .pipe(filter(() => !!this._serverValidationService.serverValidations[this._serverValidation]))
@@ -77,7 +77,7 @@ export class ServerValidationValidatorDirective implements Validator, OnInit, On
     /**
      * Called when component is destroyed
      */
-    public ngOnDestroy()
+    public ngOnDestroy(): void
     {
         this._subscriptions.unsubscribe();
     }
@@ -93,7 +93,7 @@ export class ServerValidationValidatorDirective implements Validator, OnInit, On
     {
         if(this._serverValidationService.serverValidations[this._serverValidation])
         {
-            let result: Dictionary = {};
+            const result: Dictionary = {};
             result[SERVER_VALIDATIONS] = this._serverValidationService.serverValidations[this._serverValidation];
 
             return result;
