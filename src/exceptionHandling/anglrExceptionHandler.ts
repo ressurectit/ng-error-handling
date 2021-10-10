@@ -1,7 +1,6 @@
 import {ClassProvider, Optional, ErrorHandler, Injectable, Inject, PLATFORM_ID, Injector} from '@angular/core';
 import {isPlatformBrowser} from '@angular/common';
-import {GlobalNotificationsService} from '@anglr/notifications';
-import {LOGGER, Logger} from '@anglr/common';
+import {LOGGER, Logger, Notifications} from '@anglr/common';
 import {isBlank, isPresent} from '@jscrpt/common';
 import sourceMap from 'sourcemapped-stacktrace';
 
@@ -9,6 +8,7 @@ import {AngularError} from './angularError';
 import {AnglrExceptionHandlerOptions} from './anglrExceptionHandlerOptions';
 import {ANGLR_EXCEPTION_EXTENDERS, AnglrExceptionExtender} from './anglrExceptionExtender';
 import {ErrorWithStack} from './errorWithStack';
+import {ERROR_HANDLING_NOTIFICATIONS} from '../misc/tokens';
 
 /**
  * Exception handler that is capable of customized handling of unhandled errors
@@ -25,7 +25,7 @@ export class AnglrExceptionHandler implements ErrorHandler
 
     //######################### constructor #########################
     constructor(@Optional() private _options: AnglrExceptionHandlerOptions,
-                @Optional() private _globalNotifications: GlobalNotificationsService,
+                @Optional() @Inject(ERROR_HANDLING_NOTIFICATIONS) private _notifications: Notifications,
                 @Inject(ANGLR_EXCEPTION_EXTENDERS) @Optional() private _extenders: AnglrExceptionExtender[],
                 @Inject(LOGGER) private _logger: Logger,
                 private _injector: Injector,
@@ -58,9 +58,9 @@ export class AnglrExceptionHandler implements ErrorHandler
         let originalStack = error.stack || '';
         let stack = await this._fromSourceMap(originalStack);
         
-        if(this._globalNotifications && isPresent(message))
+        if(this._notifications && isPresent(message))
         {
-            this._globalNotifications.error(message);
+            this._notifications.error(message);
         }
 
         if(error.rejection)

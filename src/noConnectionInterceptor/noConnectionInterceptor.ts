@@ -34,7 +34,7 @@ export class NoConnectionInterceptor implements HttpInterceptor
     {
         return next.handle(req).pipe(catchError((err) =>
         {
-            return Observable.create((observer: Observer<any>) =>
+            return new Observable((observer: Observer<any>) =>
             {
                 //client error, not response from server, or is ignored
                 if (err.error instanceof Error ||

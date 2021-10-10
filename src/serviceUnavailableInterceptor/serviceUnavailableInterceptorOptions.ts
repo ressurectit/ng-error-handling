@@ -1,7 +1,8 @@
 import {Injector} from '@angular/core';
-import {GlobalNotificationsService} from '@anglr/notifications';
 import {isPresent} from '@jscrpt/common';
 import {Observer} from 'rxjs';
+
+import {ERROR_HANDLING_NOTIFICATIONS} from '../misc/tokens';
 
 /**
  * Action called when 503 http status code is intercepted
@@ -23,7 +24,7 @@ export class ServiceUnavailableInterceptorOptions
      */
     action?: ServiceUnavailableAction = (injector: Injector, observer: Observer<any>) =>
     {
-        const notifications = injector.get(GlobalNotificationsService);
+        const notifications = injector.get(ERROR_HANDLING_NOTIFICATIONS);
 
         if(isPresent(notifications))
         {

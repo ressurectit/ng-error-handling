@@ -16,7 +16,7 @@ export const errorWithUrlExtender: AnglrExceptionExtender = (injector: Injector,
     errorWithUrl.applicationUrl = injector.get(Location).path();
 
     return Promise.resolve(errorWithUrl);
-}
+};
 
 /**
  * Extender used for extending error with current application URL

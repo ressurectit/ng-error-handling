@@ -18,6 +18,7 @@
 - `InternalServerErrorComponent` with bit changed design
 - added new `errorWithUrlExtender` that implements `AnglrExceptionExtender` and adding (application url) data to error defined in `ErrorWithUrl`
 - added new `ERROR_WITH_URL_EXTENDER` provider used for providing `errorWithUrlExtender` 
+- new `ERROR_HANDLING_NOTIFICATIONS` injection token used for injecting notifications service used withing error handling package
 - refactored `ServerValidationValidatorDirective`, which nows also subscribes for changes of `ServerValidationService`
 - new *subpackage* `@anglr/select/html2canvas`
 - *subpackage* `@anglr/select/html2canvas`
@@ -49,6 +50,7 @@
 - `InternalServerErrorComponent` is now using `InternalServerErrorRenderer` implementation for displaying internal server error and not displaying error directly
 - removed `WithServerValidationsDirective`, new improved `ServerValidationValidatorDirective` will cover its functionality
 - changed constructor parameters for `ServerValidationValidatorDirective`
+- `GlobalNotificationsService` replaced with `Notifications` from `@anglr/common` package, using `ERROR_HANDLING_NOTIFICATIONS` `InjectionToken`
 
 ## Version 7.0.1
 

@@ -1,7 +1,6 @@
 import {Injectable, Inject, Optional, ClassProvider, InjectionToken} from '@angular/core';
 import {HttpInterceptor, HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpErrorResponse, HttpRequest} from '@angular/common/http';
-import {GlobalNotificationsService} from '@anglr/notifications';
-import {Logger, LOGGER, IgnoredInterceptorsService, IgnoredInterceptorId, AdditionalInfo} from '@anglr/common';
+import {Logger, LOGGER, IgnoredInterceptorsService, IgnoredInterceptorId, AdditionalInfo, Notifications} from '@anglr/common';
 import {isFunction, isArray} from '@jscrpt/common';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
@@ -10,6 +9,7 @@ import {HttpErrorInterceptorOptions} from './httpErrorInterceptorOptions';
 import {InternalServerErrorService} from '../internalServerError/internalServerError.service';
 import {ServerValidationService} from '../serverValidation//serverValidation.service';
 import {BadRequestDetail} from './badRequestDetail';
+import {ERROR_HANDLING_NOTIFICATIONS} from '../misc/tokens';
 
 /**
  * Type of mapper function
@@ -33,7 +33,7 @@ export class HttpErrorInterceptor implements HttpInterceptor
                 @Optional() private _serverValidationService: ServerValidationService,
                 @Optional() private _ignoredInterceptorsService: IgnoredInterceptorsService,
                 @Optional() @Inject(ERROR_RESPONSE_MAP_PROVIDER) private _responseMapper: ResponseMapperFunction,
-                private _notifications: GlobalNotificationsService,
+                @Optional() @Inject(ERROR_HANDLING_NOTIFICATIONS) private _notifications: Notifications,
                 @Inject(LOGGER) private _logger: Logger)
     {
         if(!_options)
@@ -91,7 +91,7 @@ export class HttpErrorInterceptor implements HttpInterceptor
                             {
                                 this._logger.error(`HTTP_ERROR 4xx: ${itm}`);
 
-                                this._notifications.error(itm);
+                                this._notifications?.error(itm);
                             });
                         }
                         
@@ -107,7 +107,7 @@ export class HttpErrorInterceptor implements HttpInterceptor
                                 {
                                     if(isArray(errorDetail.validationErrors[errorInputName]))
                                     {
-                                        errorDetail.validationErrors[errorInputName].forEach(errorMessage => this._notifications.error(errorMessage));
+                                        errorDetail.validationErrors[errorInputName].forEach(errorMessage => this._notifications?.error(errorMessage));
                                     }
                                 });
                             }
@@ -115,7 +115,7 @@ export class HttpErrorInterceptor implements HttpInterceptor
                     }
                     catch(error)
                     {
-                        this._notifications.error(`Request '${err.url}' ended with error code: ${err.status}`);
+                        this._notifications?.error(`Request '${err.url}' ended with error code: ${err.status}`);
                     }
                 }
             }));
