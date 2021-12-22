@@ -1,7 +1,7 @@
 <div class="ise-title">
     <div class="ise-title-text">INTERNAL SERVER ERROR: {{data?.errorInfo?.requestUrl}}</div>
 
-    <a (click)="data?.deleteCallback(data?.errorInfo); dialog?.close()" class="remove-btn">
+    <a (click)="data?.deleteCallback(data.errorInfo); dialog?.close()" class="remove-btn">
         <span class="fas fa-trash-alt"></span>
     </a>
 

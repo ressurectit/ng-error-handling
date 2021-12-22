@@ -33,10 +33,14 @@
 
 ### BREAKING CHANGES
 
-- minimal supported version of *Angular* is `12.0.0`
-- minimal supported version of `@jscrpt/common` is `1.2.0`
+- minimal supported version of *Angular* is `13.1.0`
+- minimal supported version of `@jscrpt/common` is `2.2.0`
 - minimal supported version of `@anglr/common` is `9.0.0`
+- compiled as *Angular IVY* **only** with new *APF*
+- removed support of *es5* target and using latest package.json features
+- removed dependency `@anglr/types`, all mising types used directly here
 - removed `jquery` as dependency
+- dropped support of `Node.js <= 12.20`
 - removed `ReportingExceptionHandlerService`, now should be implemented as custom logger *sink*
 - renamed `ReportingExceptionHandlerOptions` to `AnglrExceptionHandlerOptions`
     - dropped `captureScreenImage` option

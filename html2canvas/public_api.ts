@@ -1,1 +1,0 @@
-export * from './src/html2canvas';

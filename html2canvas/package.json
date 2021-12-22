@@ -1,9 +1,9 @@
-  
 {
     "name": "@anglr/error-handling-html2canvas",
-    "module": "./dist/es5/html2canvas/index.js",
-    "esm2015": "./dist/es2015/html2canvas/index.js",
-    "esm5": "./dist/es5/html2canvas/index.js",
-    "typings": "./index.d.ts",
-    "sideEffects": false
-}
+    "sideEffects": false,
+    "module": "../es2015/html2canvas/src/index.js",
+    "es2015": "../es2015/html2canvas/src/index.js",
+    "es2020": "../es2020/html2canvas/src/index.js",
+    "esm2020": "../es2020/html2canvas/src/index.js",
+    "typings": "./src/index.d.ts"
+  }

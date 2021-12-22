@@ -1,34 +1,37 @@
 {
     "compilerOptions":
     {
-        "target": "es5",
-        "module": "esnext",
+        "target": "es2020",
+        "module": "es2020",
         "moduleResolution": "node",
+        "sourceMap": true,
+        "inlineSources": true,
         "declaration": false,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "noImplicitAny": false,
+        "noImplicitAny": true,
         "noImplicitReturns": true,
+        "noImplicitOverride": true,
+        "noImplicitThis": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "strictNullChecks": false,
+        "strict": true,
+        "strictNullChecks": true,
         "esModuleInterop": true,
+        "importHelpers": true,
+        "newLine": "lf",
+        "rootDir": ".",
+        "outDir": "es2020",
+        "baseUrl": "src",
+        "paths": 
+        {
+            "@anglr/error-handling": ["index.ts"],
+            "sourcemapped-stacktrace" : ["types/sourcemapped-stacktrace.typings.ts"],
+        },
         "lib": 
         [
-            "es2016", 
-            "ES2017",
-            "ES2018",
+            "es2020",
             "dom"
-        ],
-        "types": 
-        [
-            "html2canvas",
-            "sourcemapped-stacktrace"
-        ],
-        "typeRoots": 
-        [
-            "node_modules/@types",
-            "node_modules/@anglr/types"
         ],
         "plugins": 
         [
@@ -39,13 +42,13 @@
     },
     "exclude":
     [
-        "node_modules",
-        "dist"
+        "node_modules"
     ],
     "angularCompilerOptions": 
     {
-        "fullTemplateTypeCheck": true,
         "strictTemplates": true,
-        "enableIvy": false
+        "compilationMode": "partial",
+        "enableResourceInlining": true,
+        "strictInjectionParameters": true
     }
 }

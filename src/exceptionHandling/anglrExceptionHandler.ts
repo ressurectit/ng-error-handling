@@ -116,7 +116,7 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
      * Converts stacktrace using source map
      * @param stack - Current stacktrace
      */
-    private _fromSourceMap(stack: string|string[]): Promise<string>
+    private _fromSourceMap(stack?: string|string[]): Promise<string>
     {
         if(this._isBrowser && !!stack)
         {
