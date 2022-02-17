@@ -17,12 +17,12 @@ export class HttpGatewayTimeoutInterceptorOptions
     /**
      * Text displayed
      */
-    text?: string = 'Server did not respond in defined time.';
+    text: string = 'Server did not respond in defined time.';
 
     /**
      * Action called when 504 status code received
      */
-    action?: HttpGatewayTimeoutAction = (injector: Injector, observer: Observer<any>) =>
+    action: HttpGatewayTimeoutAction = (injector: Injector, observer: Observer<any>) =>
     {
         const notifications = injector.get(ERROR_HANDLING_NOTIFICATIONS);
 

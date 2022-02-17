@@ -8,20 +8,17 @@ import {Observable, Subject} from 'rxjs';
  */
 export class InternalServerErrorInfo
 {
-    /**
-     * Id of error
-     */
-    id: number;
+    //######################### constructor #########################
 
     /**
-     * Html displaying info about error
+     * Creates instance of `InternalServerErrorInfo`
+     * @param id - Id of error
+     * @param errorHtml - Html displaying info about error
+     * @param requestUrl - Request url that was called and caused error
      */
-    errorHtml: SafeResourceUrl;
-
-    /**
-     * Request url that was called and caused error
-     */
-    requestUrl: string;
+    constructor(public id: number, public errorHtml: SafeResourceUrl, public requestUrl: string)
+    {
+    }
 }
 
 /**

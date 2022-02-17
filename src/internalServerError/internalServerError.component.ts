@@ -21,7 +21,7 @@ export class InternalServerErrorComponent implements OnDestroy
     /**
      * Subscription for internalServerErrorService changed event
      */
-    private _subscription: Subscription = null;
+    private _subscription: Subscription|null = null;
     
     //######################### public properties - template bindings #########################
 

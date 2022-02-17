@@ -1,5 +1,26 @@
 # Changelog
 
+## Version 9.0.0 (2022-02-16)
+
+### BREAKING CHANGES
+
+- minimal supported version of *Angular* is `13.1.0`
+- minimal supported version of `@jscrpt/common` is `2.2.0`
+- minimal supported version of `@anglr/common` is `10.0.0`
+- compiled as *Angular IVY* **only** with new *APF*
+- removed support of *es5* target and using latest package.json features
+- removed dependency `@anglr/types`, all mising types used directly here
+- dropped support of `Node.js <= 12.20`
+- `HttpGatewayTimeoutInterceptorOptions` class
+    - `text`, `action` are now non nullable
+- `NoConnectionInterceptorOptions` class
+    - `text`, `action` are now non nullable
+- `ServiceUnavailableInterceptorOptions` class
+    - `text`, `action` are now non nullable
+- `InternalServerErrorInfo` class
+    - added constructor with initialization
+- `ServerValidationMessagesComponent` removed, server validations are injected into control errors
+
 ## Version 8.0.0 (2022-02-16)
 
 ### Bug Fixes
@@ -33,14 +54,10 @@
 
 ### BREAKING CHANGES
 
-- minimal supported version of *Angular* is `13.1.0`
-- minimal supported version of `@jscrpt/common` is `2.2.0`
+- minimal supported version of *Angular* is `12.0.0`
+- minimal supported version of `@jscrpt/common` is `1.2.0`
 - minimal supported version of `@anglr/common` is `9.0.0`
-- compiled as *Angular IVY* **only** with new *APF*
-- removed support of *es5* target and using latest package.json features
-- removed dependency `@anglr/types`, all mising types used directly here
 - removed `jquery` as dependency
-- dropped support of `Node.js <= 12.20`
 - removed `ReportingExceptionHandlerService`, now should be implemented as custom logger *sink*
 - renamed `ReportingExceptionHandlerOptions` to `AnglrExceptionHandlerOptions`
     - dropped `captureScreenImage` option

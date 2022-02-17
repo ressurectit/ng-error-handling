@@ -53,7 +53,7 @@ export class HttpErrorInterceptor implements HttpInterceptor
      * @param req - Request to be intercepted
      * @param next - Next middleware that can be called for next processing
      */
-    public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>
+    public intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>>
     {
         return next.handle(req)
             .pipe(tap(() => {}, (err: HttpErrorResponse) =>
@@ -74,7 +74,7 @@ export class HttpErrorInterceptor implements HttpInterceptor
 
                         if(this._internalServerErrorService)
                         {
-                            this._internalServerErrorService.showInternalServerError(err.error, err.url);
+                            this._internalServerErrorService.showInternalServerError(err.error, err.url ?? '');
                         }
                         
                         return;

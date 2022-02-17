@@ -5,7 +5,6 @@ export {InternalServerErrorService, InternalServerErrorInfo, INTERNAL_SERVER_ERR
 export {InternalServerErrorComponent} from './internalServerError/internalServerError.component';
 export {ServerValidationService} from './serverValidation/serverValidation.service';
 export {ServerValidationValidatorDirective, SERVER_VALIDATIONS_VALIDATOR} from './serverValidation/serverValidationValidator.directive';
-export {ServerValidationMessagesComponent, ImplicitString} from './serverValidation/serverValidationMessages.component';
 export {ANGLR_EXCEPTION_EXTENDERS, AnglrExceptionExtender, ErrorWithUrl, ErrorWithScreenShot} from './exceptionHandling/anglrExceptionExtender';
 export {ANGLR_EXCEPTION_HANDLER_PROVIDER, AnglrExceptionHandler} from './exceptionHandling/anglrExceptionHandler';
 export {errorWithUrlExtender, ERROR_WITH_URL_EXTENDER} from './exceptionHandling/errorWithUrlExtender';

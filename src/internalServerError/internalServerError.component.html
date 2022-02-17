@@ -1,5 +1,5 @@
 <div class="internal-server-error-notification">
-    <div class="notification" *ngIf="errorsHtml?.length > 0" (click)="errorsVisible = !errorsVisible">!</div>
+    <div class="notification" *ngIf="errorsHtml.length > 0" (click)="errorsVisible = !errorsVisible">!</div>
 
     <div class="internalServerErrorsList" *ngIf="errorsVisible">
         <div *ngFor="let error of errorsHtml">

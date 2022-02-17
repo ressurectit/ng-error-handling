@@ -1,7 +1,7 @@
 import {Injectable, Optional, Injector, ClassProvider} from '@angular/core';
 import {HttpInterceptor, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpRequest} from '@angular/common/http';
-import {IgnoredInterceptorsService, AdditionalInfo, IgnoredInterceptorId} from '@anglr/common';
-import {Observable, Observer} from 'rxjs';
+import {IGNORED_INTERCEPTORS} from '@anglr/common';
+import {Observable} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 
 import {HttpGatewayTimeoutInterceptorOptions} from './httpGatewayTimeoutInterceptorOptions';
@@ -14,7 +14,6 @@ export class HttpGatewayTimeoutInterceptor implements HttpInterceptor
 {
     //######################### constructor #########################
     constructor(@Optional() private _options: HttpGatewayTimeoutInterceptorOptions,
-                @Optional() private _ignoredInterceptorsService: IgnoredInterceptorsService,
                 private _injector: Injector)
     {
         if(!_options || !(_options instanceof HttpGatewayTimeoutInterceptorOptions))
@@ -30,15 +29,15 @@ export class HttpGatewayTimeoutInterceptor implements HttpInterceptor
      * @param req - Request to be intercepted
      * @param next - Next middleware that can be called for next processing
      */
-    public intercept(req: HttpRequest<any> & AdditionalInfo<IgnoredInterceptorId>, next: HttpHandler): Observable<HttpEvent<any>>
+    public intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>>
     {
         return next.handle(req).pipe(catchError((err) =>
         {
-            return Observable.create((observer: Observer<any>) =>
+            return new Observable(observer =>
             {
                 //client error, not response from server, or is ignored
                 if (err.error instanceof Error ||
-                    (this._ignoredInterceptorsService && this._ignoredInterceptorsService.isIgnored(HttpGatewayTimeoutInterceptor, req.additionalInfo)))
+                    req.context.get(IGNORED_INTERCEPTORS).some(itm => itm == HttpGatewayTimeoutInterceptor))
                 {
                     observer.error(err);
                     observer.complete();
@@ -57,7 +56,7 @@ export class HttpGatewayTimeoutInterceptor implements HttpInterceptor
                 //other errors
                 observer.error(err);
                 observer.complete();
-            }) as Observable<HttpEvent<any>>;
+            }) as Observable<HttpEvent<unknown>>;
         }));
     }
 }

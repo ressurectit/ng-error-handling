@@ -1,6 +1,5 @@
 import {Attribute, ExistingProvider, forwardRef, Directive, OnInit, OnDestroy, Injector} from '@angular/core';
-import {NG_VALIDATORS, Validator, FormControlDirective, FormControlName, FormControl, NgModel} from '@angular/forms';
-import {Dictionary} from '@jscrpt/common';
+import {NG_VALIDATORS, Validator, FormControlDirective, FormControlName, FormControl, NgModel, ValidationErrors} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {filter} from 'rxjs/operators';
 
@@ -41,7 +40,7 @@ export class ServerValidationValidatorDirective implements Validator, OnInit, On
     /**
      * Instance of control that is used
      */
-    private _control: FormControl;
+    private _control?: FormControl;
 
     //######################### private properties #########################
 
@@ -50,7 +49,7 @@ export class ServerValidationValidatorDirective implements Validator, OnInit, On
      */
     private get control(): FormControl
     {
-        return this._control ?? (this._control = this._injector.get(FormControlDirective, null)?.control ?? this._injector.get(FormControlName, null)?.control ?? this._injector.get(NgModel, null).control);
+        return this._control ?? (this._control = this._injector.get(FormControlDirective, null)?.control ?? this._injector.get(FormControlName, null)?.control ?? this._injector.get(NgModel).control);
     }
 
     //######################### constructor #########################
@@ -89,11 +88,11 @@ export class ServerValidationValidatorDirective implements Validator, OnInit, On
      * @param control - Control that is being validated
      * @returns validation results
      */
-    public validate(): Dictionary
+    public validate(): ValidationErrors | null
     {
         if(this._serverValidationService.serverValidations[this._serverValidation])
         {
-            const result: Dictionary = {};
+            const result: ValidationErrors = {};
             result[SERVER_VALIDATIONS] = this._serverValidationService.serverValidations[this._serverValidation];
 
             return result;

@@ -1,6 +1,6 @@
 import {Injectable, Optional, Injector, ClassProvider} from '@angular/core';
 import {HttpInterceptor, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpRequest} from '@angular/common/http';
-import {IgnoredInterceptorsService, IgnoredInterceptorId, AdditionalInfo} from '@anglr/common';
+import {IGNORED_INTERCEPTORS} from '@anglr/common';
 import {catchError} from 'rxjs/operators';
 import {Observable, Observer} from 'rxjs';
 
@@ -14,7 +14,6 @@ export class NoConnectionInterceptor implements HttpInterceptor
 {
     //######################### constructor #########################
     constructor(@Optional() private _options: NoConnectionInterceptorOptions,
-                @Optional() private _ignoredInterceptorsService: IgnoredInterceptorsService,
                 private _injector: Injector)
     {
         if(!_options || !(_options instanceof NoConnectionInterceptorOptions))
@@ -30,15 +29,15 @@ export class NoConnectionInterceptor implements HttpInterceptor
      * @param req - Request to be intercepted
      * @param next - Next middleware that can be called for next processing
      */
-    public intercept(req: HttpRequest<any> & AdditionalInfo<IgnoredInterceptorId>, next: HttpHandler): Observable<HttpEvent<any>>
+    public intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>>
     {
         return next.handle(req).pipe(catchError((err) =>
         {
-            return new Observable((observer: Observer<any>) =>
+            return new Observable((observer: Observer<unknown>) =>
             {
                 //client error, not response from server, or is ignored
                 if (err.error instanceof Error ||
-                    (this._ignoredInterceptorsService && this._ignoredInterceptorsService.isIgnored(NoConnectionInterceptor, req.additionalInfo)))
+                    req.context.get(IGNORED_INTERCEPTORS).some(itm => itm == NoConnectionInterceptor))
                 {
                     observer.error(err);
                     observer.complete();
@@ -57,7 +56,7 @@ export class NoConnectionInterceptor implements HttpInterceptor
                 //other errors
                 observer.error(err);
                 observer.complete();
-            }) as Observable<HttpEvent<any>>;
+            }) as Observable<HttpEvent<unknown>>;
         }));
     }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 declare namespace SourceMappedStacktrace
 {
     /**
@@ -6,7 +7,7 @@ declare namespace SourceMappedStacktrace
      * @param {(stack: string[]) => void} done Callback invoked with the transformed stacktrace (an Array of Strings) passed as the first argument
      * @param {{cacheGlobally?: boolean, filter?: Function}} opts Optional options object containing
      */
-    function mapStackTrace(stack: string|string[], done: (stack: string[]) => void, opts?: {cacheGlobally?: boolean, filter?: Function});
+    function mapStackTrace(stack: string|string[], done: (stack: string[]) => void, opts?: {cacheGlobally?: boolean, filter?: Function}): void;
 }
 
 declare module 'sourcemapped-stacktrace'
