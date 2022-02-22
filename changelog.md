@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 9.0.2 (2022-02-22)
+
+### Bug Fixes
+
+- fixed missing `material` entry point
+
 ## Version 9.0.1 (2022-02-22)
 
 ### Bug Fixes

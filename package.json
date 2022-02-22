@@ -126,6 +126,14 @@
             "es2015": "./es2015/html2canvas/src/index.js",
             "node": "./es2015/html2canvas/src/index.js",
             "default": "./es2020/html2canvas/src/index.js"
+        },
+        "./material": {
+            "types": "./material/src/index.d.ts",
+            "esm2020": "./es2020/material/src/index.js",
+            "es2020": "./es2020/material/src/index.js",
+            "es2015": "./es2015/material/src/index.js",
+            "node": "./es2015/material/src/index.js",
+            "default": "./es2020/material/src/index.js"
         }
     }
 }
