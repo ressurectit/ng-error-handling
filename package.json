@@ -5,7 +5,7 @@
     "type": "module",
     "sideEffects": false,
     "scripts": {
-        "build": "ngc --declaration --declarationDir . --declarationMap && ngc -t es2015 --outDir es2015 && npm run dts:rollup",
+        "build": "ngc --declaration --declarationDir . --declarationMap && ngc -t es2015 --outDir es2015",
         "dts:rollup": "npm run api -- api-extractor.json && npm run api -- html2canvas/api-extractor.json && npm run api -- material/api-extractor.json",
         "api": "api-extractor run --local --verbose -c",
         "clean": "rimraf */temp temp es2015 es2020 **/tsdoc-metadata.json src/**/*.d.ts src/**/*.d.ts.map */src/**/*.d.ts */src/**/*.d.ts.map ./*.d.ts ./*.d.ts.map */*.d.ts",
@@ -33,11 +33,11 @@
         "doc:generate:html2canvas": "rimraf docs/content/api/ng-error-handling-html2canvas && npm run doc:json:html2canvas && npm run doc:md:html2canvas && npm run doc:api:html2canvas",
         "doc:json:html2canvas": "api-extractor run --local --verbose -c html2canvas/api-extractor.json",
         "doc:md:html2canvas": "api-documenter markdown -i html2canvas/temp -o docs/content/api/ng-error-handling-html2canvas",
-        "doc:api:html2canvas": "copyfiles -u 2 html2canvas/temp/common-html2canvas.api.md docs/content/api/ng-common-html2canvas && rimraf html2canvas/temp",
+        "doc:api:html2canvas": "copyfiles -u 2 html2canvas/temp/error-handling-html2canvas.api.md docs/content/api/ng-error-handling-html2canvas && rimraf html2canvas/temp",
         "doc:generate:material": "rimraf docs/content/api/ng-error-handling-material && npm run doc:json:material && npm run doc:md:material && npm run doc:api:material",
         "doc:json:material": "api-extractor run --local --verbose -c material/api-extractor.json",
         "doc:md:material": "api-documenter markdown -i material/temp -o docs/content/api/ng-error-handling-material",
-        "doc:api:material": "copyfiles -u 2 material/temp/common-material.api.md docs/content/api/ng-common-material && rimraf material/temp"
+        "doc:api:material": "copyfiles -u 2 material/temp/error-handling-material.api.md docs/content/api/ng-error-handling-material && rimraf material/temp"
     },
     "engines": {
         "node": "^12.20.0 || ^14.15.0 || >=16.10.0"
@@ -106,26 +106,26 @@
     "es2020": "./es2020/src/index.js",
     "es2015": "./es2015/src/index.js",
     "module": "./es2015/src/index.js",
-    "typings": "./error-handling.d.ts",
+    "typings": "./src/index.d.ts",
     "exports": {
         "./package.json": {
             "default": "./package.json"
         },
         ".": {
-            "types": "./error-handling.d.ts",
+            "types": "./src/index.d.ts",
             "esm2020": "./es2020/src/index.js",
             "es2020": "./es2020/src/index.js",
             "es2015": "./es2015/src/index.js",
             "node": "./es2015/src/index.js",
             "default": "./es2020/src/index.js"
         },
-        "./date-fns": {
-            "types": "./date-fns/error-handling-date-fns.d.ts",
-            "esm2020": "./es2020/date-fns/src/index.js",
-            "es2020": "./es2020/date-fns/src/index.js",
-            "es2015": "./es2015/date-fns/src/index.js",
-            "node": "./es2015/date-fns/src/index.js",
-            "default": "./es2020/date-fns/src/index.js"
+        "./html2canvas": {
+            "types": "./html2canvas/src/index.d.ts",
+            "esm2020": "./es2020/html2canvas/src/index.js",
+            "es2020": "./es2020/html2canvas/src/index.js",
+            "es2015": "./es2015/html2canvas/src/index.js",
+            "node": "./es2015/html2canvas/src/index.js",
+            "default": "./es2020/html2canvas/src/index.js"
         }
     }
 }
