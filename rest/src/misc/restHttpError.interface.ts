@@ -1,5 +1,7 @@
 import {HttpClientErrorCustomHandler, HttpClientErrorResponseMapper} from '@anglr/error-handling';
 
+import {WithRestClientContext} from './withRestClientContext';
+
 /**
  * Contains metadata for http client errors configuration
  */
@@ -18,5 +20,5 @@ export interface RestHttpClientErrors extends TypedPropertyDescriptor<any>
     /**
      * Custom error handlers for specific http status codes
      */
-    customErrorHandlers?: Record<number, HttpClientErrorCustomHandler>;
+    customErrorHandlers?: Record<number, HttpClientErrorCustomHandler|WithRestClientContext<HttpClientErrorCustomHandler>>;
 }

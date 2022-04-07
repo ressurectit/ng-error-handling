@@ -33,12 +33,15 @@
     - **DECORATORS**
         - new `Handle404` decorator, that handles 404 response http code
         - new `IgnoreClientErrors` decorator, that adds ignored client error http codes for client error handling middleware
+        - new `Handle400WithValidations` decorator, that handles 400 http code with validations
     - **MIDDLEWARES**
         - new `ClientErrorHandlingMiddleware` middleware, that is used for handling 4xx errors
     - new `RestHttpClientErrors` interface, that contains metadata for http client errors configuration
         - property `addIgnoredClientErrors` array of ignored client errors that will be added to default ones
         - property `clientErrorResponseMapper` response mapper for client errors
         - property `customErrorHandlers` custom error handlers for specific http status codes
+    - new `WithRestClientContext` class, that allows resolving your data with RESTClient context
+    - new `resolveWithRestClientContext` function, that resolves with rest client context into result
 
 ### BREAKING CHANGES
 

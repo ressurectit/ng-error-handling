@@ -7,6 +7,7 @@ import {catchError} from 'rxjs/operators';
 
 import {RestHttpClientErrors} from '../misc/restHttpError.interface';
 import {ɵhandle4xxFunction} from '../../../src/errorHandlers/handle4xxFunc';
+import {resolveWithRestClientContext} from '../misc/withRestClientContext';
 
 interface ɵClientError
 {
@@ -75,7 +76,7 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
                     //call custom error handler
                     if(customErrorHandlers?.[err.status])
                     {
-                        return customErrorHandlers[err.status](err);
+                        return resolveWithRestClientContext(customErrorHandlers[err.status], this)(err);
                     }
                 }
 
