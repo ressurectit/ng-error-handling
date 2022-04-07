@@ -1,5 +1,13 @@
 # Changelog
 
+## Version 10.0.0 (2022-04-07)
+
+### Features
+
+- new *subpackage* `@anglr/error-handling/rest`
+- *subpackage* `@anglr/error-handling/rest`
+    - requires `@anglr/rest` minimal version `11.0.1`
+
 ## Version 9.0.2 (2022-02-22)
 
 ### Bug Fixes

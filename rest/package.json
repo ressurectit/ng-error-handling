@@ -1,0 +1,9 @@
+{
+    "name": "@anglr/error-handling-rest",
+    "sideEffects": false,
+    "module": "../es2015/rest/src/index.js",
+    "es2015": "../es2015/rest/src/index.js",
+    "es2020": "../es2020/rest/src/index.js",
+    "esm2020": "../es2020/rest/src/index.js",
+    "typings": "./src/index.d.ts"
+  }
