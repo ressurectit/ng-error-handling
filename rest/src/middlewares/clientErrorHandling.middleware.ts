@@ -1,12 +1,11 @@
 import {HttpRequest, HttpErrorResponse} from '@angular/common/http';
 import {LOGGER, Logger, Notifications} from '@anglr/common';
 import {RESTClient, RestMiddleware} from '@anglr/rest';
+import {CLIENT_ERROR_NOTIFICATIONS, HTTP_CLIENT_ERROR_CUSTOM_HANDLER, HTTP_CLIENT_ERROR_RESPONSE_MAPPER, HTTP_IGNORED_CLIENT_ERRORS, RestClientError} from '@anglr/error-handling';
 import {Observable, of, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 
-import {CLIENT_ERROR_NOTIFICATIONS, CUSTOM_CLIENT_ERROR_HANDLER, REST_CLIENT_ERRORS_RESPONSE_MAPPER, REST_IGNORED_CLIENT_ERRORS} from '../tokens';
-import {RestClientErrors} from '../rest.interface';
-import {RestClientError} from '../types';
+import {RestHttpClientErrors} from '../misc/restHttpError.interface';
 
 interface ɵClientError
 {
@@ -36,7 +35,7 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
                _id: string,
                _target: unknown,
                _methodName: string,
-               descriptor: RestClientErrors,
+               descriptor: RestHttpClientErrors,
                _args: unknown[],
                request: HttpRequest<unknown>,
                next: (request: HttpRequest<unknown>) => Observable<unknown>): Observable<unknown>
@@ -60,7 +59,7 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
                 if(err.status >= 400 && err.status < 500)
                 {
                     const $this = this as unknown as ɵClientError;
-                    const ignoredClientErrors = this.injector.get(REST_IGNORED_CLIENT_ERRORS).concat(descriptor?.addIgnoredClientErrors ?? []);
+                    const ignoredClientErrors = this.injector.get(HTTP_IGNORED_CLIENT_ERRORS).concat(descriptor?.addIgnoredClientErrors ?? []);
 
                     $this.ɵLogger ??= this.injector.get(LOGGER, null);
                     $this.ɵLogger?.error(`HTTP_ERROR ${err.status} ${err.statusText}: ${err.error}`);
@@ -71,7 +70,7 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
                         return throwError(err);
                     }
                     
-                    const customErrorHandlers = descriptor?.customErrorHandlers ?? this.injector.get(CUSTOM_CLIENT_ERROR_HANDLER, null);
+                    const customErrorHandlers = descriptor?.customErrorHandlers ?? this.injector.get(HTTP_CLIENT_ERROR_CUSTOM_HANDLER, null);
 
                     //call custom error handler
                     if(customErrorHandlers?.[err.status])
@@ -81,7 +80,7 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
 
                     $this.ɵNotifications ??= this.injector.get(CLIENT_ERROR_NOTIFICATIONS, null);
 
-                    const mapper = descriptor?.clientErrorsResponseMapper ?? this.injector.get(REST_CLIENT_ERRORS_RESPONSE_MAPPER);
+                    const mapper = descriptor?.clientErrorResponseMapper ?? this.injector.get(HTTP_CLIENT_ERROR_RESPONSE_MAPPER);
                     const errors = mapper(err);
 
                     errors?.forEach(error => $this.ɵNotifications?.error(error));

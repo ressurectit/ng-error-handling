@@ -1,7 +1,7 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {Observable, of, throwError} from 'rxjs';
 
-import {RestNotFoundError} from '../types';
+import {RestNotFoundError} from '../misc/httpErrors';
 
 /**
  * Handles http error response with code 404 and returns RestNotFoundError

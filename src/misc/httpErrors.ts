@@ -1,4 +1,4 @@
-import {RestClientValidationErrors} from './rest.interface';
+import {HttpClientValidationErrors} from './httpError.interface';
 
 /**
  * Class that represents handled client error 4xx http status code
@@ -24,7 +24,7 @@ export class RestNotFoundError extends RestClientError
 export class ClientValidationError extends RestClientError
 {
     constructor(messages: string[]|undefined|null,
-                public validationErrors: RestClientValidationErrors|undefined|null)
+                public validationErrors: HttpClientValidationErrors|undefined|null)
     {
         super(messages);
     }

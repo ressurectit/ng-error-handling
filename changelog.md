@@ -4,9 +4,49 @@
 
 ### Features
 
+- **ERROR HANDLERS**
+    - new `handle400WithValidationsFunc` function, that handles http error response with code 400 and process validations errors and returns RestClientError or RestClientValidationError
+    - new `handle404Func` function, that handles http error response with code 404 and returns RestNotFoundError
+- **INTERCEPTORS**
+    - new `HttpClientErrorInterceptor` *http interceptor*, that is used for handling http server errors with codes 400..499
+    - new `HttpServerErrorInterceptor` *http interceptor*, that is used for handling http server errors with codes 500..599 and displaying of internal server error
+- new `HttpClientErrorResponseMapper` type, that represents response mapper for http client errors that are converted to array of error messages
+- new `HttpClientValidationErrorResponseMapper` type, that represents response mapper for http client validation errors that are converted into object RestClientValidationErrors
+- new `HttpClientErrorCustomHandler` type, that represents custom handler for `HttpErrorResponse`
+- new `HttpClientPropertyValidationError` interface, that represents validation errors for single validated property
+- new `HttpClientValidationErrors` interface, that represents object storing validations errors from server
+- new `Handle400WithValidationsOptions` interface, that represents options passed for handle 400 http status code with validations
+    - property `injector` injector used for obtaining dependencies
+    - property `clientErrorsResponseMapper` response mapper for http client errors
+    - property `clientValidationErrorsResponseMapper` response mapper for http client validation errors
+- new `RestClientError` class, that represents handled client error 4xx http status code
+- new `RestNotFoundError` class, that represents handled 404 http status code
+- new `ClientValidationError` class, that represents handled 400 http status code with validations
+- **RXJS OPERATORS**
+    - new `handle400WithValidations` operator, that handles 400 http code with validations as response
+    - new `handle404` operator, that handles 404 http code as response
 - new *subpackage* `@anglr/error-handling/rest`
 - *subpackage* `@anglr/error-handling/rest`
     - requires `@anglr/rest` minimal version `11.0.1`
+    - **DECORATORS**
+        - new `Handle404` decorator, that handles 404 response http code
+        - new `IgnoreClientErrors` decorator, that adds ignored client error http codes for client error handling middleware
+    - **MIDDLEWARES**
+        - new `ClientErrorHandlingMiddleware` middleware, that is used for handling 4xx errors
+    - new `RestHttpClientErrors` interface, that contains metadata for http client errors configuration
+        - property `addIgnoredClientErrors` array of ignored client errors that will be added to default ones
+        - property `clientErrorResponseMapper` response mapper for client errors
+        - property `customErrorHandlers` custom error handlers for specific http status codes
+
+### BREAKING CHANGES
+
+- removed `BadRequestDetail`
+- removed `HTTP_ERROR_INTERCEPTOR_PROVIDER`
+- removed `ResponseMapperFunction`
+- removed `ERROR_RESPONSE_MAP_PROVIDER`
+- removed `HttpErrorInterceptor` replaced by `HttpClientErrorInterceptor` and `HttpServerErrorInterceptor`
+    - `HttpClientErrorInterceptor` should not be used, use RestMiddleware instead
+- removed `HttpErrorInterceptorOptions`
 
 ## Version 9.0.2 (2022-02-22)
 
@@ -58,13 +98,13 @@
 - new `INTERNAL_SERVER_ERROR_RENDERER` injection token that allows injecting of implementation `InternalServerErrorRenderer`, defaults to *dummy* implementation
 - `InternalServerErrorComponent` with bit changed design
 - added new `errorWithUrlExtender` that implements `AnglrExceptionExtender` and adding (application url) data to error defined in `ErrorWithUrl`
-- added new `ERROR_WITH_URL_EXTENDER` provider used for providing `errorWithUrlExtender` 
+- added new `ERROR_WITH_URL_EXTENDER` provider used for providing `errorWithUrlExtender`
 - new `ERROR_HANDLING_NOTIFICATIONS` injection token used for injecting notifications service used withing error handling package
 - refactored `ServerValidationValidatorDirective`, which nows also subscribes for changes of `ServerValidationService`
 - new *subpackage* `@anglr/select/html2canvas`
 - *subpackage* `@anglr/select/html2canvas`
     - added new `errorWithScreenShotExtender` that implements `AnglrExceptionExtender` and adding (screenshot) data to error defined in `ErrorWithScreenShot`
-    - added new `ERROR_WITH_SCREENSHOT_EXTENDER` provider used for providing `errorWithScreenShotExtender` 
+    - added new `ERROR_WITH_SCREENSHOT_EXTENDER` provider used for providing `errorWithScreenShotExtender`
 - new *subpackage* `@anglr/select/material`
 - *subpackage* `@anglr/select/material`
     - added new `DialogInternalServerErrorRenderer` as implementation of `InternalServerErrorRenderer` which displays internal server error in *material dialog*
@@ -113,7 +153,7 @@
 
 ## Version 5.0.2
  - added `ServiceUnavailableInterceptor` and `ServiceUnavailableInterceptorOptions` for handling 503 http status code
- - updated `NoConnectionInterceptorOptions` default `text` property value 
+ - updated `NoConnectionInterceptorOptions` default `text` property value
 
 ## Version 5.0.1
  - added `HttpGatewayTimeoutInterceptor` and `HttpGatewayTimeoutInterceptorOptions` for handling 504 http status code

@@ -3,7 +3,7 @@ import {MonoTypeOperatorFunction} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 
 import {handle404Func} from '../errorHandlers';
-import {RestNotFoundError} from '../types';
+import {RestNotFoundError} from '../misc/httpErrors';
 
 /**
  * Handles 404 http code as response

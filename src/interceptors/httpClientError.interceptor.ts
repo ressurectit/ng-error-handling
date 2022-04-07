@@ -5,15 +5,18 @@ import {InternalServerErrorService} from '@anglr/error-handling';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 
+import {HTTP_IGNORED_CLIENT_ERRORS} from '../misc/tokens';
+
 /**
- * Interceptor that is used for handling http server errors with codes 500..599
+ * Interceptor that is used for handling http server errors with codes 400..499
  */
 @Injectable()
-export class HttpServerErrorInterceptor implements HttpInterceptor
+export class HttpClientErrorInterceptor implements HttpInterceptor
 {
     //######################### constructor #########################
-    constructor(@Optional() private _internalServerErrorService: InternalServerErrorService,
-                @Inject(LOGGER) private _logger: Logger)
+    constructor(@Optional() protected _internalServerErrorService: InternalServerErrorService,
+                @Inject(HTTP_IGNORED_CLIENT_ERRORS) protected _ignoredClientErrors: number[],
+                @Inject(LOGGER) protected _logger: Logger,)
     {
     }
 
@@ -39,20 +42,17 @@ export class HttpServerErrorInterceptor implements HttpInterceptor
 
                     //client error, not response from server, or is ignored
                     if (err.error instanceof Error || 
-                        req.context.get(IGNORED_INTERCEPTORS).some(itm => itm == HttpServerErrorInterceptor))
+                        req.context.get(IGNORED_INTERCEPTORS).some(itm => itm == HttpClientErrorInterceptor))
                     {
                         return;
                     }
 
-                    //if server error
-                    if(err.status >= 500 && err.status < 600)
+                    //if client error
+                    if(err.status >= 400 && err.status < 500 && !this._ignoredClientErrors.find(itm => itm == err.status))
                     {
-                        this._logger.error(`HTTP_ERROR 5xx: url: ${err.url} error:${err.error}`);
+                        this._logger.error(`HTTP_ERROR ${err.status} ${err.statusText}: ${err.error}`);
 
-                        if(this._internalServerErrorService)
-                        {
-                            this._internalServerErrorService.showInternalServerError(err.error, err.url ?? '');
-                        }
+                        //TODO: finish
                     }
                 }));
         }
@@ -64,11 +64,11 @@ export class HttpServerErrorInterceptor implements HttpInterceptor
 }
 
 /**
- * Provider for proper use of HttpServerErrorInterceptor, use this provider to inject this interceptor
+ * Provider for proper use of HttpClientErrorInterceptor, use this provider to inject this interceptor
  */
-export const HTTP_SERVER_ERROR_INTERCEPTOR_PROVIDER: ClassProvider = 
+export const HTTP_CLIENT_ERROR_INTERCEPTOR_PROVIDER: ClassProvider = 
 {
     provide: HTTP_INTERCEPTORS,
     multi: true,
-    useClass: HttpServerErrorInterceptor
+    useClass: HttpClientErrorInterceptor
 };

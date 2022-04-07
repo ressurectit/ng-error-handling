@@ -1,6 +1,3 @@
-export {BadRequestDetail} from './httpErrorInterceptor/badRequestDetail';
-export {HttpErrorInterceptor, HTTP_ERROR_INTERCEPTOR_PROVIDER, ERROR_RESPONSE_MAP_PROVIDER, ResponseMapperFunction} from './httpErrorInterceptor/httpErrorInterceptor';
-export {HttpErrorInterceptorOptions} from './httpErrorInterceptor/httpErrorInterceptorOptions';
 export {InternalServerErrorService, InternalServerErrorInfo, INTERNAL_SERVER_ERROR_RENDERER, InternalServerErrorRenderer} from './internalServerError/internalServerError.service';
 export {InternalServerErrorComponent} from './internalServerError/internalServerError.component';
 export {ServerValidationService} from './serverValidation/serverValidation.service';
@@ -20,3 +17,8 @@ export * from './noConnectionInterceptor/noConnectionInterceptorOptions';
 export * from './serviceUnavailableInterceptor/serviceUnavailableInterceptor';
 export * from './serviceUnavailableInterceptor/serviceUnavailableInterceptorOptions';
 export * from './misc/tokens';
+export * from './misc/httpError.interface';
+export * from './misc/httpErrors';
+export * from './errorHandlers';
+export * from './interceptors';
+export * from './rxjsOperators';

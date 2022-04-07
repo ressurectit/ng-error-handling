@@ -2,8 +2,8 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {MonoTypeOperatorFunction} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 
-import {RestClientError, ClientValidationError} from '../types';
-import {Handle400WithValidationsOptions} from '../rest.interface';
+import {RestClientError, ClientValidationError} from '../misc/httpErrors';
+import {Handle400WithValidationsOptions} from '../misc/httpError.interface';
 import {handle400WithValidationsFunc} from '../errorHandlers';
 
 /**

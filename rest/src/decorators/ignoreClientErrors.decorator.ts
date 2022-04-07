@@ -1,6 +1,6 @@
 import {RESTClient, RestMethodMiddlewares} from '@anglr/rest';
 
-import {RestClientErrors} from '../rest.interface';
+import {RestHttpClientErrors} from '../misc/restHttpError.interface';
 
 /**
  * Adds ignored client error http codes for client error handling middleware
@@ -8,11 +8,11 @@ import {RestClientErrors} from '../rest.interface';
  */
 export function IgnoreClientErrors(addIgnoredClientErrors: number[])
 {
-    return function<TDecorated>(_target: RESTClient, _propertyKey: string, descriptor: RestClientErrors &
+    return function<TDecorated>(_target: RESTClient, _propertyKey: string, descriptor: RestHttpClientErrors &
                                                                                        RestMethodMiddlewares |
                                                                                        TDecorated): TypedPropertyDescriptor<any>
     {
-        const descr = descriptor as RestClientErrors & RestMethodMiddlewares;
+        const descr = descriptor as RestHttpClientErrors & RestMethodMiddlewares;
         descr.addIgnoredClientErrors = addIgnoredClientErrors;
 
         return descr;
