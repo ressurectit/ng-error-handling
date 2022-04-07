@@ -1,11 +1,12 @@
-import {Injectable, Inject, Optional, ClassProvider} from '@angular/core';
+import {Injectable, Inject, Optional, ClassProvider, Injector} from '@angular/core';
 import {HttpInterceptor, HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpErrorResponse, HttpRequest} from '@angular/common/http';
 import {Logger, LOGGER, IGNORED_INTERCEPTORS} from '@anglr/common';
-import {InternalServerErrorService} from '@anglr/error-handling';
+import {InternalServerErrorService, ɵHandle400WithValidationsFunction} from '@anglr/error-handling';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 
 import {HTTP_IGNORED_CLIENT_ERRORS} from '../misc/tokens';
+import {ɵhandle4xxFunction} from '../errorHandlers/handle4xxFunc';
 
 /**
  * Interceptor that is used for handling http server errors with codes 400..499
@@ -15,6 +16,7 @@ export class HttpClientErrorInterceptor implements HttpInterceptor
 {
     //######################### constructor #########################
     constructor(@Optional() protected _internalServerErrorService: InternalServerErrorService,
+                protected _injector: Injector,
                 @Inject(HTTP_IGNORED_CLIENT_ERRORS) protected _ignoredClientErrors: number[],
                 @Inject(LOGGER) protected _logger: Logger,)
     {
@@ -52,7 +54,25 @@ export class HttpClientErrorInterceptor implements HttpInterceptor
                     {
                         this._logger.error(`HTTP_ERROR ${err.status} ${err.statusText}: ${err.error}`);
 
-                        //TODO: finish
+                        //handle 400
+                        if(ɵHandle400WithValidationsFunction(err,
+                                                             {
+                                                                 injector: this._injector
+                                                             },
+                                                             () => false,
+                                                             () => true,
+                                                             () => true))
+                        {
+                            return;
+                        }
+
+                        //handle rest of 4xx
+                        ɵhandle4xxFunction(err,
+                                           {
+                                               injector: this._injector
+                                           },
+                                           () => false,
+                                           () => true);
                     }
                 }));
         }

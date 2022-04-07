@@ -1,11 +1,9 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {Observable, of, throwError} from 'rxjs';
 
-import {Handle400WithValidationsOptions} from '../misc/httpError.interface';
+import {Handle400WithValidationsOptions, HttpClientValidationErrors} from '../misc/httpError.interface';
 import {CLIENT_ERROR_NOTIFICATIONS, HTTP_CLIENT_ERROR_RESPONSE_MAPPER, HTTP_CLIENT_VALIDATION_ERROR_RESPONSE_MAPPER} from '../misc/tokens';
 import {RestClientError, ClientValidationError} from '../misc/httpErrors';
-
-//TODO: extract functionality and use it in interceptor
 
 /**
  * Handles http error response with code 400 and process validations errors and returns RestClientError or RestClientValidationError
@@ -13,6 +11,22 @@ import {RestClientError, ClientValidationError} from '../misc/httpErrors';
  * @param options - Options containing required stuff for handling errors
  */
 export function handle400WithValidationsFunc(error: HttpErrorResponse, options: Handle400WithValidationsOptions): Observable<RestClientError|ClientValidationError>
+{
+    return ɵHandle400WithValidationsFunction(error,
+                                             options,
+                                             error => throwError(error),
+                                             errors => of(new RestClientError(errors)),
+                                             (errors, validationErrors) => of(new ClientValidationError(errors, validationErrors)));
+}
+
+/**
+ * Handles http error response with code 400 and process validations errors, with custom return types
+ */
+export function ɵHandle400WithValidationsFunction<TError, TClientError, TClientValidationError>(error: HttpErrorResponse,
+                                                                                                options: Handle400WithValidationsOptions,
+                                                                                                errorReturnCallback: (error: HttpErrorResponse) => TError,
+                                                                                                clientErrorReturnCallback: (errors: string[]) => TClientError,
+                                                                                                clientValidationErrorReturnCallback: (errors: string[], validationErrors: HttpClientValidationErrors | null) => TClientValidationError): TError|TClientError|TClientValidationError
 {
     //handles 400 code
     if(error.status == 400)
@@ -29,11 +43,11 @@ export function handle400WithValidationsFunc(error: HttpErrorResponse, options: 
         {
             //TODO
 
-            return of(new ClientValidationError(errors, validationErrors));
+            return clientValidationErrorReturnCallback(errors, validationErrors);
         }
 
-        return of(new RestClientError(errors));
+        return clientErrorReturnCallback(errors);
     }
 
-    return throwError(error);
+    return errorReturnCallback(error);
 }

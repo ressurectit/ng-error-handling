@@ -1,15 +1,15 @@
 import {HttpRequest, HttpErrorResponse} from '@angular/common/http';
-import {LOGGER, Logger, Notifications} from '@anglr/common';
+import {LOGGER, Logger} from '@anglr/common';
 import {RESTClient, RestMiddleware} from '@anglr/rest';
-import {CLIENT_ERROR_NOTIFICATIONS, HTTP_CLIENT_ERROR_CUSTOM_HANDLER, HTTP_CLIENT_ERROR_RESPONSE_MAPPER, HTTP_IGNORED_CLIENT_ERRORS, RestClientError} from '@anglr/error-handling';
+import {HTTP_CLIENT_ERROR_CUSTOM_HANDLER, HTTP_IGNORED_CLIENT_ERRORS, RestClientError} from '@anglr/error-handling';
 import {Observable, of, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 
 import {RestHttpClientErrors} from '../misc/restHttpError.interface';
+import {ɵhandle4xxFunction} from '../../../src/errorHandlers/handle4xxFunc';
 
 interface ɵClientError
 {
-    ɵNotifications: Notifications|null;
     ɵLogger: Logger|null;
 }
 
@@ -77,19 +77,15 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
                     {
                         return customErrorHandlers[err.status](err);
                     }
-
-                    $this.ɵNotifications ??= this.injector.get(CLIENT_ERROR_NOTIFICATIONS, null);
-
-                    const mapper = descriptor?.clientErrorResponseMapper ?? this.injector.get(HTTP_CLIENT_ERROR_RESPONSE_MAPPER);
-                    const errors = mapper(err);
-
-                    errors?.forEach(error => $this.ɵNotifications?.error(error));
-
-                    return of(new RestClientError(errors));
                 }
 
-                //other errors
-                return throwError(err);
+                return ɵhandle4xxFunction(err,
+                                          {
+                                              injector: this.injector,
+                                              clientErrorsResponseMapper: descriptor?.clientErrorResponseMapper
+                                          },
+                                          error => throwError(error),
+                                          errors => of(new RestClientError(errors)));
             }));
     }
 }

@@ -40,9 +40,9 @@ export interface HttpClientValidationErrors
 }
 
 /**
- * Options passed for handle 400 http status code with validations
+ * Options passed for handle 4xx http status codes
  */
-export interface Handle400WithValidationsOptions
+export interface Handle4xxOptions
 {
     /**
      * Injector used for obtaining dependencies
@@ -53,7 +53,13 @@ export interface Handle400WithValidationsOptions
      * Response mapper for http client errors
      */
     clientErrorsResponseMapper?: HttpClientErrorResponseMapper;
+}
 
+/**
+ * Options passed for handle 400 http status code with validations
+ */
+export interface Handle400WithValidationsOptions extends Handle4xxOptions
+{
     /**
      * Response mapper for http client validation errors
      */

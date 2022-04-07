@@ -15,9 +15,11 @@
 - new `HttpClientErrorCustomHandler` type, that represents custom handler for `HttpErrorResponse`
 - new `HttpClientPropertyValidationError` interface, that represents validation errors for single validated property
 - new `HttpClientValidationErrors` interface, that represents object storing validations errors from server
-- new `Handle400WithValidationsOptions` interface, that represents options passed for handle 400 http status code with validations
+- new `Handle4xxOptions` interface, that options passed for handle 4xx http status codes
     - property `injector` injector used for obtaining dependencies
     - property `clientErrorsResponseMapper` response mapper for http client errors
+- new `Handle400WithValidationsOptions` interface, that represents options passed for handle 400 http status code with validations
+    - extends `Handle4xxOptions`
     - property `clientValidationErrorsResponseMapper` response mapper for http client validation errors
 - new `RestClientError` class, that represents handled client error 4xx http status code
 - new `RestNotFoundError` class, that represents handled 404 http status code
