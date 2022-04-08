@@ -5,8 +5,6 @@ import {Handle4xxOptions} from '../misc/httpError.interface';
 import {CLIENT_ERROR_NOTIFICATIONS, HTTP_CLIENT_ERROR_RESPONSE_MAPPER} from '../misc/tokens';
 import {RestClientError, ClientValidationError} from '../misc/httpErrors';
 
-//TODO: extract functionality and use it in interceptor
-
 /**
  * Handles http error response with code 400..499 and returns RestClientError
  * @param error - Http error response to be handled

@@ -1,16 +1,10 @@
 import {Attribute, ExistingProvider, forwardRef, Directive, OnInit, OnDestroy, Injector} from '@angular/core';
-import {NG_VALIDATORS, Validator, FormControlDirective, FormControlName, FormControl, NgModel, ValidationErrors} from '@angular/forms';
+import {NG_VALIDATORS, Validator, FormControlDirective, FormControlName, FormControl, NgModel, ValidationErrors, AbstractControl} from '@angular/forms';
+import {isEmptyObject} from '@jscrpt/common';
 import {Subscription} from 'rxjs';
 import {filter} from 'rxjs/operators';
 
 import {ServerValidationService} from './serverValidation.service';
-
-//TODO: try to get form control name
-
-/**
- * Name of server validations as error
- */
-export const SERVER_VALIDATIONS = 'serverValidation';
 
 /**
  * Validator that is injected with directive ServerValidationValidator
@@ -32,33 +26,55 @@ export const SERVER_VALIDATIONS_VALIDATOR: ExistingProvider =
 })
 export class ServerValidationValidatorDirective implements Validator, OnInit, OnDestroy
 {
-    //######################### private fields #########################
+    //######################### protected fields #########################
 
     /**
      * Array of subscriptions that are destroyed on directive destroy
      */
-    private _subscriptions: Subscription = new Subscription();
+    protected _subscriptions: Subscription = new Subscription();
 
     /**
      * Instance of control that is used
      */
-    private _control?: FormControl;
+    protected _control?: FormControl;
 
-    //######################### private properties #########################
+    /**
+     * Name of control
+     */
+    protected _controlName!: string;
+
+    //######################### protected properties #########################
 
     /**
      * Gets control which was assigned to this element
      */
-    private get control(): FormControl
+    protected get control(): FormControl
     {
         return this._control ?? (this._control = this._injector.get(FormControlDirective, null)?.control ?? this._injector.get(FormControlName, null)?.control ?? this._injector.get(NgModel).control);
     }
 
-    //######################### constructor #########################
-    constructor(@Attribute('serverValidation') private _serverValidation: string,
-                private _serverValidationService: ServerValidationService,
-                private _injector: Injector)
+    //######################### public properties #########################
+
+    /**
+     * Name of server property that is being validated by this
+     */
+    public get propertyName(): string
     {
+        return this._controlName;
+    }
+
+    //######################### constructor #########################
+    constructor(@Attribute('serverValidation') protected _serverValidation: string,
+                @Attribute('formControlName') protected _formControlName: string,
+                protected _serverValidationService: ServerValidationService,
+                protected _injector: Injector)
+    {
+        if(!this._formControlName && !this._serverValidation)
+        {
+            throw new Error('Missing name of server validation property for "ServerValidationValidatorDirective"');
+        }
+
+        this._controlName = this._formControlName || this._serverValidation;
     }
 
     //######################### public methods - implementation of OnInit #########################
@@ -69,7 +85,7 @@ export class ServerValidationValidatorDirective implements Validator, OnInit, On
     public ngOnInit(): void
     {
         this._subscriptions.add(this._serverValidationService.serverValidationsChanged
-                                    .pipe(filter(() => !!this._serverValidationService.serverValidations[this._serverValidation]))
+                                    .pipe(filter(() => !!this._serverValidationService.serverValidations[this._controlName]))
                                     .subscribe(() => this.control.updateValueAndValidity()));
     }
 
@@ -90,14 +106,16 @@ export class ServerValidationValidatorDirective implements Validator, OnInit, On
      * @param control - Control that is being validated
      * @returns validation results
      */
-    public validate(): ValidationErrors | null
+    public validate(control: AbstractControl): ValidationErrors | null
     {
-        if(this._serverValidationService.serverValidations[this._serverValidation])
-        {
-            const result: ValidationErrors = {};
-            result[SERVER_VALIDATIONS] = this._serverValidationService.serverValidations[this._serverValidation];
+        const validationErrors = this._serverValidationService.serverValidations[this._controlName];
 
-            return result;
+        if(validationErrors && !isEmptyObject(validationErrors))
+        {
+            return {
+                ...validationErrors,
+                actual: control.value
+            };
         }
 
         return null;

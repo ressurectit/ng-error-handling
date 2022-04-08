@@ -1,9 +1,11 @@
 import {HttpErrorResponse} from '@angular/common/http';
+import {isEmptyObject} from '@jscrpt/common';
 import {Observable, of, throwError} from 'rxjs';
 
 import {Handle400WithValidationsOptions, HttpClientValidationErrors} from '../misc/httpError.interface';
 import {CLIENT_ERROR_NOTIFICATIONS, HTTP_CLIENT_ERROR_RESPONSE_MAPPER, HTTP_CLIENT_VALIDATION_ERROR_RESPONSE_MAPPER} from '../misc/tokens';
 import {RestClientError, ClientValidationError} from '../misc/httpErrors';
+import {ServerValidationService} from '../serverValidation/serverValidation.service';
 
 /**
  * Handles http error response with code 400 and process validations errors and returns RestClientError or RestClientValidationError
@@ -39,9 +41,9 @@ export function ɵHandle400WithValidationsFunction<TError, TClientError, TClient
 
         errors?.forEach(error => notifications?.error(error));
 
-        if(validationErrors)
+        if(validationErrors && !isEmptyObject(validationErrors))
         {
-            //TODO
+            options.injector.get(ServerValidationService).addServerValidationErrors(validationErrors);
 
             return clientValidationErrorReturnCallback(errors, validationErrors);
         }

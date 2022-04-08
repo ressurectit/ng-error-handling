@@ -1,15 +1,18 @@
 # Changelog
 
-## Version 10.0.0 (2022-04-07)
+## Version 10.0.0 (2022-04-08)
 
 ### Features
 
 - **ERROR HANDLERS**
     - new `handle400WithValidationsFunc` function, that handles http error response with code 400 and process validations errors and returns RestClientError or RestClientValidationError
     - new `handle404Func` function, that handles http error response with code 404 and returns RestNotFoundError
+    - new `handle4xxFunc` function, that handles http error response with code 400..499 and returns RestClientError
 - **INTERCEPTORS**
     - new `HttpClientErrorInterceptor` *http interceptor*, that is used for handling http server errors with codes 400..499
     - new `HttpServerErrorInterceptor` *http interceptor*, that is used for handling http server errors with codes 500..599 and displaying of internal server error
+    - new `HTTP_SERVER_ERROR_INTERCEPTOR_PROVIDER` provider for proper use of HttpServerErrorInterceptor, use this provider to inject this interceptor
+    - new `HTTP_CLIENT_ERROR_INTERCEPTOR_PROVIDER` provider for proper use of HttpClientErrorInterceptor, use this provider to inject this interceptor
 - new `HttpClientErrorResponseMapper` type, that represents response mapper for http client errors that are converted to array of error messages
 - new `HttpClientValidationErrorResponseMapper` type, that represents response mapper for http client validation errors that are converted into object RestClientValidationErrors
 - new `HttpClientErrorCustomHandler` type, that represents custom handler for `HttpErrorResponse`
@@ -24,9 +27,18 @@
 - new `RestClientError` class, that represents handled client error 4xx http status code
 - new `RestNotFoundError` class, that represents handled 404 http status code
 - new `ClientValidationError` class, that represents handled 400 http status code with validations
+- **SERVER VALIDATIONS**
+    - `ServerValidationService` service
+        - new `serverValidationProperties` property, that gets array of server validation properties
+        - new `removeServerValidationError` method, that removes validation errors for single property
+    - `ServerValidationValidatorDirective` directive
+        - now also tries to get property name from `FormControlNameDirective`
+        - now uses new `HttpClientValidationErrors`, which allows multiple server validations errors to be set
+        - new `propertyName` property, that is name of server property that is being validated by this
 - **RXJS OPERATORS**
     - new `handle400WithValidations` operator, that handles 400 http code with validations as response
     - new `handle404` operator, that handles 404 http code as response
+    - new `handle4xx` operator, that handles http error response with code 400..499 as response
 - new *subpackage* `@anglr/error-handling/rest`
 - *subpackage* `@anglr/error-handling/rest`
     - requires `@anglr/rest` minimal version `11.0.1`
@@ -46,12 +58,16 @@
 ### BREAKING CHANGES
 
 - removed `BadRequestDetail`
-- removed `HTTP_ERROR_INTERCEPTOR_PROVIDER`
+- removed `HTTP_ERROR_INTERCEPTOR_PROVIDER` replaced by `HTTP_SERVER_ERROR_INTERCEPTOR_PROVIDER` and `HTTP_CLIENT_ERROR_INTERCEPTOR_PROVIDER`
+    - `HTTP_CLIENT_ERROR_INTERCEPTOR_PROVIDER` should not be used, use `ClientErrorHandlingMiddleware` instead
 - removed `ResponseMapperFunction`
 - removed `ERROR_RESPONSE_MAP_PROVIDER`
 - removed `HttpErrorInterceptor` replaced by `HttpClientErrorInterceptor` and `HttpServerErrorInterceptor`
-    - `HttpClientErrorInterceptor` should not be used, use RestMiddleware instead
+    - `HttpClientErrorInterceptor` should not be used, use `ClientErrorHandlingMiddleware` instead
 - removed `HttpErrorInterceptorOptions`
+- updated `ServerValidationService` class `serverValidations` property, has new type `HttpClientValidationErrors`
+- updated `ServerValidationService` class `addServerValidationErrors` method, has new parameter type `HttpClientValidationErrors`
+- removed `SERVER_VALIDATIONS` constant
 
 ## Version 9.0.2 (2022-02-22)
 
