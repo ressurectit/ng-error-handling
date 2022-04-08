@@ -63,7 +63,7 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
                     const ignoredClientErrors = this.injector.get(HTTP_IGNORED_CLIENT_ERRORS).concat(descriptor?.addIgnoredClientErrors ?? []);
 
                     $this.ɵLogger ??= this.injector.get(LOGGER, null);
-                    $this.ɵLogger?.error(`HTTP_ERROR ${err.status} ${err.statusText}: ${err.error}`);
+                    $this.ɵLogger?.error(`HTTP_ERROR ${err.status} ${err.statusText}: ${JSON.stringify(err.error)}`);
                     
                     //client error ignored
                     if(ignoredClientErrors.find(itm => itm == err.status))
