@@ -1,5 +1,20 @@
 # Changelog
 
+## Version 11.0.0 (2022-06-06)
+
+### Features
+
+- new `ERROR_HANDLING_REST_MIDDLEWARES_ORDER` constant, that represents definition of array of rest middlewares order including error handling middleware
+- new `middlewareTypes` type, that represents array of middleware names that are available in error-handling library
+- new `REST_ERROR_HANDLING_MIDDLEWARES_ORDRE` injection token, used for injecting array of rest middleware types that defines order of rest middlewares, including error handling middleware
+- updated `ClientErrorHandlingMiddleware` middleware, now middleware type has *static* `id` to correspond with `RestMiddlewareType<RestMiddleware>`
+
+### BREAKING CHANGES
+
+- minimal supported version of `@angular` is `14.0.0`
+- minimal supported version of `@anglr/common` is `11.2.0`
+- dropped support of `NodeJs` version `12`
+
 ## Version 10.0.0 (2022-04-08)
 
 ### Features

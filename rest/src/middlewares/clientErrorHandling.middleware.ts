@@ -19,6 +19,13 @@ interface ɵClientError
  */
 export class ClientErrorHandlingMiddleware implements RestMiddleware
 {
+    //######################### public static properties #########################
+
+    /**
+     * String identification of middleware
+     */
+    public static id: string = 'ClientErrorHandlingMiddleware';
+
     //######################### public methods - implementation of RestMiddleware #########################
 
     /**
