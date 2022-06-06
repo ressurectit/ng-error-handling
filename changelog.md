@@ -6,7 +6,7 @@
 
 - new `ERROR_HANDLING_REST_MIDDLEWARES_ORDER` constant, that represents definition of array of rest middlewares order including error handling middleware
 - new `middlewareTypes` type, that represents array of middleware names that are available in error-handling library
-- new `REST_ERROR_HANDLING_MIDDLEWARES_ORDRE` injection token, used for injecting array of rest middleware types that defines order of rest middlewares, including error handling middleware
+- new `REST_ERROR_HANDLING_MIDDLEWARE_ORDER` provider, that is provider for rest middleware order with error handling middleware
 - updated `ClientErrorHandlingMiddleware` middleware, now middleware type has *static* `id` to correspond with `RestMiddlewareType<RestMiddleware>`
 
 ### BREAKING CHANGES

@@ -1,4 +1,5 @@
-import {RestMiddlewareOrderType} from '@anglr/rest';
+import {ValueProvider} from '@angular/core';
+import {RestMiddlewareOrderType, REST_MIDDLEWARES_ORDER} from '@anglr/rest';
 import type {middlewareTypes as restMiddlewareTypes} from '@anglr/rest';
 
 import type {middlewareTypes} from './middlewareTypes';
@@ -27,3 +28,12 @@ export const ERROR_HANDLING_REST_MIDDLEWARES_ORDER: RestMiddlewareOrderType<midd
     'MockLoggerMiddleware',
     'ReportProgressMiddleware',
 ];
+
+/**
+ * Provider for rest middleware order with error handling middleware
+ */
+export const REST_ERROR_HANDLING_MIDDLEWARE_ORDER: ValueProvider =
+{
+    provide: REST_MIDDLEWARES_ORDER,
+    useValue: ERROR_HANDLING_REST_MIDDLEWARES_ORDER
+};
