@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 11.0.0 (2022-06-06)
+## Version 11.0.0 (2022-06-08)
 
 ### Features
 
@@ -12,6 +12,7 @@
 ### BREAKING CHANGES
 
 - minimal supported version of `@angular` is `14.0.0`
+- minimal supported version of `@anglr/rest` is `12.0.0`
 - minimal supported version of `@anglr/common` is `11.2.0`
 - dropped support of `NodeJs` version `12`
 
