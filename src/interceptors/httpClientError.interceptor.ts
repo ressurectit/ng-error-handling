@@ -2,8 +2,7 @@ import {Injectable, Inject, Optional, ClassProvider, Injector} from '@angular/co
 import {HttpInterceptor, HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpErrorResponse, HttpRequest} from '@angular/common/http';
 import {Logger, LOGGER, IGNORED_INTERCEPTORS} from '@anglr/common';
 import {InternalServerErrorService, ɵHandle400WithValidationsFunction} from '@anglr/error-handling';
-import {Observable} from 'rxjs';
-import {tap} from 'rxjs/operators';
+import {Observable, tap} from 'rxjs';
 
 import {HTTP_IGNORED_CLIENT_ERRORS} from '../misc/tokens';
 import {ɵhandle4xxFunction} from '../errorHandlers/handle4xxFunc';

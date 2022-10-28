@@ -2,8 +2,7 @@ import {HttpRequest, HttpErrorResponse} from '@angular/common/http';
 import {LOGGER, Logger} from '@anglr/common';
 import {RESTClient, RestMiddleware} from '@anglr/rest';
 import {HTTP_CLIENT_ERROR_CUSTOM_HANDLER, HTTP_IGNORED_CLIENT_ERRORS, RestClientError} from '@anglr/error-handling';
-import {Observable, of, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {Observable, of, throwError, catchError} from 'rxjs';
 
 import {RestHttpClientErrors} from '../misc/restHttpError.interface';
 import {ɵhandle4xxFunction} from '../../../src/errorHandlers/handle4xxFunc';
@@ -75,7 +74,7 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
                     //client error ignored
                     if(ignoredClientErrors.find(itm => itm == err.status))
                     {
-                        return throwError(err);
+                        return throwError(() => err);
                     }
                     
                     const customErrorHandlers = descriptor?.customErrorHandlers ?? this.injector.get(HTTP_CLIENT_ERROR_CUSTOM_HANDLER, null);

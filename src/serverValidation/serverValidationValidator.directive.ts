@@ -1,8 +1,7 @@
 import {Attribute, ExistingProvider, forwardRef, Directive, OnInit, OnDestroy, Injector} from '@angular/core';
 import {NG_VALIDATORS, Validator, FormControlDirective, FormControlName, FormControl, NgModel, ValidationErrors, AbstractControl} from '@angular/forms';
 import {isEmptyObject} from '@jscrpt/common';
-import {Subscription} from 'rxjs';
-import {filter} from 'rxjs/operators';
+import {Subscription, filter} from 'rxjs';
 
 import {ServerValidationService} from './serverValidation.service';
 

@@ -1,5 +1,14 @@
 # Changelog
 
+## Version 12.0.0 (2022-10-28)
+
+### BREAKING CHANGES
+
+- minimal supported version of `rxjs` is `7.5.7`
+- minimal supported version of `@jscrpt/common` is `3.3.0`
+- minimal supported version of `@anglr/common` is `15.0.1`
+- minimal supported version of `tslib` is `2.4.0`
+
 ## Version 11.0.0 (2022-06-08)
 
 ### Features

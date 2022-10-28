@@ -1,8 +1,7 @@
 import {Injectable, Optional, Injector, ClassProvider} from '@angular/core';
 import {HttpInterceptor, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpRequest} from '@angular/common/http';
 import {IGNORED_INTERCEPTORS} from '@anglr/common';
-import {Observable} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {Observable, catchError} from 'rxjs';
 
 import {HttpGatewayTimeoutInterceptorOptions} from './httpGatewayTimeoutInterceptorOptions';
 

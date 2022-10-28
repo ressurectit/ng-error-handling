@@ -1,6 +1,5 @@
 import {HttpErrorResponse} from '@angular/common/http';
-import {MonoTypeOperatorFunction} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {MonoTypeOperatorFunction, catchError} from 'rxjs';
 
 import {handle404Func} from '../errorHandlers';
 import {RestNotFoundError} from '../misc/httpErrors';
