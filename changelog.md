@@ -27,6 +27,8 @@
 - new `WithRestClientError` decorator, which changes behavior of ClientErrorHandlingMiddleware to rest client error
 - updated `handle404Func` function
     - new parameter `options` containing injector and mapper function for extraction of error messages
+- updated `handle404` rxjs operator function
+    - new parameter `options` containing injector and mapper function for extraction of error messages
 - updated `RestHttpClientErrors` interface
     - new **extends**
         - `Partial<ClientErrorHandlingMiddlewareOptions>`
