@@ -1,7 +1,7 @@
 import {RESTClient, RestMethodMiddlewares} from '@anglr/rest';
+import {ClientErrorHandlingBehavior} from '@anglr/error-handling';
 
 import {RestHttpClientErrors} from '../misc/restHttpError.interface';
-import {ClientErrorHandlingMiddlewareBehavior} from '../misc/clientErrorHandlingMiddleware.options';
 
 /**
  * Changes behavior of ClientErrorHandlingMiddleware to pass through errors
@@ -13,7 +13,7 @@ export function ErrorPassThrough()
                                                                                        TDecorated): TypedPropertyDescriptor<any>
     {
         const descr = descriptor as RestHttpClientErrors & RestMethodMiddlewares;
-        descr.behavior = ClientErrorHandlingMiddlewareBehavior.PassThrough;
+        descr.behavior = ClientErrorHandlingBehavior.PassThrough;
 
         return descr;
     };

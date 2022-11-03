@@ -5,6 +5,7 @@ import {Handle4xxOptions} from '../misc/httpError.interface';
 import {CLIENT_ERROR_NOTIFICATIONS} from '../misc/tokens';
 import {RestClientError, ClientValidationError} from '../misc/httpErrors';
 import {readErrorsFromHttpErrorResponse} from '../misc/utils';
+import {getDefaultClientErrorObservable} from '../misc/clientErrorHandling.options';
 
 /**
  * Handles http error response with code 400..499 and returns RestClientError
@@ -16,7 +17,7 @@ export function handle4xxFunc(error: HttpErrorResponse, options: Handle4xxOption
     return ɵhandle4xxFunction(error,
                               options,
                               error => throwError(() => error),
-                              errors => of(new RestClientError(errors)));
+                              errors => getDefaultClientErrorObservable({errors, httpResponse: error, validationErrors: null}, err => new RestClientError(err.errors), options.options?.behavior));
 }
 
 /**

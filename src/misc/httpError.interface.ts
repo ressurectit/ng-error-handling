@@ -2,6 +2,8 @@ import {Injector} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
+import {ClientErrorHandlingOptions} from './clientErrorHandling.options';
+
 /**
  * Response mapper for http client errors that are converted to array of error messages
  */
@@ -50,6 +52,11 @@ export interface Handle4xxOptions
     injector?: Injector;
 
     /**
+     * Options for client error handling
+     */
+    options?: ClientErrorHandlingOptions;
+
+    /**
      * Response mapper for http client errors
      */
     clientErrorsResponseMapper?: HttpClientErrorResponseMapper;
@@ -80,4 +87,15 @@ export interface HttpClientErrors
      * Object storing validation errors
      */
     validationErrors: HttpClientValidationErrors|null;
+}
+
+/**
+ * Http client error, containing extracted errors and original
+ */
+export interface HttpClientError extends HttpClientErrors
+{
+    /**
+     * Original http error response
+     */
+    httpResponse: HttpErrorResponse;
 }

@@ -12,20 +12,30 @@
 - new `readErrorsFromHttpErrorResponse` function, that reads errors and validation errors from http error response
 - new `HttpClientErrors` interface, which represents definition of http client errors read from http error response
 - new `ɵHandle404Func` function, which handles http error response with code 404 and returns RestNotFoundError
+- new `ClientErrorHandlingBehavior` enum, which represents behavior for client error handling
+    - **values**
+        - `Suppress` result of http request with client error is handled by handler but observable never finishes
+        - `PassThrough` result of http request with client error is handled by handler and extracted errors passes through to observable
+        - `PassThroughHttp` result of http request with client error is handled by handler and extracted errors passes through to observable with original http error
+        - `RestClientError` result of http request with client error is handled by handler and observable returns instance of RestClientError or its descendants
+- new `ClientErrorHandlingOptions` class, which represents options for client error handling
+    - **properties**
+        - `behavior` behavior of client error handling
+- new `CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS` injection token for global client error handling middleware options
+- new `HttpClientError` interface, which represents http client error, containing extracted errors and original
+    - **extends**
+        - `HttpClientErrors`
+    - **properties**
+        - `httpResponse` original http error response
+- new `getDefaultClientErrorObservable` function which, gets observable for error according specified behavior
 - updated `handle404Func` function
     - new parameter `options` containing injector and mapper function for extraction of error messages
 - updated `handle404` rxjs operator function
     - new parameter `options` containing injector and mapper function for extraction of error messages
+- updated `Handle4xxOptions` interface
+    - new **properties**
+        - `options` options for client error handling
 - *subpackage* `@anglr/error-handling/rest`
-    - new `ClientErrorHandlingMiddlewareBehavior` enum, which represents behavior for client error handling middleware
-        - **values**
-            - `Suppress` result of http request with client error is handled by middleware but observable never finishes
-            - `PassThrough` result of http request with client error is handled by middleware and error passes through to observable
-            - `RestClientError` result of http request with client error is handled by middleware and observable returns instance of RestClientError or its descendants
-    - new `ClientErrorHandlingMiddlewareOptions` class, which represents options for client error handling middleware
-        - **properties**
-            - `behavior` behavior of client error handling middleware
-    - new `CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS` injection token for global client error handling middleware options
     - new `ErrorPassThrough` decorator, which changes behavior of ClientErrorHandlingMiddleware to pass through errors
     - new `SuppressError` decorator, which changes behavior of ClientErrorHandlingMiddleware to suppress errors
     - new `WithRestClientError` decorator, which changes behavior of ClientErrorHandlingMiddleware to rest client error

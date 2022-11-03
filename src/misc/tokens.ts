@@ -2,6 +2,7 @@ import {InjectionToken} from '@angular/core';
 import {Notifications} from '@anglr/common';
 
 import {HttpClientErrorResponseMapper, HttpClientValidationErrorResponseMapper} from './httpError.interface';
+import {ClientErrorHandlingOptions} from './clientErrorHandling.options';
 
 /**
  * Injection token used for injecting notifications service used withing error handling package
@@ -22,3 +23,8 @@ export const CLIENT_ERROR_NOTIFICATIONS: InjectionToken<Notifications> = new Inj
  * Injection token that represents default response mapper for http client validation errors
  */
 export const HTTP_CLIENT_VALIDATION_ERROR_RESPONSE_MAPPER: InjectionToken<HttpClientValidationErrorResponseMapper> = new InjectionToken<HttpClientValidationErrorResponseMapper>('HTTP_CLIENT_VALIDATION_ERROR_RESPONSE_MAPPER');
+
+/**
+ * Injection token for global client error handling middleware options
+ */
+export const CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS: InjectionToken<ClientErrorHandlingOptions> = new InjectionToken<ClientErrorHandlingOptions>('CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS', {providedIn: 'root', factory: () => new ClientErrorHandlingOptions()});
