@@ -47,7 +47,7 @@ export interface Handle4xxOptions
     /**
      * Injector used for obtaining dependencies
      */
-    injector: Injector;
+    injector?: Injector;
 
     /**
      * Response mapper for http client errors

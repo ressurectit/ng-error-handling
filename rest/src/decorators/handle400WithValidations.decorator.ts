@@ -5,9 +5,9 @@ import {isBlank} from '@jscrpt/common';
 import {RestHttpClientErrors} from '../misc/restHttpError.interface';
 import {WithRestClientContext} from '../misc/withRestClientContext';
 
-
 /**
  * Handles 400 http code with validations
+ * @param handler - Custom handler for 400 http status code, if not specified default one returning ClientValidationError will be used
  */
 export function Handle400WithValidations(handler?: HttpClientErrorCustomHandler|WithRestClientContext<HttpClientErrorCustomHandler>)
 {
@@ -29,7 +29,7 @@ export function Handle400WithValidations(handler?: HttpClientErrorCustomHandler|
         }
 
         descr.customErrorHandlers ??= {};
-        descr.customErrorHandlers[404] = handler;
+        descr.customErrorHandlers[400] = handler;
 
         return descr;
     };

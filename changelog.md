@@ -2,6 +2,10 @@
 
 ## Version 12.0.0 (2022-11-03)
 
+### Bug Fixes
+
+- fixed `Handle400WithValidations` decorator, now correctly registers custom handler for 400 http status code
+
 ### Features
 
 - now also typings are available for external usage
@@ -9,8 +13,23 @@
 - new `HttpClientErrors` interface, which represents definition of http client errors read from http error response
 - new `ɵHandle404Func` function, which handles http error response with code 404 and returns RestNotFoundError
 - new `ɵHandle404Func` function, which handles http error response with code 404 and returns RestNotFoundError
+- new `ClientErrorHandlingMiddlewareBehavior` enum, which represents behavior for client error handling middleware
+    - **values**
+        - `Suppress` result of http request with client error is handled by middleware but observable never finishes
+        - `PassThrough` result of http request with client error is handled by middleware and error passes through to observable
+        - `RestClientError` result of http request with client error is handled by middleware and observable returns instance of RestClientError or its descendants
+- new `ClientErrorHandlingMiddlewareOptions` class, which represents options for client error handling middleware
+    - **properties**
+        - `behavior` behavior of client error handling middleware
+- new `CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS` injection token for global client error handling middleware options
+- new `ErrorPassThrough` decorator, which changes behavior of ClientErrorHandlingMiddleware to pass through errors
+- new `SuppressError` decorator, which changes behavior of ClientErrorHandlingMiddleware to suppress errors
+- new `WithRestClientError` decorator, which changes behavior of ClientErrorHandlingMiddleware to rest client error
 - updated `handle404Func` function
     - new parameter `options` containing injector and mapper function for extraction of error messages
+- updated `RestHttpClientErrors` interface
+    - new **extends**
+        - `Partial<ClientErrorHandlingMiddlewareOptions>`
 
 ### BREAKING CHANGES
 
@@ -18,6 +37,8 @@
 - minimal supported version of `@jscrpt/common` is `3.3.0`
 - minimal supported version of `@anglr/common` is `15.0.1`
 - minimal supported version of `tslib` is `2.4.0`
+- updated `Handle4xxOptions` interface
+    - `injector` is now optional
 
 ## Version 11.0.0 (2022-06-08)
 

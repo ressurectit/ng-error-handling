@@ -17,12 +17,12 @@ export class NoConnectionInterceptorOptions
     /**
      * Text displayed
      */
-    text: string = 'Server is offline. Try again later.';
+    public text: string = 'Server is offline. Try again later.';
 
     /**
      * Action called when 0 status code received
      */
-    action: NoConnectionAction = (injector: Injector, observer: Observer<any>) =>
+    public action: NoConnectionAction = (injector: Injector, observer: Observer<any>) =>
     {
         const notifications = injector.get(ERROR_HANDLING_NOTIFICATIONS);
 

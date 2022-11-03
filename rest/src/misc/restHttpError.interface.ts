@@ -1,11 +1,12 @@
 import {HttpClientErrorCustomHandler, HttpClientErrorResponseMapper} from '@anglr/error-handling';
 
+import {ClientErrorHandlingMiddlewareOptions} from './clientErrorHandlingMiddleware.options';
 import {WithRestClientContext} from './withRestClientContext';
 
 /**
  * Contains metadata for http client errors configuration
  */
-export interface RestHttpClientErrors extends TypedPropertyDescriptor<any>
+export interface RestHttpClientErrors extends TypedPropertyDescriptor<any>, Partial<ClientErrorHandlingMiddlewareOptions>
 {
     /**
      * Array of ignored client errors that will be added to default ones

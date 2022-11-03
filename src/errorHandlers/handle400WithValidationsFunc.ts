@@ -3,9 +3,10 @@ import {isEmptyObject} from '@jscrpt/common';
 import {Observable, of, throwError} from 'rxjs';
 
 import {Handle400WithValidationsOptions, HttpClientValidationErrors} from '../misc/httpError.interface';
-import {CLIENT_ERROR_NOTIFICATIONS, HTTP_CLIENT_ERROR_RESPONSE_MAPPER, HTTP_CLIENT_VALIDATION_ERROR_RESPONSE_MAPPER} from '../misc/tokens';
+import {CLIENT_ERROR_NOTIFICATIONS} from '../misc/tokens';
 import {RestClientError, ClientValidationError} from '../misc/httpErrors';
 import {ServerValidationService} from '../serverValidation/serverValidation.service';
+import {readErrorsFromHttpErrorResponse} from '../misc/utils';
 
 /**
  * Handles http error response with code 400 and process validations errors and returns RestClientError or RestClientValidationError
@@ -33,17 +34,17 @@ export function ɵHandle400WithValidationsFunction<TError, TClientError, TClient
     //handles 400 code
     if(error.status == 400)
     {
-        const clientErrorsResponseMapper = options.clientErrorsResponseMapper ?? options.injector.get(HTTP_CLIENT_ERROR_RESPONSE_MAPPER);
-        const clientValidationErrorsResponseMapper = options.clientValidationErrorsResponseMapper ?? options.injector.get(HTTP_CLIENT_VALIDATION_ERROR_RESPONSE_MAPPER);
-        const errors = clientErrorsResponseMapper(error);
-        const validationErrors = clientValidationErrorsResponseMapper(error);
-        const notifications = options.injector.get(CLIENT_ERROR_NOTIFICATIONS, null);
+        const {errors, validationErrors} = readErrorsFromHttpErrorResponse(error, options.injector, options.clientErrorsResponseMapper, options.clientValidationErrorsResponseMapper);
+        const notifications = options.injector?.get(CLIENT_ERROR_NOTIFICATIONS, null);
 
-        errors?.forEach(error => notifications?.error(error));
+        if(notifications)
+        {
+            errors.forEach(error => notifications.error(error));
+        }
 
         if(validationErrors && !isEmptyObject(validationErrors))
         {
-            options.injector.get(ServerValidationService).addServerValidationErrors(validationErrors);
+            options.injector?.get(ServerValidationService).addServerValidationErrors(validationErrors);
 
             return clientValidationErrorReturnCallback(errors, validationErrors);
         }

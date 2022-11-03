@@ -2,8 +2,9 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {Observable, of, throwError} from 'rxjs';
 
 import {Handle4xxOptions} from '../misc/httpError.interface';
-import {CLIENT_ERROR_NOTIFICATIONS, HTTP_CLIENT_ERROR_RESPONSE_MAPPER} from '../misc/tokens';
+import {CLIENT_ERROR_NOTIFICATIONS} from '../misc/tokens';
 import {RestClientError, ClientValidationError} from '../misc/httpErrors';
+import {readErrorsFromHttpErrorResponse} from '../misc/utils';
 
 /**
  * Handles http error response with code 400..499 and returns RestClientError
@@ -29,11 +30,13 @@ export function ɵhandle4xxFunction<TError, TClientError>(error: HttpErrorRespon
     //handles 4xx code
     if(error.status >= 400 && error.status < 500)
     {
-        const clientErrorsResponseMapper = options.clientErrorsResponseMapper ?? options.injector.get(HTTP_CLIENT_ERROR_RESPONSE_MAPPER);
-        const errors = clientErrorsResponseMapper(error);
-        const notifications = options.injector.get(CLIENT_ERROR_NOTIFICATIONS, null);
+        const {errors} = readErrorsFromHttpErrorResponse(error, options.injector, options.clientErrorsResponseMapper);
+        const notifications = options.injector?.get(CLIENT_ERROR_NOTIFICATIONS, null);
 
-        errors?.forEach(error => notifications?.error(error));
+        if(notifications)
+        {
+            errors.forEach(error => notifications.error(error));
+        }
 
         return clientErrorReturnCallback(errors);
     }

@@ -3,13 +3,14 @@ import {handle404Func, HttpClientErrorCustomHandler} from '@anglr/error-handling
 import {isBlank} from '@jscrpt/common';
 
 import {RestHttpClientErrors} from '../misc/restHttpError.interface';
+import {WithRestClientContext} from '../misc/withRestClientContext';
 
 
 /**
  * Handles 404 response http code
  * @param handler - Custom handler for 404 http status code, if not specified default one returning RestNotFoundError will be used
  */
-export function Handle404(handler?: HttpClientErrorCustomHandler)
+export function Handle404(handler?: HttpClientErrorCustomHandler|WithRestClientContext<HttpClientErrorCustomHandler>)
 {
     return function<TDecorated>(_target: RESTClient, _propertyKey: string, descriptor: RestHttpClientErrors &
                                                                                        RestMethodMiddlewares |
@@ -19,7 +20,13 @@ export function Handle404(handler?: HttpClientErrorCustomHandler)
 
         if(isBlank(handler))
         {
-            handler = handle404Func;
+            handler = new WithRestClientContext(function(this: RESTClient)
+            {
+                return <HttpClientErrorCustomHandler>(err =>
+                {
+                    return handle404Func(err, {injector: this.injector});
+                });
+            });
         }
 
         descr.customErrorHandlers ??= {};
