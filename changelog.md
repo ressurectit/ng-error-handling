@@ -12,26 +12,28 @@
 - new `readErrorsFromHttpErrorResponse` function, that reads errors and validation errors from http error response
 - new `HttpClientErrors` interface, which represents definition of http client errors read from http error response
 - new `ɵHandle404Func` function, which handles http error response with code 404 and returns RestNotFoundError
-- new `ɵHandle404Func` function, which handles http error response with code 404 and returns RestNotFoundError
-- new `ClientErrorHandlingMiddlewareBehavior` enum, which represents behavior for client error handling middleware
-    - **values**
-        - `Suppress` result of http request with client error is handled by middleware but observable never finishes
-        - `PassThrough` result of http request with client error is handled by middleware and error passes through to observable
-        - `RestClientError` result of http request with client error is handled by middleware and observable returns instance of RestClientError or its descendants
-- new `ClientErrorHandlingMiddlewareOptions` class, which represents options for client error handling middleware
-    - **properties**
-        - `behavior` behavior of client error handling middleware
-- new `CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS` injection token for global client error handling middleware options
-- new `ErrorPassThrough` decorator, which changes behavior of ClientErrorHandlingMiddleware to pass through errors
-- new `SuppressError` decorator, which changes behavior of ClientErrorHandlingMiddleware to suppress errors
-- new `WithRestClientError` decorator, which changes behavior of ClientErrorHandlingMiddleware to rest client error
 - updated `handle404Func` function
     - new parameter `options` containing injector and mapper function for extraction of error messages
 - updated `handle404` rxjs operator function
     - new parameter `options` containing injector and mapper function for extraction of error messages
-- updated `RestHttpClientErrors` interface
-    - new **extends**
-        - `Partial<ClientErrorHandlingMiddlewareOptions>`
+- *subpackage* `@anglr/error-handling/rest`
+    - new `ClientErrorHandlingMiddlewareBehavior` enum, which represents behavior for client error handling middleware
+        - **values**
+            - `Suppress` result of http request with client error is handled by middleware but observable never finishes
+            - `PassThrough` result of http request with client error is handled by middleware and error passes through to observable
+            - `RestClientError` result of http request with client error is handled by middleware and observable returns instance of RestClientError or its descendants
+    - new `ClientErrorHandlingMiddlewareOptions` class, which represents options for client error handling middleware
+        - **properties**
+            - `behavior` behavior of client error handling middleware
+    - new `CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS` injection token for global client error handling middleware options
+    - new `ErrorPassThrough` decorator, which changes behavior of ClientErrorHandlingMiddleware to pass through errors
+    - new `SuppressError` decorator, which changes behavior of ClientErrorHandlingMiddleware to suppress errors
+    - new `WithRestClientError` decorator, which changes behavior of ClientErrorHandlingMiddleware to rest client error
+    - updated `RestHttpClientErrors` interface
+        - new **extends**
+            - `Partial<ClientErrorHandlingMiddlewareOptions>`
+    - updated `HTTP_CLIENT_ERROR_CUSTOM_HANDLER` injection token
+        - now also `WithRestClientContext<HttpClientErrorCustomHandler>` can be used as handler
 
 ### BREAKING CHANGES
 
@@ -41,6 +43,10 @@
 - minimal supported version of `tslib` is `2.4.0`
 - updated `Handle4xxOptions` interface
     - `injector` is now optional
+- removed `HttpClientErrorInterceptor` http interceptor
+- removed `HTTP_CLIENT_ERROR_INTERCEPTOR_PROVIDER` injection token
+- moved `HTTP_IGNORED_CLIENT_ERRORS` into *subpackage* `@anglr/error-handling/rest`
+- moved `HTTP_CLIENT_ERROR_CUSTOM_HANDLER` into *subpackage* `@anglr/error-handling/rest`
 
 ## Version 11.0.0 (2022-06-08)
 

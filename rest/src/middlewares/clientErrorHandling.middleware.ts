@@ -1,16 +1,19 @@
 import {HttpRequest, HttpErrorResponse} from '@angular/common/http';
 import {LOGGER, Logger} from '@anglr/common';
 import {RESTClient, RestMiddleware} from '@anglr/rest';
-import {HTTP_CLIENT_ERROR_CUSTOM_HANDLER, HTTP_IGNORED_CLIENT_ERRORS, RestClientError} from '@anglr/error-handling';
+import {RestClientError, ɵhandle4xxFunction} from '@anglr/error-handling';
 import {Observable, of, throwError, catchError} from 'rxjs';
 
 import {RestHttpClientErrors} from '../misc/restHttpError.interface';
-import {ɵhandle4xxFunction} from '../../../src/errorHandlers/handle4xxFunc';
 import {resolveWithRestClientContext} from '../misc/withRestClientContext';
+import {ClientErrorHandlingMiddlewareOptions} from '../misc/clientErrorHandlingMiddleware.options';
+import {CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS, HTTP_CLIENT_ERROR_CUSTOM_HANDLER, HTTP_IGNORED_CLIENT_ERRORS} from '../misc/tokens';
 
 interface ɵClientError
 {
     ɵLogger: Logger|null;
+
+    ɵClientErrorHandlingMiddlewareOptions: ClientErrorHandlingMiddlewareOptions;
 }
 
 /**
@@ -69,6 +72,7 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
                     const ignoredClientErrors = this.injector.get(HTTP_IGNORED_CLIENT_ERRORS).concat(descriptor?.addIgnoredClientErrors ?? []);
 
                     $this.ɵLogger ??= this.injector.get(LOGGER, null);
+                    $this.ɵClientErrorHandlingMiddlewareOptions ??= this.injector.get(CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS, new ClientErrorHandlingMiddlewareOptions());
                     $this.ɵLogger?.error(`HTTP_ERROR ${err.status} ${err.statusText}: ${JSON.stringify(err.error)}`);
                     
                     //client error ignored
@@ -77,7 +81,11 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
                         return throwError(() => err);
                     }
                     
-                    const customErrorHandlers = descriptor?.customErrorHandlers ?? this.injector.get(HTTP_CLIENT_ERROR_CUSTOM_HANDLER, null);
+                    const customErrorHandlers = 
+                    {
+                        ...this.injector.get(HTTP_CLIENT_ERROR_CUSTOM_HANDLER, null),
+                        ...descriptor?.customErrorHandlers,
+                    };
 
                     //call custom error handler
                     if(customErrorHandlers?.[err.status])
