@@ -26,7 +26,7 @@
         "paths": 
         {
             "@anglr/error-handling": ["index.ts"],
-            "sourcemapped-stacktrace" : ["types/sourcemapped-stacktrace.typings.ts"],
+            "sourcemapped-stacktrace" : ["typings/sourcemapped-stacktrace/index.d.ts"],
         },
         "lib": 
         [

@@ -16,7 +16,7 @@ export function handle400WithValidationsFunc(error: HttpErrorResponse, options: 
 {
     return ɵHandle400WithValidationsFunction(error,
                                              options,
-                                             error => throwError(error),
+                                             error => throwError(() => error),
                                              errors => of(new RestClientError(errors)),
                                              (errors, validationErrors) => of(new ClientValidationError(errors, validationErrors)));
 }

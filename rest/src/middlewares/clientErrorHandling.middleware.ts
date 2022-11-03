@@ -53,13 +53,13 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
                 //nothing to handle
                 if (!(err instanceof HttpErrorResponse))
                 {
-                    return throwError(err);
+                    return throwError(() => err);
                 }
 
                 //client error, not response from server
                 if (err.error instanceof Error)
                 {
-                    return throwError(err);
+                    return throwError(() => err);
                 }
 
                 //if client error
@@ -91,7 +91,7 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
                                               injector: this.injector,
                                               clientErrorsResponseMapper: descriptor?.clientErrorResponseMapper
                                           },
-                                          error => throwError(error),
+                                          error => throwError(() => error),
                                           errors => of(new RestClientError(errors)));
             }));
     }

@@ -14,7 +14,7 @@ export function handle4xxFunc(error: HttpErrorResponse, options: Handle4xxOption
 {
     return ɵhandle4xxFunction(error,
                               options,
-                              error => throwError(error),
+                              error => throwError(() => error),
                               errors => of(new RestClientError(errors)));
 }
 

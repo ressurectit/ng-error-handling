@@ -1,6 +1,16 @@
 # Changelog
 
-## Version 12.0.0 (2022-10-28)
+## Version 12.0.0 (2022-11-03)
+
+### Features
+
+- now also typings are available for external usage
+- new `readErrorsFromHttpErrorResponse` function, that reads errors and validation errors from http error response
+- new `HttpClientErrors` interface, which represents definition of http client errors read from http error response
+- new `ɵHandle404Func` function, which handles http error response with code 404 and returns RestNotFoundError
+- new `ɵHandle404Func` function, which handles http error response with code 404 and returns RestNotFoundError
+- updated `handle404Func` function
+    - new parameter `options` containing injector and mapper function for extraction of error messages
 
 ### BREAKING CHANGES
 

@@ -19,6 +19,7 @@ export * from './serviceUnavailableInterceptor/serviceUnavailableInterceptorOpti
 export * from './misc/tokens';
 export * from './misc/httpError.interface';
 export * from './misc/httpErrors';
+export * from './misc/utils';
 export * from './errorHandlers';
 export * from './interceptors';
 export * from './rxjsOperators';
