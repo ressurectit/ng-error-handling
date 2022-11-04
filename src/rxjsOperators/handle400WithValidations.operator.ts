@@ -1,18 +1,21 @@
-import {HttpErrorResponse} from '@angular/common/http';
-import {MonoTypeOperatorFunction, catchError} from 'rxjs';
+import {MonoTypeOperatorFunction, catchError, of, throwError} from 'rxjs';
 
-import {RestClientError, ClientValidationError} from '../misc/httpErrors';
-import {Handle400WithValidationsOptions} from '../misc/httpError.interface';
+import {ClientValidationError, RestClientError} from '../misc/httpErrors';
+import {Handle4xxOptions} from '../misc/httpError.interface';
 import {handle400WithValidationsFunc} from '../errorHandlers';
 
 /**
- * Handles 400 http code with validations as response
+ * Handles 400 http code with validations as response and returns ClientValidationError or RestClientError if no validation errors
  * @param options - Options that are required for handling 400 with validations
  */
-export function handle400WithValidations(options: Handle400WithValidationsOptions): MonoTypeOperatorFunction<RestClientError|ClientValidationError|HttpErrorResponse>
+export function handle400WithValidations(options: Handle4xxOptions): MonoTypeOperatorFunction<ClientValidationError|RestClientError>
 {
     return source =>
     {
-        return source.pipe(catchError(err => handle400WithValidationsFunc(err, options)));
+        return source.pipe(catchError(err => handle400WithValidationsFunc(err,
+                                                                          options,
+                                                                          error => throwError(() => error),
+                                                                          error => of(new RestClientError(error.errors)),
+                                                                          error => of(new ClientValidationError(error.errors, error.validationErrors)))));
     };
 }

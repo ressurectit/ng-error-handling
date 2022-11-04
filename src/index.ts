@@ -16,7 +16,6 @@ export * from './noConnectionInterceptor/noConnectionInterceptor';
 export * from './noConnectionInterceptor/noConnectionInterceptorOptions';
 export * from './serviceUnavailableInterceptor/serviceUnavailableInterceptor';
 export * from './serviceUnavailableInterceptor/serviceUnavailableInterceptorOptions';
-export * from './misc/clientErrorHandling.options';
 export * from './misc/tokens';
 export * from './misc/httpError.interface';
 export * from './misc/httpErrors';

@@ -1,42 +1,30 @@
 import {HttpErrorResponse} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
 
-import {Handle4xxOptions} from '../misc/httpError.interface';
-import {RestNotFoundError} from '../misc/httpErrors';
+import {Handle4xxOptions, HttpClientError} from '../misc/httpError.interface';
 import {readErrorsFromHttpErrorResponse} from '../misc/utils';
 
 /**
- * Handles http error response with code 404 and returns RestNotFoundError
- * @param error - Http error response to be handled
- * @param options - Options containing injector and mapper function for extraction of error messages
- */
-export function handle404Func(error: HttpErrorResponse,
-                              options?: Handle4xxOptions): Observable<RestNotFoundError|HttpErrorResponse>
-{
-    return ɵHandle404Func(error,
-                          options,
-                          error => throwError(() => error),
-                          errors => of(new RestNotFoundError(errors)));
-}
-
-/**
  * Handles http error response with code 404 with custom return types
+ * @param error - Http error response
+ * @param options - Options containing information used for obtaining error messages
+ * @param errorReturnCallback - Callback that transforms unprocessed http error response into TError
+ * @param clientErrorReturnCallback - Callback that transforms processed http error response error messages into TClientError
  */
-export function ɵHandle404Func<TError, TClientError>(error: HttpErrorResponse,
-                                                     options: Handle4xxOptions|undefined|null,
-                                                     errorReturnCallback: (error: HttpErrorResponse) => TError,
-                                                     clientErrorReturnCallback: (errors: string[]) => TClientError): TError|TClientError
+export function handle404Func<TError, TClientError>(error: HttpErrorResponse,
+                                                    options: Handle4xxOptions,
+                                                    errorReturnCallback: (error: HttpErrorResponse) => TError,
+                                                    clientErrorReturnCallback: (error: HttpClientError) => TClientError): TError|TClientError
 {
     if(error.status == 404)
     {
-        let errors: string[] = [];
+        const {errors} = readErrorsFromHttpErrorResponse(error, options.injector, options.clientErrorsResponseMapper);
 
-        if(options?.clientErrorsResponseMapper || options?.injector)
+        return clientErrorReturnCallback(
         {
-            errors = readErrorsFromHttpErrorResponse(error, options.injector, options.clientErrorsResponseMapper).errors ?? [];
-        }
-
-        return clientErrorReturnCallback(errors);
+            errors,
+            httpResponse: error,
+            validationErrors: null,
+        });
     }
 
     return errorReturnCallback(error);

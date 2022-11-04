@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 12.0.0 (2022-11-03)
+## Version 12.0.0 (2022-11-04)
 
 ### Bug Fixes
 
@@ -11,39 +11,43 @@
 - now also typings are available for external usage
 - new `readErrorsFromHttpErrorResponse` function, that reads errors and validation errors from http error response
 - new `HttpClientErrors` interface, which represents definition of http client errors read from http error response
-- new `ɵHandle404Func` function, which handles http error response with code 404 and returns RestNotFoundError
-- new `ClientErrorHandlingBehavior` enum, which represents behavior for client error handling
-    - **values**
-        - `Suppress` result of http request with client error is handled by handler but observable never finishes
-        - `PassThrough` result of http request with client error is handled by handler and extracted errors passes through to observable
-        - `PassThroughHttp` result of http request with client error is handled by handler and extracted errors passes through to observable with original http error
-        - `RestClientError` result of http request with client error is handled by handler and observable returns instance of RestClientError or its descendants
-- new `ClientErrorHandlingOptions` class, which represents options for client error handling
     - **properties**
-        - `behavior` behavior of client error handling
-- new `CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS` injection token for global client error handling middleware options
+        - `errors` array of error
+        - `validationErrors` object storing validation errors
 - new `HttpClientError` interface, which represents http client error, containing extracted errors and original
     - **extends**
         - `HttpClientErrors`
     - **properties**
         - `httpResponse` original http error response
-- new `getDefaultClientErrorObservable` function which, gets observable for error according specified behavior
-- updated `handle404Func` function
-    - new parameter `options` containing injector and mapper function for extraction of error messages
+- new `handle4xxSuppress` rxjs operator, that handles http error response with code 400..499 as response and never returns
+- new `handle404Suppress` rxjs operator, that handles 404 http code as response and never returns
 - updated `handle404` rxjs operator function
     - new parameter `options` containing injector and mapper function for extraction of error messages
-- updated `Handle4xxOptions` interface
-    - new **properties**
-        - `options` options for client error handling
 - *subpackage* `@anglr/error-handling/rest`
+    - new `ClientErrorHandlingBehavior` enum, which represents behavior for client error handling
+        - **values**
+            - `Suppress` result of http request with client error is handled by handler but observable never finishes
+            - `PassThrough` result of http request with client error is handled by handler and extracted errors passes through to observable
+            - `PassThroughHttp` result of http request with client error is handled by handler and extracted errors passes through to observable with original http error
+            - `RestClientError` result of http request with client error is handled by handler and observable returns instance of RestClientError or its descendants
+    - new `ClientErrorHandlingOptions` class, which represents options for client error handling
+        - **properties**
+            - `behavior` behavior of client error handling
+            - `defaultHandler` default error handler to be used if no other configured handler was found
+            - `defaultClientError` default factory for obtaining RestClientError
+            - `defaultClientValidationError` default factory for obtaining ClientValidationError
+    - new `CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS` injection token for global client error handling middleware options
+    - new `getDefaultClientErrorObservable` function which, gets observable for error according specified behavior
+    - new `HttpClientErrorCustomHandlerDef` type, that represents definition of http client error custom handler types
     - new `ErrorPassThrough` decorator, which changes behavior of ClientErrorHandlingMiddleware to pass through errors
     - new `SuppressError` decorator, which changes behavior of ClientErrorHandlingMiddleware to suppress errors
     - new `WithRestClientError` decorator, which changes behavior of ClientErrorHandlingMiddleware to rest client error
+    - new `getErrorHandlers` function, which gets error handler functions to be used for handling errors
     - updated `RestHttpClientErrors` interface
         - new **extends**
             - `Partial<ClientErrorHandlingMiddlewareOptions>`
     - updated `HTTP_CLIENT_ERROR_CUSTOM_HANDLER` injection token
-        - now also `WithRestClientContext<HttpClientErrorCustomHandler>` can be used as handler
+        - now of type `HttpClientErrorCustomHandlerDef`
 
 ### BREAKING CHANGES
 
@@ -55,8 +59,19 @@
     - `injector` is now optional
 - removed `HttpClientErrorInterceptor` http interceptor
 - removed `HTTP_CLIENT_ERROR_INTERCEPTOR_PROVIDER` injection token
+- removed `WithRestClientContext` class
+- removed `resolveWithRestClientContext` function
+- removed `Handle400WithValidationsOptions` interface, properties are now part of `Handle4xxOptions`
+- renamed `ɵhandle4xxFunction` function to `handle4xxFunc`
+- removed `handle4xxFunc` original function
+- renamed `ɵHandle400WithValidationsFunction` function to `handle400WithValidationsFunc`
+- removed `handle400WithValidationsFunc` original function
 - moved `HTTP_IGNORED_CLIENT_ERRORS` into *subpackage* `@anglr/error-handling/rest`
 - moved `HTTP_CLIENT_ERROR_CUSTOM_HANDLER` into *subpackage* `@anglr/error-handling/rest`
+- updated `handle404Func` function
+    - changed signature
+- updated `HttpClientErrorCustomHandler` type
+    - changed signature
 
 ## Version 11.0.0 (2022-06-08)
 

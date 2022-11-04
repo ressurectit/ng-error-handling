@@ -1,15 +1,15 @@
-import {handle400WithValidationsFunc, HttpClientErrorCustomHandler} from '@anglr/error-handling';
+import {handle400WithValidationsFunc} from '@anglr/error-handling';
 import {RESTClient, RestMethodMiddlewares} from '@anglr/rest';
 import {isBlank} from '@jscrpt/common';
 
 import {RestHttpClientErrors} from '../misc/restHttpError.interface';
-import {WithRestClientContext} from '../misc/withRestClientContext';
+import {HttpClientErrorCustomHandlerDef} from '../misc/types';
 
 /**
  * Handles 400 http code with validations
  * @param handler - Custom handler for 400 http status code, if not specified default one returning ClientValidationError will be used
  */
-export function Handle400WithValidations(handler?: HttpClientErrorCustomHandler|WithRestClientContext<HttpClientErrorCustomHandler>)
+export function Handle400WithValidations(handler?: HttpClientErrorCustomHandlerDef)
 {
     return function<TDecorated>(_target: RESTClient, _propertyKey: string, descriptor: RestHttpClientErrors &
                                                                                        RestMethodMiddlewares |
@@ -19,13 +19,7 @@ export function Handle400WithValidations(handler?: HttpClientErrorCustomHandler|
 
         if(isBlank(handler))
         {
-            handler = new WithRestClientContext(function(this: RESTClient)
-            {
-                return <HttpClientErrorCustomHandler>(err =>
-                {
-                    return handle400WithValidationsFunc(err, {injector: this.injector});
-                });
-            });
+            handler = handle400WithValidationsFunc;
         }
 
         descr.customErrorHandlers ??= {};

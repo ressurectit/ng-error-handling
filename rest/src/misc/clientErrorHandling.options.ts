@@ -1,8 +1,6 @@
+import {ClientValidationError, handle400WithValidationsFunc, HttpClientError, HttpClientErrorCustomHandler, RestClientError} from '@anglr/error-handling';
 import {Func1, isPresent} from '@jscrpt/common';
 import {NEVER, Observable, of, throwError} from 'rxjs';
-
-import {HttpClientError} from './httpError.interface';
-import {RestClientError} from './httpErrors';
 
 /**
  * Behavior for client error handling
@@ -40,17 +38,53 @@ export class ClientErrorHandlingOptions
      */
     public behavior: ClientErrorHandlingBehavior = ClientErrorHandlingBehavior.Suppress;
 
+    /**
+     * Default error handler to be used if no other configured handler was found
+     */
+    public defaultHandler: HttpClientErrorCustomHandler = handle400WithValidationsFunc;
+
+    /**
+     * Default factory for obtaining RestClientError
+     */
+    public defaultClientError: Func1<RestClientError, HttpClientError> = error => new RestClientError(error.errors);
+
+    /**
+     * Default factory for obtaining ClientValidationError
+     */
+    public defaultClientValidationError: Func1<ClientValidationError, HttpClientError> = error => new ClientValidationError(error.errors, error.validationErrors);
+
     //######################### constructor #########################
 
     /**
      * Creates instance of ClientErrorHandlingOptions
      * @param behavior - Behavior of client error handling
+     * @param defaultHandler - Default error handler to be used if no other configured handler was found
+     * @param defaultClientError - Default factory for obtaining RestClientError
+     * @param defaultClientValidationError - Default factory for obtaining ClientValidationError
      **/
-    constructor(behavior?: ClientErrorHandlingBehavior)
+    constructor(behavior?: ClientErrorHandlingBehavior,
+                defaultHandler?: HttpClientErrorCustomHandler,
+                defaultClientError?: Func1<RestClientError, HttpClientError>,
+                defaultClientValidationError?: Func1<ClientValidationError, HttpClientError>,)
     {
         if(isPresent(behavior))
         {
             this.behavior = behavior;
+        }
+
+        if(isPresent(defaultHandler))
+        {
+            this.defaultHandler = defaultHandler;
+        }
+
+        if(isPresent(defaultClientError))
+        {
+            this.defaultClientError = defaultClientError;
+        }
+
+        if(isPresent(defaultClientValidationError))
+        {
+            this.defaultClientValidationError = defaultClientValidationError;
         }
     }
 }
@@ -60,7 +94,6 @@ export class ClientErrorHandlingOptions
  * @param error - Information about occured error
  * @param restClientErrorCallback - Callback used for obtaining instance of RestClientError
  * @param behavior - Behaviour which should be used
- * @returns 
  */
 export function getDefaultClientErrorObservable(error: HttpClientError, restClientErrorCallback: Func1<RestClientError, HttpClientError>, behavior?: ClientErrorHandlingBehavior): Observable<never|RestClientError>
 {

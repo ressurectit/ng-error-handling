@@ -1,6 +1,6 @@
 import {RESTClient, RestMethodMiddlewares} from '@anglr/rest';
-import {ClientErrorHandlingBehavior} from '@anglr/error-handling';
 
+import {ClientErrorHandlingBehavior} from '../misc/clientErrorHandling.options';
 import {RestHttpClientErrors} from '../misc/restHttpError.interface';
 
 /**

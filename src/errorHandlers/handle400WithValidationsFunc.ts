@@ -1,35 +1,24 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {isEmptyObject} from '@jscrpt/common';
-import {Observable, of, throwError} from 'rxjs';
 
-import {Handle400WithValidationsOptions, HttpClientValidationErrors} from '../misc/httpError.interface';
+import {Handle4xxOptions, HttpClientError} from '../misc/httpError.interface';
 import {CLIENT_ERROR_NOTIFICATIONS} from '../misc/tokens';
-import {RestClientError, ClientValidationError} from '../misc/httpErrors';
 import {ServerValidationService} from '../serverValidation/serverValidation.service';
 import {readErrorsFromHttpErrorResponse} from '../misc/utils';
 
 /**
- * Handles http error response with code 400 and process validations errors and returns RestClientError or RestClientValidationError
- * @param error - Http error response to be handled
- * @param options - Options containing required stuff for handling errors
- */
-export function handle400WithValidationsFunc(error: HttpErrorResponse, options: Handle400WithValidationsOptions): Observable<RestClientError|ClientValidationError>
-{
-    return ɵHandle400WithValidationsFunction(error,
-                                             options,
-                                             error => throwError(() => error),
-                                             errors => of(new RestClientError(errors)),
-                                             (errors, validationErrors) => of(new ClientValidationError(errors, validationErrors)));
-}
-
-/**
  * Handles http error response with code 400 and process validations errors, with custom return types
+ * @param error - Http error response
+ * @param options - Options containing information used for obtaining error messages
+ * @param errorReturnCallback - Callback that transforms unprocessed http error response into TError
+ * @param clientErrorReturnCallback - Callback that transforms processed http error response error messages into TClientError
+ * @param clientValidationErrorReturnCallback - Callback that transforms processed http error response validation error messages into TClientValidationError
  */
-export function ɵHandle400WithValidationsFunction<TError, TClientError, TClientValidationError>(error: HttpErrorResponse,
-                                                                                                options: Handle400WithValidationsOptions,
-                                                                                                errorReturnCallback: (error: HttpErrorResponse) => TError,
-                                                                                                clientErrorReturnCallback: (errors: string[]) => TClientError,
-                                                                                                clientValidationErrorReturnCallback: (errors: string[], validationErrors: HttpClientValidationErrors | null) => TClientValidationError): TError|TClientError|TClientValidationError
+export function handle400WithValidationsFunc<TError, TClientError, TClientValidationError>(error: HttpErrorResponse,
+                                                                                           options: Handle4xxOptions,
+                                                                                           errorReturnCallback: (error: HttpErrorResponse) => TError,
+                                                                                           clientErrorReturnCallback: (error: HttpClientError) => TClientError,
+                                                                                           clientValidationErrorReturnCallback?: (error: HttpClientError) => TClientValidationError): TError|TClientError|TClientValidationError
 {
     //handles 400 code
     if(error.status == 400)
@@ -42,14 +31,24 @@ export function ɵHandle400WithValidationsFunction<TError, TClientError, TClient
             errors.forEach(error => notifications.error(error));
         }
 
-        if(validationErrors && !isEmptyObject(validationErrors))
+        if(validationErrors && !isEmptyObject(validationErrors) && clientValidationErrorReturnCallback)
         {
             options.injector?.get(ServerValidationService).addServerValidationErrors(validationErrors);
 
-            return clientValidationErrorReturnCallback(errors, validationErrors);
+            return clientValidationErrorReturnCallback(
+            {
+                errors,
+                validationErrors,
+                httpResponse: error,
+            });
         }
 
-        return clientErrorReturnCallback(errors);
+        return clientErrorReturnCallback(
+        {
+            errors,
+            httpResponse: error,
+            validationErrors: null,
+        });
     }
 
     return errorReturnCallback(error);

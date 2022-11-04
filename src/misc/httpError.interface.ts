@@ -1,8 +1,6 @@
 import {Injector} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
-import {Observable} from 'rxjs';
-
-import {ClientErrorHandlingOptions} from './clientErrorHandling.options';
+import {Func1, Func4Rest} from '@jscrpt/common';
 
 /**
  * Response mapper for http client errors that are converted to array of error messages
@@ -15,9 +13,16 @@ export type HttpClientErrorResponseMapper = (err: HttpErrorResponse) => string[]
 export type HttpClientValidationErrorResponseMapper = (err: HttpErrorResponse) => HttpClientValidationErrors|null;
 
 /**
- * Custom handler for `HttpErrorResponse` 
+ * Custom handler for `HttpErrorResponse`
  */
-export type HttpClientErrorCustomHandler<TResponse = any> = (err: HttpErrorResponse) => Observable<HttpErrorResponse|TResponse>;
+export type HttpClientErrorCustomHandler<TError = any,
+                                         TClientError = any,
+                                         TClientValidationError = TClientError> = Func4Rest<TError|TClientError|TClientValidationError,
+                                                                                            HttpErrorResponse,
+                                                                                            Handle4xxOptions,
+                                                                                            Func1<TError, HttpErrorResponse>,
+                                                                                            Func1<TClientError, HttpClientError>,
+                                                                                            [Func1<TClientValidationError, HttpClientError>?]>;
 
 /**
  * Validation errors for single validated property
@@ -52,21 +57,10 @@ export interface Handle4xxOptions
     injector?: Injector;
 
     /**
-     * Options for client error handling
-     */
-    options?: ClientErrorHandlingOptions;
-
-    /**
      * Response mapper for http client errors
      */
     clientErrorsResponseMapper?: HttpClientErrorResponseMapper;
-}
 
-/**
- * Options passed for handle 400 http status code with validations
- */
-export interface Handle400WithValidationsOptions extends Handle4xxOptions
-{
     /**
      * Response mapper for http client validation errors
      */

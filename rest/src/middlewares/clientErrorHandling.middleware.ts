@@ -1,18 +1,65 @@
 import {HttpRequest, HttpErrorResponse} from '@angular/common/http';
 import {LOGGER, Logger} from '@anglr/common';
 import {RESTClient, RestMiddleware} from '@anglr/rest';
-import {RestClientError, ɵhandle4xxFunction, ClientErrorHandlingOptions, CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS} from '@anglr/error-handling';
+import {ClientValidationError, HttpClientError, HttpClientErrorCustomHandler, RestClientError} from '@anglr/error-handling';
+import {Func1} from '@jscrpt/common';
 import {Observable, of, throwError, catchError} from 'rxjs';
 
 import {RestHttpClientErrors} from '../misc/restHttpError.interface';
-import {resolveWithRestClientContext} from '../misc/withRestClientContext';
-import {HTTP_CLIENT_ERROR_CUSTOM_HANDLER, HTTP_IGNORED_CLIENT_ERRORS} from '../misc/tokens';
+import {CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS, HTTP_CLIENT_ERROR_CUSTOM_HANDLER, HTTP_IGNORED_CLIENT_ERRORS} from '../misc/tokens';
+import {ClientErrorHandlingOptions} from '../misc/clientErrorHandling.options';
+import {HttpClientErrorCustomHandlerDef} from '../misc/types';
 
 interface ɵClientError
 {
     ɵLogger: Logger|null;
 
     ɵClientErrorHandlingMiddlewareOptions: ClientErrorHandlingOptions;
+}
+
+/**
+ * Gets error handler functions to be used for handling errors
+ * @param defaultOptions - Default options
+ * @param options - Default options overrides
+ * @param handler - Handler definition
+ */
+export function getErrorHandlers(defaultOptions: ClientErrorHandlingOptions,
+                                 options: Partial<ClientErrorHandlingOptions>,
+                                 handler?: HttpClientErrorCustomHandlerDef,): {handlerFn: HttpClientErrorCustomHandler, clientErrorFn: Func1<RestClientError, HttpClientError>, clientValidationErrorFn: Func1<ClientValidationError, HttpClientError>}
+{
+    const opts =
+    {
+        ...defaultOptions,
+        ...options,
+    };
+
+    let handlerFn = opts.defaultHandler;
+    let clientErrorFn = opts.defaultClientError;
+    let clientValidationErrorFn = opts.defaultClientValidationError;
+
+    if(handler)
+    {
+        if(Array.isArray(handler))
+        {
+            [handlerFn, clientErrorFn] = handler;
+            const [, , validationErrorFn] = handler;
+
+            if(validationErrorFn)
+            {
+                clientValidationErrorFn = validationErrorFn;
+            }
+        }
+        else
+        {
+            handlerFn = handler;
+        }
+    }
+
+    return {
+        handlerFn,
+        clientErrorFn,
+        clientValidationErrorFn,
+    };
 }
 
 /**
@@ -89,17 +136,22 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
                     //call custom error handler
                     if(customErrorHandlers?.[err.status])
                     {
-                        return resolveWithRestClientContext(customErrorHandlers[err.status], this)(err);
+                        const {clientErrorFn, clientValidationErrorFn, handlerFn} = getErrorHandlers($this.ɵClientErrorHandlingMiddlewareOptions, descriptor, customErrorHandlers?.[err.status]);
+
+                        return handlerFn(err,
+                                         {injector: this.injector, clientErrorsResponseMapper: descriptor.clientErrorResponseMapper},
+                                         error => throwError(() => error),
+                                         error => of(clientErrorFn(error)),
+                                         error => of(clientValidationErrorFn(error)));
                     }
 
+                    const {clientErrorFn, clientValidationErrorFn, handlerFn} = getErrorHandlers($this.ɵClientErrorHandlingMiddlewareOptions, descriptor);
                     
-                    return ɵhandle4xxFunction(err,
-                        {
-                            injector: this.injector,
-                            clientErrorsResponseMapper: descriptor?.clientErrorResponseMapper
-                        },
-                        error => throwError(() => error),
-                        errors => of(new RestClientError(errors)));
+                    return handlerFn(err,
+                                     {injector: this.injector, clientErrorsResponseMapper: descriptor.clientErrorResponseMapper},
+                                     error => throwError(() => error),
+                                     error => of(clientErrorFn(error)),
+                                     error => of(clientValidationErrorFn(error)));
                 }
 
                 return throwError(() => err);
