@@ -3,11 +3,11 @@ import {LOGGER, Logger} from '@anglr/common';
 import {RESTClient, RestMiddleware} from '@anglr/rest';
 import {ClientValidationError, HttpClientError, HttpClientErrorCustomHandler, RestClientError} from '@anglr/error-handling';
 import {Func1} from '@jscrpt/common';
-import {Observable, of, throwError, catchError} from 'rxjs';
+import {Observable, throwError, catchError} from 'rxjs';
 
 import {RestHttpClientErrors} from '../misc/restHttpError.interface';
 import {CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS, HTTP_CLIENT_ERROR_CUSTOM_HANDLER, HTTP_IGNORED_CLIENT_ERRORS} from '../misc/tokens';
-import {ClientErrorHandlingOptions} from '../misc/clientErrorHandling.options';
+import {ClientErrorHandlingOptions, getDefaultClientErrorObservable} from '../misc/clientErrorHandling.options';
 import {HttpClientErrorCustomHandlerDef} from '../misc/types';
 
 interface ɵClientError
@@ -133,6 +133,8 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
                         ...descriptor?.customErrorHandlers,
                     };
 
+                    const behavior = descriptor.behavior ?? $this.ɵClientErrorHandlingMiddlewareOptions.behavior;
+
                     //call custom error handler
                     if(customErrorHandlers?.[err.status])
                     {
@@ -141,8 +143,8 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
                         return handlerFn(err,
                                          {injector: this.injector, clientErrorsResponseMapper: descriptor.clientErrorResponseMapper},
                                          error => throwError(() => error),
-                                         error => of(clientErrorFn(error)),
-                                         error => of(clientValidationErrorFn(error)));
+                                         error => getDefaultClientErrorObservable(error, e => clientErrorFn(e), behavior),
+                                         error => getDefaultClientErrorObservable(error, e => clientValidationErrorFn(e), behavior));
                     }
 
                     const {clientErrorFn, clientValidationErrorFn, handlerFn} = getErrorHandlers($this.ɵClientErrorHandlingMiddlewareOptions, descriptor);
@@ -150,8 +152,8 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
                     return handlerFn(err,
                                      {injector: this.injector, clientErrorsResponseMapper: descriptor.clientErrorResponseMapper},
                                      error => throwError(() => error),
-                                     error => of(clientErrorFn(error)),
-                                     error => of(clientValidationErrorFn(error)));
+                                     error => getDefaultClientErrorObservable(error, e => clientErrorFn(e), behavior),
+                                     error => getDefaultClientErrorObservable(error, e => clientValidationErrorFn(e), behavior));
                 }
 
                 return throwError(() => err);
