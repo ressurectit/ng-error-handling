@@ -29,6 +29,12 @@ export function readErrorsFromHttpErrorResponse(error: HttpErrorResponse, inject
         validationErrors = clientValidationErrorsResponseMapper(error);
     }
 
+    //in case of incorrect type
+    if(!Array.isArray(errors))
+    {
+        errors = [errors];
+    }
+
     return {
         errors,
         validationErrors,
