@@ -40,6 +40,7 @@
     - new `getDefaultClientErrorObservable` function which, gets observable for error according specified behavior
     - new `HttpClientErrorCustomHandlerDef` type, that represents definition of http client error custom handler types
     - new `ErrorPassThrough` decorator, which changes behavior of ClientErrorHandlingMiddleware to pass through errors
+    - new `ErrorPassThroughHttp` decorator, which changes behavior of ClientErrorHandlingMiddleware to pass through errors and http error response
     - new `SuppressError` decorator, which changes behavior of ClientErrorHandlingMiddleware to suppress errors
     - new `WithRestClientError` decorator, which changes behavior of ClientErrorHandlingMiddleware to rest client error
     - new `getErrorHandlers` function, which gets error handler functions to be used for handling errors

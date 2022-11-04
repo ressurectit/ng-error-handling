@@ -1,4 +1,5 @@
 export * from './errorPassThrough.decorator';
+export * from './errorPassThroughHttp.decorator';
 export * from './handle400WithValidations.decorator';
 export * from './handle404.decorator';
 export * from './ignoreClientErrors.decorator';
