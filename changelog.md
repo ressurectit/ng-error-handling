@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 12.0.1 (2023-07-25)
+
+### Bug Fixes
+
+- fixed `HttpServerErrorInterceptor` imports, which points to itself
+
 ## Version 12.0.0 (2022-11-04)
 
 ### Bug Fixes

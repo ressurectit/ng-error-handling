@@ -1,8 +1,9 @@
 import {Injectable, Inject, Optional, ClassProvider} from '@angular/core';
 import {HttpInterceptor, HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpErrorResponse, HttpRequest} from '@angular/common/http';
 import {Logger, LOGGER, IGNORED_INTERCEPTORS} from '@anglr/common';
-import {InternalServerErrorService} from '@anglr/error-handling';
 import {Observable, tap} from 'rxjs';
+
+import {InternalServerErrorService} from '../internalServerError/internalServerError.service';
 
 /**
  * Interceptor that is used for handling http server errors with codes 500..599 and displaying of internal server error
