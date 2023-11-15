@@ -47,7 +47,7 @@ export class HttpServerErrorInterceptor implements HttpInterceptor
                     //if server error
                     if(err.status >= 500 && err.status < 600)
                     {
-                        this._logger.error(`HTTP_ERROR 5xx: url: ${err.url} error:${err.error}`);
+                        this._logger.error('HTTP_ERROR 5xx: url: {{err.url}} error: {{@err.error}}', {url: err.url, error: err.error});
 
                         if(this._internalServerErrorService)
                         {

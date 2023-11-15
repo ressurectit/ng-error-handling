@@ -1,5 +1,17 @@
 # Changelog
 
+## Version 13.0.0 (2023-11-15)
+
+### BREAKING CHANGES
+
+- minimal supported version of `NodeJs` is `18`
+- minimal supported version of `@angular` is `17.0.1`
+- minimal supported version of `@angular` material is `17.0.0`
+- minimal supported version of `@jscrpt/common` is `5.0.0`
+- minimal supported version of `@anglr/common` is `19.0.0`
+- minimal supported version of `@anglr/rest` is `14.0.0`
+- minimal supported version of `tslib` is `2.6.2`
+
 ## Version 12.0.1 (2023-07-25)
 
 ### Bug Fixes

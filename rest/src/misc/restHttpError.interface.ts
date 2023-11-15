@@ -7,7 +7,7 @@ import {HttpClientErrorCustomHandlerDef} from './types';
 /**
  * Contains metadata for http client errors configuration
  */
-export interface RestHttpClientErrors extends TypedPropertyDescriptor<any>, Partial<ClientErrorHandlingOptions>
+export interface RestHttpClientErrors extends TypedPropertyDescriptor<unknown>, Partial<ClientErrorHandlingOptions>
 {
     /**
      * Array of ignored client errors that will be added to default ones

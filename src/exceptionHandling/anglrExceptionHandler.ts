@@ -107,7 +107,7 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
             logError = await extender(this._injector, logError);
         }
 
-        this._logger.error('Unhandled error: {@error}', logError);
+        this._logger.error('Unhandled error: {{@logError}}', {logError});
     }
     
     //######################### private methods #########################

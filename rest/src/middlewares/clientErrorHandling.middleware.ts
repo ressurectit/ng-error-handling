@@ -1,6 +1,6 @@
 import {HttpRequest, HttpErrorResponse} from '@angular/common/http';
 import {LOGGER, Logger} from '@anglr/common';
-import {RESTClient, RestMiddleware} from '@anglr/rest';
+import {RESTClientBase, RestMiddleware} from '@anglr/rest';
 import {ClientValidationError, HttpClientError, HttpClientErrorCustomHandler, RestClientError} from '@anglr/error-handling';
 import {Func1} from '@jscrpt/common';
 import {Observable, throwError, catchError} from 'rxjs';
@@ -65,7 +65,7 @@ export function getErrorHandlers(defaultOptions: ClientErrorHandlingOptions,
 /**
  * Middleware that is used for handling 4xx errors 
  */
-export class ClientErrorHandlingMiddleware implements RestMiddleware
+export class ClientErrorHandlingMiddleware implements RestMiddleware<unknown, unknown, RestHttpClientErrors>
 {
     //######################### public static properties #########################
 
@@ -87,7 +87,7 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
      * @param request - Http request that you can modify
      * @param next - Used for calling next middleware with modified request
      */
-    public run(this: RESTClient,
+    public run(this: RESTClientBase,
                _id: string,
                _target: unknown,
                _methodName: string,
@@ -119,7 +119,7 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware
 
                     $this.ɵLogger ??= this.injector.get(LOGGER, null);
                     $this.ɵClientErrorHandlingMiddlewareOptions ??= this.injector.get(CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS, new ClientErrorHandlingOptions());
-                    $this.ɵLogger?.error(`HTTP_ERROR ${err.status} ${err.statusText}: ${JSON.stringify(err.error)}`);
+                    $this.ɵLogger?.error('HTTP_ERROR {{status}} {{statusText}}: {{error}}', {status: err.status, statusText: err.statusText, error: err.error});
                     
                     //client error ignored
                     if(ignoredClientErrors.find(itm => itm == err.status))

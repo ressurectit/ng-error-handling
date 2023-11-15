@@ -5,10 +5,9 @@
     "type": "module",
     "sideEffects": false,
     "scripts": {
-        "build": "ngc --declaration --declarationDir . --declarationMap && ngc -t es2015 --outDir es2015",
-        "dts:rollup": "npm run api -- api-extractor.json && npm run api -- html2canvas/api-extractor.json && npm run api -- rest/api-extractor.json && npm run api -- material/api-extractor.json",
+        "build": "ngc --declaration --declarationDir . --declarationMap",
         "api": "api-extractor run --local --verbose -c",
-        "clean": "rimraf */temp temp es2015 es2020 **/tsdoc-metadata.json src/**/*.d.ts src/**/*.d.ts.map */src/**/*.d.ts */src/**/*.d.ts.map ./*.d.ts ./*.d.ts.map */*.d.ts",
+        "clean": "rimraf --glob */temp temp es2022 **/tsdoc-metadata.json src/**/*.d.ts src/**/*.d.ts.map */src/**/*.d.ts */src/**/*.d.ts.map ./*.d.ts ./*.d.ts.map */*.d.ts",
         "clean:deps": "rimraf package-lock.json node_modules || echo 'node_modules removed'",
         "clean:all": "npm run clean && npm run clean:deps",
         "ngc": "ngc",
@@ -44,7 +43,7 @@
         "doc:api:material": "copyfiles -u 2 material/temp/error-handling-material.api.md docs/content/api/ng-error-handling-material && rimraf material/temp"
     },
     "engines": {
-        "node": "^14.15.0 || >=16.10.0"
+        "node": "^18.13.0 || >=20.9.0"
     },
     "repository": {
         "type": "git",
@@ -63,93 +62,92 @@
     },
     "homepage": "https://github.com/ressurectit/ng-error-handling",
     "peerDependencies": {
-        "@angular/core": ">=14.0.0",
-        "@angular/common": ">=14.0.0",
-        "@angular/platform-browser": ">=14.0.0",
-        "@angular/forms": ">=14.0.0",
-        "@angular/cdk": ">=14.0.0",
-        "@angular/material": ">=14.0.0",
+        "@angular/core": ">=17.0.1",
+        "@angular/common": ">=17.0.1",
+        "@angular/platform-browser": ">=17.0.1",
+        "@angular/forms": ">=17.0.0",
+        "@angular/cdk": ">=17.0.0",
+        "@angular/material": ">=17.0.1",
         "rxjs": ">=7.5.7",
-        "@jscrpt/common": ">=3.3.0",
-        "@anglr/common": ">=15.0.1",
-        "@anglr/rest": ">=12.0.0",
-        "html2canvas": "^1.3.3",
+        "@jscrpt/common": ">=5.0.0",
+        "@anglr/common": ">=19.0.0",
+        "@anglr/rest": ">=14.0.0-beta.20231115182003",
+        "html2canvas": "^1.4.1",
         "sourcemapped-stacktrace": "1.1.11",
-        "tslib": "^2.4.0"
+        "tslib": "^2.6.2"
     },
     "devDependencies": {
-        "@angular/core": "^14.0.0",
-        "@angular/common": "^14.0.0",
-        "@angular/platform-browser": "^14.0.0",
-        "@angular/forms": "^14.0.0",
-        "@angular/animations": "^14.0.0",
-        "@angular/cdk": "^14.0.0",
-        "@angular/material": "^14.0.0",
+        "@angular/core": "^17.0.1",
+        "@angular/common": "^17.0.1",
+        "@angular/platform-browser": "^17.0.1",
+        "@angular/animations": "^17.0.1",
+        "@angular/forms": "^17.0.1",
+        "@angular/cdk": "^17.0.0",
+        "@angular/material": "^17.0.0",
         "rxjs": "^7.5.7",
-        "@jscrpt/common": "^3.2.0",
-        "@anglr/common": "^15.0.1",
-        "@anglr/rest": "^12.0.0",
-        "html2canvas": "^1.3.3",
-        "@types/node": "^14.14.31",
-        "@angular/compiler-cli": "^14.0.0",
-        "@angular/compiler": "^14.0.0",
-        "@angular/language-service": "^14.0.0",
-        "@microsoft/api-extractor": "7.19.2",
-        "@microsoft/api-documenter": "7.13.77",
-        "tslib": "2.4.0",
+        "@jscrpt/common": "^5.0.0",
+        "@anglr/common": "^19.0.0",
+        "@anglr/rest": "^14.0.0-beta.20231115182003",
+        "html2canvas": "^1.4.1",
+        "@types/node": "^18.15.3",
+        "@angular/compiler-cli": "^17.0.0",
+        "@angular/compiler": "^17.0.0",
+        "@angular/language-service": "^17.0.0",
+        "@microsoft/api-extractor": "7.38.2",
+        "@microsoft/api-documenter": "7.23.11",
+        "tslib": "2.6.2",
         "eslint": "7.32.0",
-        "@typescript-eslint/eslint-plugin": "4.33.0",
-        "@typescript-eslint/parser": "4.33.0",
+        "@typescript-eslint/eslint-plugin": "6.10.0",
+        "@typescript-eslint/parser": "6.10.0",
         "eslint-plugin-ressurectit": "0.1.0",
-        "rimraf": "3.0.2",
+        "rimraf": "5.0.5",
         "copyfiles": "2.4.1",
-        "replace-in-file": "6.3.2",
+        "replace-in-file": "7.0.2",
         "path-exists-cli": "2.0.0",
-        "typescript": "4.7.2",
+        "typescript": "5.2.2",
         "npm-git-version": "2.0.0"
     },
-    "esm2020": "./es2020/src/index.js",
-    "es2020": "./es2020/src/index.js",
-    "es2015": "./es2015/src/index.js",
-    "module": "./es2015/src/index.js",
+    "module": "./es2022/src/index.js",
     "typings": "./src/index.d.ts",
     "exports": {
         "./package.json": {
             "default": "./package.json"
+        },
+        "./styles": {
+            "sass": "./styles/index.scss"
+        },
+        "./styles/themes/*": {
+            "sass": "./styles/themes/*.scss"
         },
         "./typings/*": {
             "types": "./typings/*/index.d.ts"
         },
         ".": {
             "types": "./src/index.d.ts",
-            "esm2020": "./es2020/src/index.js",
-            "es2020": "./es2020/src/index.js",
-            "es2015": "./es2015/src/index.js",
-            "node": "./es2015/src/index.js",
-            "default": "./es2020/src/index.js"
+            "esm2022": "./es2022/src/index.js",
+            "es2022": "./es2022/src/index.js",
+            "node": "./es2022/src/index.js",
+            "default": "./es2022/src/index.js"
         },
         "./html2canvas": {
             "types": "./html2canvas/src/index.d.ts",
-            "esm2020": "./es2020/html2canvas/src/index.js",
-            "es2020": "./es2020/html2canvas/src/index.js",
-            "es2015": "./es2015/html2canvas/src/index.js",
-            "node": "./es2015/html2canvas/src/index.js",
-            "default": "./es2020/html2canvas/src/index.js"
+            "esm2022": "./es2022/html2canvas/src/index.js",
+            "es2022": "./es2022/html2canvas/src/index.js",
+            "node": "./es2022/html2canvas/src/index.js",
+            "default": "./es2022/html2canvas/src/index.js"
         },
         "./rest": {
             "types": "./rest/src/index.d.ts",
-            "esm2020": "./es2020/rest/src/index.js",
-            "es2020": "./es2020/rest/src/index.js",
-            "es2015": "./es2015/rest/src/index.js",
-            "node": "./es2015/rest/src/index.js",
-            "default": "./es2020/rest/src/index.js"
+            "esm2022": "./es2022/rest/src/index.js",
+            "es2022": "./es2022/rest/src/index.js",
+            "node": "./es2022/rest/src/index.js",
+            "default": "./es2022/rest/src/index.js"
         },
         "./material": {
             "types": "./material/src/index.d.ts",
-            "esm2020": "./es2020/material/src/index.js",
-            "es2020": "./es2020/material/src/index.js",
-            "es2015": "./es2015/material/src/index.js",
-            "node": "./es2015/material/src/index.js",
+            "esm2022": "./es2022/material/src/index.js",
+            "es2022": "./es2022/material/src/index.js",
+            "node": "./es2022/material/src/index.js",
             "default": "./es2020/material/src/index.js"
         }
     }
