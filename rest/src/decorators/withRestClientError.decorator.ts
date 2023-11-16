@@ -10,11 +10,11 @@ export function WithRestClientError()
 {
     return function<TDecorated>(_target: RESTClient, _propertyKey: string, descriptor: RestHttpClientErrors &
                                                                                        RestMethodMiddlewares |
-                                                                                       TDecorated): TypedPropertyDescriptor<any>
+                                                                                       TDecorated): TDecorated
     {
         const descr = descriptor as RestHttpClientErrors & RestMethodMiddlewares;
         descr.behavior = ClientErrorHandlingBehavior.RestClientError;
 
-        return descr;
+        return descr as TDecorated;
     };
 }

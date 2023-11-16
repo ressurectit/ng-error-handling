@@ -14,7 +14,7 @@ export function Handle404(handler?: HttpClientErrorCustomHandlerDef)
 {
     return function<TDecorated>(_target: RESTClient, _propertyKey: string, descriptor: RestHttpClientErrors &
                                                                                        RestMethodMiddlewares |
-                                                                                       TDecorated): TypedPropertyDescriptor<any>
+                                                                                       TDecorated): TDecorated
     {
         const descr = descriptor as RestHttpClientErrors & RestMethodMiddlewares;
 
@@ -26,6 +26,6 @@ export function Handle404(handler?: HttpClientErrorCustomHandlerDef)
         descr.customErrorHandlers ??= {};
         descr.customErrorHandlers[404] = handler;
 
-        return descr;
+        return descr as TDecorated;
     };
 }

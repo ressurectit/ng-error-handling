@@ -13,7 +13,7 @@ export function Handle400WithValidations(handler?: HttpClientErrorCustomHandlerD
 {
     return function<TDecorated>(_target: RESTClient, _propertyKey: string, descriptor: RestHttpClientErrors &
                                                                                        RestMethodMiddlewares |
-                                                                                       TDecorated): TypedPropertyDescriptor<any>
+                                                                                       TDecorated): TDecorated
     {
         const descr = descriptor as RestHttpClientErrors & RestMethodMiddlewares;
 
@@ -25,6 +25,6 @@ export function Handle400WithValidations(handler?: HttpClientErrorCustomHandlerD
         descr.customErrorHandlers ??= {};
         descr.customErrorHandlers[400] = handler;
 
-        return descr;
+        return descr as TDecorated;
     };
 }

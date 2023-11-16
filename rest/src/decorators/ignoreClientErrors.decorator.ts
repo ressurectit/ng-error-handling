@@ -10,11 +10,11 @@ export function IgnoreClientErrors(addIgnoredClientErrors: number[])
 {
     return function<TDecorated>(_target: RESTClient, _propertyKey: string, descriptor: RestHttpClientErrors &
                                                                                        RestMethodMiddlewares |
-                                                                                       TDecorated): TypedPropertyDescriptor<any>
+                                                                                       TDecorated): TDecorated
     {
         const descr = descriptor as RestHttpClientErrors & RestMethodMiddlewares;
         descr.addIgnoredClientErrors = addIgnoredClientErrors;
 
-        return descr;
+        return descr as TDecorated;
     };
 }
