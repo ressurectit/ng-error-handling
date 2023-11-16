@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {InternalServerErrorInfo, InternalServerErrorRenderer} from '@anglr/error-handling';
 
-import {DialogInternalServerErrorSAComponent} from '../components/dialogInternalServerError/dialogInternalServerError.component';
-import {DialogInternalServerErrorData} from '../components/dialogInternalServerError/dialogInternalServerError.interface';
+import {DialogInternalServerErrorSAComponent} from '../../components/dialogInternalServerError/dialogInternalServerError.component';
+import {DialogInternalServerErrorData} from '../../components/dialogInternalServerError/dialogInternalServerError.interface';
 
 /**
  * Renderer that is using angular material for displaying internal server error

@@ -1,23 +1,23 @@
 import {Injectable, Optional, Injector, ClassProvider} from '@angular/core';
 import {HttpInterceptor, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpRequest} from '@angular/common/http';
 import {IGNORED_INTERCEPTORS} from '@anglr/common';
-import {Observable, catchError} from 'rxjs';
+import {Observable, Observer, catchError} from 'rxjs';
 
-import {HttpGatewayTimeoutInterceptorOptions} from './httpGatewayTimeoutInterceptorOptions';
+import {ServiceUnavailableInterceptorOptions} from './serviceUnavailableInterceptor.options';
 
 /**
- * HttpGatewayTimeoutInterceptor used for intercepting http responses and handling 504 statuses
+ * ServiceUnavailableInterceptor used for intercepting http responses and handling 503 statuses
  */
 @Injectable()
-export class HttpGatewayTimeoutInterceptor implements HttpInterceptor
+export class ServiceUnavailableInterceptor implements HttpInterceptor
 {
     //######################### constructor #########################
-    constructor(@Optional() private _options: HttpGatewayTimeoutInterceptorOptions,
+    constructor(@Optional() private _options: ServiceUnavailableInterceptorOptions,
                 private _injector: Injector)
     {
-        if(!_options || !(_options instanceof HttpGatewayTimeoutInterceptorOptions))
+        if(!_options || !(_options instanceof ServiceUnavailableInterceptorOptions))
         {
-            this._options = new HttpGatewayTimeoutInterceptorOptions();
+            this._options = new ServiceUnavailableInterceptorOptions();
         }
     }
 
@@ -36,7 +36,7 @@ export class HttpGatewayTimeoutInterceptor implements HttpInterceptor
             {
                 //client error, not response from server, or is ignored
                 if (err.error instanceof Error ||
-                    req.context.get(IGNORED_INTERCEPTORS).some(itm => itm == HttpGatewayTimeoutInterceptor))
+                    req.context.get(IGNORED_INTERCEPTORS).some(itm => itm == ServiceUnavailableInterceptor))
                 {
                     observer.error(err);
                     observer.complete();
@@ -44,10 +44,10 @@ export class HttpGatewayTimeoutInterceptor implements HttpInterceptor
                     return;
                 }
 
-                //if gateway timeout
-                if(err.status == 504)
+                //if service unavailable
+                if(err.status == 503)
                 {
-                    this._options.action(this._injector, observer);
+                    this._options.action(this._injector, observer as Observer<unknown>);
 
                     return;
                 }
@@ -61,11 +61,11 @@ export class HttpGatewayTimeoutInterceptor implements HttpInterceptor
 }
 
 /**
- * Provider for proper use of HttpGatewayTimeoutInterceptor, use this provider to inject this interceptor
+ * Provider for proper use of ServiceUnavailableInterceptor, use this provider to inject this interceptor
  */
-export const HTTP_GATEWAY_TIMEOUT_INTERCEPTOR_PROVIDER: ClassProvider =
+export const SERVICE_UNAVAILABLE_INTERCEPTOR_PROVIDER: ClassProvider =
 {
     provide: HTTP_INTERCEPTORS,
     multi: true,
-    useClass: HttpGatewayTimeoutInterceptor
+    useClass: ServiceUnavailableInterceptor
 };

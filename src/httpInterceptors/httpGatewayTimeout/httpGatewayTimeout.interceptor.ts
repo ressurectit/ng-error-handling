@@ -3,21 +3,21 @@ import {HttpInterceptor, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpRequest}
 import {IGNORED_INTERCEPTORS} from '@anglr/common';
 import {Observable, Observer, catchError} from 'rxjs';
 
-import {NoConnectionInterceptorOptions} from './noConnectionInterceptorOptions';
+import {HttpGatewayTimeoutInterceptorOptions} from './httpGatewayTimeoutInterceptor.options';
 
 /**
- * NoConnectionInterceptor used for intercepting http responses and handling 0 statuses
+ * HttpGatewayTimeoutInterceptor used for intercepting http responses and handling 504 statuses
  */
 @Injectable()
-export class NoConnectionInterceptor implements HttpInterceptor
+export class HttpGatewayTimeoutInterceptor implements HttpInterceptor
 {
     //######################### constructor #########################
-    constructor(@Optional() private _options: NoConnectionInterceptorOptions,
+    constructor(@Optional() private _options: HttpGatewayTimeoutInterceptorOptions,
                 private _injector: Injector)
     {
-        if(!_options || !(_options instanceof NoConnectionInterceptorOptions))
+        if(!_options || !(_options instanceof HttpGatewayTimeoutInterceptorOptions))
         {
-            this._options = new NoConnectionInterceptorOptions();
+            this._options = new HttpGatewayTimeoutInterceptorOptions();
         }
     }
 
@@ -32,11 +32,11 @@ export class NoConnectionInterceptor implements HttpInterceptor
     {
         return next.handle(req).pipe(catchError((err) =>
         {
-            return new Observable((observer: Observer<unknown>) =>
+            return new Observable(observer  =>
             {
                 //client error, not response from server, or is ignored
                 if (err.error instanceof Error ||
-                    req.context.get(IGNORED_INTERCEPTORS).some(itm => itm == NoConnectionInterceptor))
+                    req.context.get(IGNORED_INTERCEPTORS).some(itm => itm == HttpGatewayTimeoutInterceptor))
                 {
                     observer.error(err);
                     observer.complete();
@@ -44,10 +44,10 @@ export class NoConnectionInterceptor implements HttpInterceptor
                     return;
                 }
 
-                //if no connection to server
-                if(err.status == 0)
+                //if gateway timeout
+                if(err.status == 504)
                 {
-                    this._options.action(this._injector, observer);
+                    this._options.action(this._injector, observer as Observer<unknown>);
 
                     return;
                 }
@@ -61,11 +61,11 @@ export class NoConnectionInterceptor implements HttpInterceptor
 }
 
 /**
- * Provider for proper use of NoConnectionInterceptor, use this provider to inject this interceptor
+ * Provider for proper use of HttpGatewayTimeoutInterceptor, use this provider to inject this interceptor
  */
-export const NO_CONNECTION_INTERCEPTOR_PROVIDER: ClassProvider =
+export const HTTP_GATEWAY_TIMEOUT_INTERCEPTOR_PROVIDER: ClassProvider =
 {
     provide: HTTP_INTERCEPTORS,
     multi: true,
-    useClass: NoConnectionInterceptor
+    useClass: HttpGatewayTimeoutInterceptor
 };

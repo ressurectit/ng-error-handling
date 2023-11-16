@@ -1,23 +1,23 @@
 import {Injectable, Optional, Injector, ClassProvider} from '@angular/core';
 import {HttpInterceptor, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpRequest} from '@angular/common/http';
 import {IGNORED_INTERCEPTORS} from '@anglr/common';
-import {Observable, catchError} from 'rxjs';
+import {Observable, Observer, catchError} from 'rxjs';
 
-import {ServiceUnavailableInterceptorOptions} from './serviceUnavailableInterceptorOptions';
+import {NoConnectionInterceptorOptions} from './noConnectionInterceptor.options';
 
 /**
- * ServiceUnavailableInterceptor used for intercepting http responses and handling 503 statuses
+ * NoConnectionInterceptor used for intercepting http responses and handling 0 statuses
  */
 @Injectable()
-export class ServiceUnavailableInterceptor implements HttpInterceptor
+export class NoConnectionInterceptor implements HttpInterceptor
 {
     //######################### constructor #########################
-    constructor(@Optional() private _options: ServiceUnavailableInterceptorOptions,
+    constructor(@Optional() private _options: NoConnectionInterceptorOptions,
                 private _injector: Injector)
     {
-        if(!_options || !(_options instanceof ServiceUnavailableInterceptorOptions))
+        if(!_options || !(_options instanceof NoConnectionInterceptorOptions))
         {
-            this._options = new ServiceUnavailableInterceptorOptions();
+            this._options = new NoConnectionInterceptorOptions();
         }
     }
 
@@ -32,11 +32,11 @@ export class ServiceUnavailableInterceptor implements HttpInterceptor
     {
         return next.handle(req).pipe(catchError((err) =>
         {
-            return new Observable(observer =>
+            return new Observable((observer: Observer<unknown>) =>
             {
                 //client error, not response from server, or is ignored
                 if (err.error instanceof Error ||
-                    req.context.get(IGNORED_INTERCEPTORS).some(itm => itm == ServiceUnavailableInterceptor))
+                    req.context.get(IGNORED_INTERCEPTORS).some(itm => itm == NoConnectionInterceptor))
                 {
                     observer.error(err);
                     observer.complete();
@@ -44,8 +44,8 @@ export class ServiceUnavailableInterceptor implements HttpInterceptor
                     return;
                 }
 
-                //if service unavailable
-                if(err.status == 503)
+                //if no connection to server
+                if(err.status == 0)
                 {
                     this._options.action(this._injector, observer);
 
@@ -61,11 +61,11 @@ export class ServiceUnavailableInterceptor implements HttpInterceptor
 }
 
 /**
- * Provider for proper use of ServiceUnavailableInterceptor, use this provider to inject this interceptor
+ * Provider for proper use of NoConnectionInterceptor, use this provider to inject this interceptor
  */
-export const SERVICE_UNAVAILABLE_INTERCEPTOR_PROVIDER: ClassProvider =
+export const NO_CONNECTION_INTERCEPTOR_PROVIDER: ClassProvider =
 {
     provide: HTTP_INTERCEPTORS,
     multi: true,
-    useClass: ServiceUnavailableInterceptor
+    useClass: NoConnectionInterceptor
 };
