@@ -1,8 +1,8 @@
 import {MonoTypeOperatorFunction, catchError, throwError, of, NEVER} from 'rxjs';
 
 import {handle4xxFunc} from '../errorHandlers/handle4xxFunc';
-import {Handle4xxOptions} from '../misc/httpError.interface';
-import {RestClientError} from '../misc/httpErrors';
+import {RestClientError} from '../misc/classes/restClientError';
+import {Handle4xxOptions} from '../interfaces';
 
 /**
  * Handles http error response with code 400..499 as response and returns RestClientError

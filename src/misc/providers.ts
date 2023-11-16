@@ -1,8 +1,7 @@
 import {ClassProvider, EnvironmentProviders, Type, ValueProvider, makeEnvironmentProviders} from '@angular/core';
 
-import {AnglrExceptionExtender} from '../exceptionHandling/anglrExceptionExtender';
 import {ANGLR_EXCEPTION_EXTENDERS, INTERNAL_SERVER_ERROR_RENDERER} from './tokens';
-import {InternalServerErrorRenderer} from '../internalServerError/internalServerError.service';
+import {AnglrExceptionExtender, InternalServerErrorRenderer} from '../interfaces';
 
 /**
  * Provides anglr exception extends functions

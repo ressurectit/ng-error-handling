@@ -1,8 +1,8 @@
 import {MonoTypeOperatorFunction, catchError, throwError, of, NEVER} from 'rxjs';
 
 import {handle404Func} from '../errorHandlers';
-import {Handle4xxOptions} from '../misc/httpError.interface';
-import {RestNotFoundError} from '../misc/httpErrors';
+import {Handle4xxOptions} from '../interfaces';
+import {RestNotFoundError} from '../misc/classes/restNotFoundError';
 
 /**
  * Handles 404 http code as response and returns RestNotFoundError

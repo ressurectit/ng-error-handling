@@ -1,7 +1,7 @@
 import {HttpErrorResponse} from '@angular/common/http';
 
-import {Handle4xxOptions, HttpClientError} from '../misc/httpError.interface';
 import {readErrorsFromHttpErrorResponse} from '../misc/utils';
+import {Handle4xxOptions, HttpClientError} from '../interfaces';
 
 /**
  * Handles http error response with code 404 with custom return types

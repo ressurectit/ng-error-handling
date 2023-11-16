@@ -1,8 +1,8 @@
 import {HttpErrorResponse} from '@angular/common/http';
 
-import {Handle4xxOptions, HttpClientError} from '../misc/httpError.interface';
 import {CLIENT_ERROR_NOTIFICATIONS} from '../misc/tokens';
 import {readErrorsFromHttpErrorResponse} from '../misc/utils';
+import {Handle4xxOptions, HttpClientError} from '../interfaces';
 
 /**
  * Handles http error response with code 400..499 with custom return types

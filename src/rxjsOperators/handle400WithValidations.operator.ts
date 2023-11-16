@@ -1,8 +1,9 @@
 import {MonoTypeOperatorFunction, catchError, of, throwError} from 'rxjs';
 
-import {ClientValidationError, RestClientError} from '../misc/httpErrors';
-import {Handle4xxOptions} from '../misc/httpError.interface';
 import {handle400WithValidationsFunc} from '../errorHandlers';
+import {Handle4xxOptions} from '../interfaces';
+import {ClientValidationError} from '../misc/classes/clientValidationError';
+import {RestClientError} from '../misc/classes/restClientError';
 
 /**
  * Handles 400 http code with validations as response and returns ClientValidationError or RestClientError if no validation errors

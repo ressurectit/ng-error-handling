@@ -1,9 +1,9 @@
 import {InjectionToken} from '@angular/core';
 import {Notifications} from '@anglr/common';
 
-import {HttpClientErrorResponseMapper, HttpClientValidationErrorResponseMapper} from './httpError.interface';
-import {AnglrExceptionExtender} from '../exceptionHandling/anglrExceptionExtender';
-import {DummyInternalServerErrorRenderer, InternalServerErrorRenderer} from '../internalServerError/internalServerError.service';
+import {HttpClientErrorResponseMapper, HttpClientValidationErrorResponseMapper} from './types';
+import {AnglrExceptionExtender, InternalServerErrorRenderer} from '../interfaces';
+import {DummyInternalServerErrorRenderer} from '../services';
 
 /**
  * Injection token used for injecting notifications service used withing error handling package

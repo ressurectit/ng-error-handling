@@ -1,1 +1,2 @@
-export * from './misc/errorWithScreenshot';
+export * from './extenders';
+export * from './interfaces';

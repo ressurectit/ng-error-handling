@@ -1,10 +1,10 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {isEmptyObject} from '@jscrpt/common';
 
-import {Handle4xxOptions, HttpClientError} from '../misc/httpError.interface';
 import {CLIENT_ERROR_NOTIFICATIONS} from '../misc/tokens';
-import {ServerValidationService} from '../serverValidation/serverValidation.service';
 import {readErrorsFromHttpErrorResponse} from '../misc/utils';
+import {Handle4xxOptions, HttpClientError} from '../interfaces';
+import {ServerValidationService} from '../services';
 
 /**
  * Handles http error response with code 400 and process validations errors, with custom return types

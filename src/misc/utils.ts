@@ -1,8 +1,9 @@
 import {Injector} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
 
-import {HttpClientErrorResponseMapper, HttpClientErrors, HttpClientValidationErrorResponseMapper, HttpClientValidationErrors} from './httpError.interface';
 import {HTTP_CLIENT_ERROR_RESPONSE_MAPPER, HTTP_CLIENT_VALIDATION_ERROR_RESPONSE_MAPPER} from './tokens';
+import {HttpClientErrorResponseMapper, HttpClientValidationErrorResponseMapper} from './types';
+import {HttpClientErrors, HttpClientValidationErrors} from '../interfaces';
 
 /**
  * Reads errors and validation errors from http error response
