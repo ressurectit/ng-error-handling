@@ -1,65 +1,18 @@
 import {HttpRequest, HttpErrorResponse} from '@angular/common/http';
 import {LOGGER, Logger} from '@anglr/common';
 import {RESTClientBase, RestMiddleware} from '@anglr/rest';
-import {ClientValidationError, HttpClientError, HttpClientErrorCustomHandler, RestClientError} from '@anglr/error-handling';
-import {Func1} from '@jscrpt/common';
 import {Observable, throwError, catchError} from 'rxjs';
 
 import {RestHttpClientErrors} from '../misc/restHttpError.interface';
 import {CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS, HTTP_CLIENT_ERROR_CUSTOM_HANDLER, HTTP_IGNORED_CLIENT_ERRORS} from '../misc/tokens';
 import {ClientErrorHandlingOptions, getDefaultClientErrorObservable} from '../misc/clientErrorHandling.options';
-import {HttpClientErrorCustomHandlerDef} from '../misc/types';
+import {getErrorHandlers} from '../misc/utils';
 
 interface ɵClientError
 {
     ɵLogger: Logger|null;
 
     ɵClientErrorHandlingMiddlewareOptions: ClientErrorHandlingOptions;
-}
-
-/**
- * Gets error handler functions to be used for handling errors
- * @param defaultOptions - Default options
- * @param options - Default options overrides
- * @param handler - Handler definition
- */
-export function getErrorHandlers(defaultOptions: ClientErrorHandlingOptions,
-                                 options: Partial<ClientErrorHandlingOptions>,
-                                 handler?: HttpClientErrorCustomHandlerDef,): {handlerFn: HttpClientErrorCustomHandler, clientErrorFn: Func1<RestClientError, HttpClientError>, clientValidationErrorFn: Func1<ClientValidationError, HttpClientError>}
-{
-    const opts =
-    {
-        ...defaultOptions,
-        ...options,
-    };
-
-    let handlerFn = opts.defaultHandler;
-    let clientErrorFn = opts.defaultClientError;
-    let clientValidationErrorFn = opts.defaultClientValidationError;
-
-    if(handler)
-    {
-        if(Array.isArray(handler))
-        {
-            [handlerFn, clientErrorFn] = handler;
-            const [, , validationErrorFn] = handler;
-
-            if(validationErrorFn)
-            {
-                clientValidationErrorFn = validationErrorFn;
-            }
-        }
-        else
-        {
-            handlerFn = handler;
-        }
-    }
-
-    return {
-        handlerFn,
-        clientErrorFn,
-        clientValidationErrorFn,
-    };
 }
 
 /**
@@ -144,7 +97,7 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware<unknown, un
                                          {injector: this.injector, clientErrorsResponseMapper: descriptor.clientErrorResponseMapper},
                                          error => throwError(() => error),
                                          error => getDefaultClientErrorObservable(error, e => clientErrorFn(e), behavior),
-                                         error => getDefaultClientErrorObservable(error, e => clientValidationErrorFn(e), behavior));
+                                         error => getDefaultClientErrorObservable(error, e => clientValidationErrorFn(e), behavior)) as Observable<unknown>;
                     }
 
                     const {clientErrorFn, clientValidationErrorFn, handlerFn} = getErrorHandlers($this.ɵClientErrorHandlingMiddlewareOptions, descriptor);
@@ -153,7 +106,7 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware<unknown, un
                                      {injector: this.injector, clientErrorsResponseMapper: descriptor.clientErrorResponseMapper},
                                      error => throwError(() => error),
                                      error => getDefaultClientErrorObservable(error, e => clientErrorFn(e), behavior),
-                                     error => getDefaultClientErrorObservable(error, e => clientValidationErrorFn(e), behavior));
+                                     error => getDefaultClientErrorObservable(error, e => clientValidationErrorFn(e), behavior)) as Observable<unknown>;
                 }
 
                 return throwError(() => err);

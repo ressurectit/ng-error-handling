@@ -7,3 +7,4 @@ export * from './misc/middlewareTypes';
 export * from './misc/restHttpError.interface';
 export * from './misc/tokens';
 export * from './misc/types';
+export * from './misc/utils';
