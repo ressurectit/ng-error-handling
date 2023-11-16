@@ -1,15 +1,24 @@
 <div class="internal-server-error-notification">
-    <div class="notification" *ngIf="errorsHtml.length > 0" (click)="errorsVisible = !errorsVisible">!</div>
-
-    <div class="internalServerErrorsList" *ngIf="errorsVisible">
-        <div *ngFor="let error of errorsHtml">
-            <a class="show-btn" (click)="show(error)">
-                <span>{{error.requestUrl}}</span>
-            </a>
-
-            <a class="remove-btn" (click)="removeReport(error)">
-                <span class="fas fa-times"></span>
-            </a>
-        </div>
-    </div>
+    @if(errorsHtml.length > 0)
+    {
+        <div class="notification" (click)="errorsVisible = !errorsVisible">!</div>
+    
+        @if(errorsVisible)
+        {
+            <div class="internalServerErrorsList">
+                @for(error of errorsHtml; track error)
+                {
+                    <div>
+                        <a class="show-btn" (click)="show(error)">
+                            <span>{{error.requestUrl}}</span>
+                        </a>
+            
+                        <a class="remove-btn" (click)="removeReport(error)">
+                            <span class="fas fa-times"></span>
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+    }
 </div>

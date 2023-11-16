@@ -6,9 +6,9 @@ import sourceMap from 'sourcemapped-stacktrace';
 
 import {AngularError} from './angularError';
 import {AnglrExceptionHandlerOptions} from './anglrExceptionHandlerOptions';
-import {ANGLR_EXCEPTION_EXTENDERS, AnglrExceptionExtender} from './anglrExceptionExtender';
+import {AnglrExceptionExtender} from './anglrExceptionExtender';
 import {ErrorWithStack} from './errorWithStack';
-import {ERROR_HANDLING_NOTIFICATIONS} from '../misc/tokens';
+import {ANGLR_EXCEPTION_EXTENDERS, ERROR_HANDLING_NOTIFICATIONS} from '../misc/tokens';
 
 /**
  * Exception handler that is capable of customized handling of unhandled errors

@@ -1,6 +1,6 @@
-import {Injector, ValueProvider, PLATFORM_ID} from '@angular/core';
+import {Injector, PLATFORM_ID} from '@angular/core';
 import {DOCUMENT, isPlatformBrowser} from '@angular/common';
-import {ErrorWithStack, AnglrExceptionExtender, ErrorWithScreenShot, ANGLR_EXCEPTION_EXTENDERS} from '@anglr/error-handling';
+import {ErrorWithStack, AnglrExceptionExtender, ErrorWithScreenShot} from '@anglr/error-handling';
 import html2canvas from 'html2canvas';
 
 /**
@@ -8,34 +8,19 @@ import html2canvas from 'html2canvas';
  * @param injector - Injector used for obtaining dependencies
  * @param error - Error that should be extended
  */
-export const errorWithScreenShotExtender: AnglrExceptionExtender = (injector: Injector, error: ErrorWithStack): Promise<ErrorWithStack> =>
+export const errorWithScreenShotExtender: AnglrExceptionExtender = async (injector: Injector, error: ErrorWithStack): Promise<ErrorWithStack> =>
 {
     const errorWithScreenshot: ErrorWithStack & ErrorWithScreenShot = error;
 
     if(!isPlatformBrowser(injector.get(PLATFORM_ID)))
     {
-        return Promise.resolve(errorWithScreenshot);
+        return errorWithScreenshot;
     }
 
     const document = injector.get(DOCUMENT);    
+    const canvas = await html2canvas(document.body);
 
-    return new Promise(resolve =>
-    {
-        html2canvas(document.body).then(canvas => 
-        {
-            errorWithScreenshot.screenshotBase64 = canvas.toDataURL().replace('data:image/png;base64,', '');
+    errorWithScreenshot.screenshotBase64 = canvas.toDataURL().replace('data:image/png;base64,', '');
 
-            resolve(errorWithScreenshot);
-        });
-    });
-};
-
-/**
- * Extender used for extending error with screenshot of current application state
- */
-export const ERROR_WITH_SCREENSHOT_EXTENDER: ValueProvider =
-{
-    provide: ANGLR_EXCEPTION_EXTENDERS,
-    useValue: errorWithScreenShotExtender,
-    multi: true
+    return errorWithScreenshot;
 };

@@ -1,4 +1,4 @@
-import {Injector, InjectionToken} from '@angular/core';
+import {Injector} from '@angular/core';
 
 import {ErrorWithStack} from './errorWithStack';
 
@@ -9,11 +9,6 @@ export interface AnglrExceptionExtender
 {
     (injector: Injector, error: ErrorWithStack): Promise<ErrorWithStack>;
 }
-
-/**
- * Injection token used for injecting multiple AnglrExceptionExtender 
- */
-export const ANGLR_EXCEPTION_EXTENDERS: InjectionToken<AnglrExceptionExtender[]> = new InjectionToken<AnglrExceptionExtender[]>('ANGLR_EXCEPTION_EXTENDERS');
 
 /**
  * Error object extended with base64 string of current screenshot

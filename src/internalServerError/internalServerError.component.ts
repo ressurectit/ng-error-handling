@@ -2,7 +2,8 @@ import {Component, OnDestroy, ChangeDetectionStrategy, Inject, ChangeDetectorRef
 import {DomSanitizer} from '@angular/platform-browser';
 import {Subscription} from 'rxjs';
 
-import {InternalServerErrorService, InternalServerErrorInfo, INTERNAL_SERVER_ERROR_RENDERER, InternalServerErrorRenderer} from './internalServerError.service';
+import {InternalServerErrorService, InternalServerErrorInfo, InternalServerErrorRenderer} from './internalServerError.service';
+import {INTERNAL_SERVER_ERROR_RENDERER} from '../misc/tokens';
 
 /**
  * Displays internal server errors in modal dialog

@@ -1,6 +1,14 @@
 # Changelog
 
-## Version 13.0.0 (2023-11-15)
+## Version 13.0.0 (2023-11-16)
+
+### Features
+
+- new `provideAnglrExceptionExtenders` function, that provides anglr exception extends functions
+- new `provideInternalServerErrorRenderer` function, that provides internal server error renderer type
+- new `DummyInternalServerErrorRenderer` service, that is dummy renderer used for displaying/rendering internal server error
+- updated `DialogInternalServerErrorSAComponent` component
+    - is now standalone
 
 ### BREAKING CHANGES
 
@@ -11,6 +19,11 @@
 - minimal supported version of `@anglr/common` is `19.0.0`
 - minimal supported version of `@anglr/rest` is `14.0.0`
 - minimal supported version of `tslib` is `2.6.2`
+- removed `ERROR_WITH_SCREENSHOT_EXTENDER` provider, use `provideAnglrExceptionExtenders` to provide it
+- removed `ERROR_WITH_URL_EXTENDER` provider, use `provideAnglrExceptionExtenders` to provide it
+- renamed `DialogInternalServerErrorComponent` to `DialogInternalServerErrorSAComponent`
+- removed `DialogInternalServerErrorModule`, `DialogInternalServerErrorSAComponent` is now standalone
+- removed `DIALOG_INTERNAL_SERVER_ERROR_RENDERER_PROVIDER` provider, use `provideInternalServerErrorRenderer` to provide it
 
 ## Version 12.0.1 (2023-07-25)
 

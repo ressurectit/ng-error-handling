@@ -1,8 +1,8 @@
-import {Injector, ValueProvider} from '@angular/core';
+import {Injector} from '@angular/core';
 import {Location} from '@angular/common';
 
 import {ErrorWithStack} from './errorWithStack';
-import {AnglrExceptionExtender, ErrorWithUrl, ANGLR_EXCEPTION_EXTENDERS} from './anglrExceptionExtender';
+import {AnglrExceptionExtender, ErrorWithUrl} from './anglrExceptionExtender';
 
 /**
  * Extends error with current application URL
@@ -16,14 +16,4 @@ export const errorWithUrlExtender: AnglrExceptionExtender = (injector: Injector,
     errorWithUrl.applicationUrl = injector.get(Location).path();
 
     return Promise.resolve(errorWithUrl);
-};
-
-/**
- * Extender used for extending error with current application URL
- */
-export const ERROR_WITH_URL_EXTENDER: ValueProvider =
-{
-    provide: ANGLR_EXCEPTION_EXTENDERS,
-    useValue: errorWithUrlExtender,
-    multi: true
 };

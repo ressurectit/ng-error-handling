@@ -1,4 +1,4 @@
-import {Injectable, InjectionToken} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {isString} from '@jscrpt/common';
 import {Observable, Subject} from 'rxjs';
@@ -88,7 +88,7 @@ export interface InternalServerErrorRenderer
 /**
  * Dummy renderer used for displaying/rendering internal server error
  */
-class DummyInternalServerErrorRenderer implements InternalServerErrorRenderer
+export class DummyInternalServerErrorRenderer implements InternalServerErrorRenderer
 {
     //######################### public methods - implementation of InternalServerErrorRenderer #########################
 
@@ -101,8 +101,3 @@ class DummyInternalServerErrorRenderer implements InternalServerErrorRenderer
     {
     }
 }
-
-/**
- * Injection token used for InternalServerErrorRenderer
- */
-export const INTERNAL_SERVER_ERROR_RENDERER: InjectionToken<InternalServerErrorRenderer> = new InjectionToken<InternalServerErrorRenderer>('INTERNAL_SERVER_ERROR_RENDERER', {providedIn: 'root', factory: () => new DummyInternalServerErrorRenderer()});

@@ -5,6 +5,6 @@ import {ErrorWithStack} from './errorWithStack';
  */
 export interface AngularError extends ErrorWithStack
 {
-    promise?: Promise<any>;
+    promise?: Promise<unknown>;
     rejection?: ErrorWithStack;
 }
