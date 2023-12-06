@@ -1,4 +1,4 @@
-import {ClientValidationError, handle400WithValidationsFunc, HttpClientError, HttpClientErrorCustomHandler, RestClientError} from '@anglr/error-handling';
+import {ClientValidationError, handle400WithValidationsFunc, XXXHttpClientError, HttpClientErrorCustomHandler, RestClientError} from '@anglr/error-handling';
 import {Func1, isPresent} from '@jscrpt/common';
 import {NEVER, Observable, of, throwError} from 'rxjs';
 
@@ -46,12 +46,12 @@ export class ClientErrorHandlingOptions
     /**
      * Default factory for obtaining RestClientError
      */
-    public defaultClientError: Func1<RestClientError, HttpClientError> = error => new RestClientError(error.errors);
+    public defaultClientError: Func1<RestClientError, XXXHttpClientError> = error => new RestClientError(error.errors);
 
     /**
      * Default factory for obtaining ClientValidationError
      */
-    public defaultClientValidationError: Func1<ClientValidationError, HttpClientError> = error => new ClientValidationError(error.errors, error.validationErrors);
+    public defaultClientValidationError: Func1<ClientValidationError, XXXHttpClientError> = error => new ClientValidationError(error.errors, error.validationErrors);
 
     //######################### constructor #########################
 
@@ -64,8 +64,8 @@ export class ClientErrorHandlingOptions
      **/
     constructor(behavior?: ClientErrorHandlingBehavior,
                 defaultHandler?: HttpClientErrorCustomHandler,
-                defaultClientError?: Func1<RestClientError, HttpClientError>,
-                defaultClientValidationError?: Func1<ClientValidationError, HttpClientError>,)
+                defaultClientError?: Func1<RestClientError, XXXHttpClientError>,
+                defaultClientValidationError?: Func1<ClientValidationError, XXXHttpClientError>,)
     {
         if(isPresent(behavior))
         {
@@ -95,7 +95,7 @@ export class ClientErrorHandlingOptions
  * @param restClientErrorCallback - Callback used for obtaining instance of RestClientError
  * @param behavior - Behaviour which should be used
  */
-export function getDefaultClientErrorObservable(error: HttpClientError, restClientErrorCallback: Func1<RestClientError, HttpClientError>, behavior?: ClientErrorHandlingBehavior): Observable<never|RestClientError>
+export function getDefaultClientErrorObservable(error: XXXHttpClientError, restClientErrorCallback: Func1<RestClientError, XXXHttpClientError>, behavior?: ClientErrorHandlingBehavior): Observable<never|RestClientError>
 {
     if(!behavior)
     {

@@ -1,7 +1,7 @@
 import {HttpErrorResponse} from '@angular/common/http';
 
 import {readErrorsFromHttpErrorResponse} from '../misc/utils';
-import {Handle4xxOptions, HttpClientError} from '../interfaces';
+import {Handle4xxOptions, XXXHttpClientError} from '../interfaces';
 
 /**
  * Handles http error response with code 404 with custom return types
@@ -13,7 +13,7 @@ import {Handle4xxOptions, HttpClientError} from '../interfaces';
 export function handle404Func<TError, TClientError>(error: HttpErrorResponse,
                                                     options: Handle4xxOptions,
                                                     errorReturnCallback: (error: HttpErrorResponse) => TError,
-                                                    clientErrorReturnCallback: (error: HttpClientError) => TClientError): TError|TClientError
+                                                    clientErrorReturnCallback: (error: XXXHttpClientError) => TClientError): TError|TClientError
 {
     if(error.status == 404)
     {

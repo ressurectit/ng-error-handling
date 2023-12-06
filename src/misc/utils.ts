@@ -10,7 +10,7 @@ import {HttpClientErrors, HttpClientValidationErrors} from '../interfaces';
  * @param error - Object with http error response
  * @param injector - Angular injector used for obtaining global options
  * @param clientErrorsResponseMapper - Function that extracts client errors from response
- * @param clientValidationErrorsResponseMapper - Functino that extracts validation errors from response
+ * @param clientValidationErrorsResponseMapper - Function that extracts validation errors from response
  */
 export function readErrorsFromHttpErrorResponse(error: HttpErrorResponse, injector?: Injector, clientErrorsResponseMapper?: HttpClientErrorResponseMapper, clientValidationErrorsResponseMapper?: HttpClientValidationErrorResponseMapper): HttpClientErrors
 {

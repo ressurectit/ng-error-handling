@@ -2,7 +2,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 
 import {CLIENT_ERROR_NOTIFICATIONS} from '../misc/tokens';
 import {readErrorsFromHttpErrorResponse} from '../misc/utils';
-import {Handle4xxOptions, HttpClientError} from '../interfaces';
+import {Handle4xxOptions, XXXHttpClientError} from '../interfaces';
 
 /**
  * Handles http error response with code 400..499 with custom return types
@@ -14,7 +14,7 @@ import {Handle4xxOptions, HttpClientError} from '../interfaces';
 export function handle4xxFunc<TError, TClientError>(error: HttpErrorResponse,
                                                     options: Handle4xxOptions,
                                                     errorReturnCallback: (error: HttpErrorResponse) => TError,
-                                                    clientErrorReturnCallback: (error: HttpClientError) => TClientError): TError|TClientError
+                                                    clientErrorReturnCallback: (error: XXXHttpClientError) => TClientError): TError|TClientError
 {
     //handles 4xx code
     if(error.status >= 400 && error.status < 500)

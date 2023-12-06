@@ -1,12 +1,27 @@
 # Changelog
 
-## Version 13.0.0 (2023-11-16)
+## Version 13.0.0 (2023-12-06)
 
 ### Features
 
 - new `provideAnglrExceptionExtenders` function, that provides anglr exception extends functions
 - new `provideInternalServerErrorRenderer` function, that provides internal server error renderer type
 - new `DummyInternalServerErrorRenderer` service, that is dummy renderer used for displaying/rendering internal server error
+- new `handleHttpClientErrors` function, that handles http error response with code 400..499 and returns HttpClientError, otherwise returns original http error response
+- new `catchHttpClientError` rxjs operator, that catches http client error response with code 400..499 and returns HttpClientError, otherwise returns original http error response
+- new `ClientErrorOptions` interface, that represents options used for common handling of client errors
+    - **properties**
+        - `injector` injector used for obtaining dependencies
+        - `clientErrorsResponseMapper` response mapper for http client errors
+        - `clientValidationErrorsResponseMapper` response mapper for http client validation errors
+- new `HttpClientError` class, that represents information about http client error (400..499)
+    - **properties**
+        - `errors` array of processed client errors
+        - `validationErrors` object storing server valiation errors
+        - `statusCode` http status code
+        - `message` http error response message
+        - `response` complete http error response object 
+- new `HttpNotFoundError` class, that represents information about http not found error (404)
 - updated `InternalServerErrorSAComponent` component
     - is now standalone
 - *subpackage* `@anglr/error-handling/material`

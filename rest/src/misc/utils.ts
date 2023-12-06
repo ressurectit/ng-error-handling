@@ -1,4 +1,4 @@
-import {ClientValidationError, HttpClientError, HttpClientErrorCustomHandler, RestClientError} from '@anglr/error-handling';
+import {ClientValidationError, XXXHttpClientError, HttpClientErrorCustomHandler, RestClientError} from '@anglr/error-handling';
 import {Func1} from '@jscrpt/common';
 
 import {ClientErrorHandlingOptions} from './clientErrorHandling.options';
@@ -12,7 +12,7 @@ import {HttpClientErrorCustomHandlerDef} from './types';
  */
 export function getErrorHandlers(defaultOptions: ClientErrorHandlingOptions,
                                  options: Partial<ClientErrorHandlingOptions>,
-                                 handler?: HttpClientErrorCustomHandlerDef,): {handlerFn: HttpClientErrorCustomHandler, clientErrorFn: Func1<RestClientError, HttpClientError>, clientValidationErrorFn: Func1<ClientValidationError, HttpClientError>}
+                                 handler?: HttpClientErrorCustomHandlerDef,): {handlerFn: HttpClientErrorCustomHandler, clientErrorFn: Func1<RestClientError, XXXHttpClientError>, clientValidationErrorFn: Func1<ClientValidationError, XXXHttpClientError>}
 {
     const opts =
     {

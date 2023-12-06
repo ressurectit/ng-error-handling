@@ -5,7 +5,7 @@ import {HttpClientErrors} from '../httpClientErrors/httpClientErrors.interface';
 /**
  * Http client error, containing extracted errors and original
  */
-export interface HttpClientError extends HttpClientErrors
+export interface XXXHttpClientError extends HttpClientErrors
 {
     /**
      * Original http error response

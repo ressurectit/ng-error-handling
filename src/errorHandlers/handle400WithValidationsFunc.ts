@@ -3,7 +3,7 @@ import {isEmptyObject} from '@jscrpt/common';
 
 import {CLIENT_ERROR_NOTIFICATIONS} from '../misc/tokens';
 import {readErrorsFromHttpErrorResponse} from '../misc/utils';
-import {Handle4xxOptions, HttpClientError} from '../interfaces';
+import {Handle4xxOptions, XXXHttpClientError} from '../interfaces';
 import {ServerValidationService} from '../services';
 
 /**
@@ -17,8 +17,8 @@ import {ServerValidationService} from '../services';
 export function handle400WithValidationsFunc<TError, TClientError, TClientValidationError>(error: HttpErrorResponse,
                                                                                            options: Handle4xxOptions,
                                                                                            errorReturnCallback: (error: HttpErrorResponse) => TError,
-                                                                                           clientErrorReturnCallback: (error: HttpClientError) => TClientError,
-                                                                                           clientValidationErrorReturnCallback?: (error: HttpClientError) => TClientValidationError): TError|TClientError|TClientValidationError
+                                                                                           clientErrorReturnCallback: (error: XXXHttpClientError) => TClientError,
+                                                                                           clientValidationErrorReturnCallback?: (error: XXXHttpClientError) => TClientValidationError): TError|TClientError|TClientValidationError
 {
     //handles 400 code
     if(error.status == 400)

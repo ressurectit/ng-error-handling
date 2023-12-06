@@ -72,7 +72,7 @@ export class ClientErrorHandlingMiddleware implements RestMiddleware<unknown, un
 
                     $this.ɵLogger ??= this.injector.get(LOGGER, null);
                     $this.ɵClientErrorHandlingMiddlewareOptions ??= this.injector.get(CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS, new ClientErrorHandlingOptions());
-                    $this.ɵLogger?.error('HTTP_ERROR {{status}} {{statusText}}: {{error}}', {status: err.status, statusText: err.statusText, error: err.error});
+                    $this.ɵLogger?.error('HTTP_ERROR {{status}} {{statusText}}: {{@error}}', {status: err.status, statusText: err.statusText, error: err.error});
                     
                     //client error ignored
                     if(ignoredClientErrors.find(itm => itm == err.status))
