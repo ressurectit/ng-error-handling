@@ -7,8 +7,21 @@
 - new `provideAnglrExceptionExtenders` function, that provides anglr exception extends functions
 - new `provideInternalServerErrorRenderer` function, that provides internal server error renderer type
 - new `DummyInternalServerErrorRenderer` service, that is dummy renderer used for displaying/rendering internal server error
-- new `handleHttpClientErrors` function, that handles http error response with code 400..499 and returns HttpClientError, otherwise returns original http error response
-- new `processHttpClientError` rxjs operator, that processes http client error response with code 400..499 and converts it into HttpClientError, otherwise throw original http error response
+- new `handleHttpClientErrorResponse` function, that handles http error response with code 400..499 and returns HttpClientError, otherwise returns original http error response
+- new `handleHttpClientErrors` function, that handles http client errors according provided options
+- new `applyBehavior` function, that gets result of catch http client error according provided behavior
+- new `processHttpClientErrorResponse` rxjs operator, that processes http client error response with code 400..499 and converts it into HttpClientError, otherwise throw original http error response
+- new `catchHttpClientError` rxjs operator, that catches http client errors and handles them according provided options
+- new `CatchHttpClientErrorBehavior` enum, that is enumeration of available behavior for catch http client error
+    - `Suppress` error is processed, but observable never completes
+    - `PassThrogh` httpClientError object is returned as result of observable
+    - `Throw` httpClientError object is 'thrown' as error from observable
+- new `CatchHttpClientErrorOptions` interface, that represents options for catch http client errors
+    - **properties**
+        - `injector` instance of injector used for obtaining dependencies
+        - `behavior` behavior of catch http client error, default is `CatchHttpClientErrorBehavior.Suppress`
+        - `skipErrorNotifications` indication whether skip displaying of notifications for errors
+        - `` ???
 - new `ClientErrorOptions` interface, that represents options used for common handling of client errors
     - **properties**
         - `injector` injector used for obtaining dependencies

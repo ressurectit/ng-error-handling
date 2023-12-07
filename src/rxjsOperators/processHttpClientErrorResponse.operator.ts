@@ -3,13 +3,13 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {MonoTypeOperatorFunction, Observable, catchError, throwError} from 'rxjs';
 
 import {HttpClientErrorOptions} from '../interfaces';
-import {handleHttpClientErrors} from '../errorHandlers';
+import {handleHttpClientErrorResponse} from '../errorHandlers';
 
 /**
  * Processes http client error response with code 400..499 and converts it into HttpClientError, otherwise throw original http error response
  * @param options - Options that must be provided in case of running outside of injection context
  */
-export function processHttpClientError<TType>(options?: HttpClientErrorOptions): MonoTypeOperatorFunction<TType>
+export function processHttpClientErrorResponse<TType>(options?: HttpClientErrorOptions): MonoTypeOperatorFunction<TType>
 {
     const injector: Injector = options?.injector ?? inject(Injector);
 
@@ -33,7 +33,7 @@ export function processHttpClientError<TType>(options?: HttpClientErrorOptions):
             {
                 (async () =>
                 {
-                    const processedError = await handleHttpClientErrors(err, 
+                    const processedError = await handleHttpClientErrorResponse(err, 
                     {
                         injector, 
                         clientErrorsResponseMapper: options?.clientErrorsResponseMapper,

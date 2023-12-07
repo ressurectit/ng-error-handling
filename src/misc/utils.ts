@@ -4,6 +4,8 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {HTTP_CLIENT_ERROR_RESPONSE_MAPPER, HTTP_CLIENT_VALIDATION_ERROR_RESPONSE_MAPPER} from './tokens';
 import {HttpClientErrorResponseMapper, HttpClientValidationErrorResponseMapper} from './types';
 import {HttpClientErrors, HttpClientValidationErrors} from '../interfaces';
+import {HttpClientError} from './classes/httpClientError';
+import {CatchHttpClientErrorBehavior} from './enums';
 
 /**
  * Reads errors and validation errors from http error response
@@ -40,4 +42,29 @@ export async function readErrorsFromHttpErrorResponse(error: HttpErrorResponse, 
         errors,
         validationErrors,
     };
+}
+
+/**
+ * Gets result of catch http client error according provided behavior
+ * @param error - Instance of error
+ * @param behavior - Requested behavior
+ */
+export function applyBehavior<TError extends HttpClientError>(error: TError, behavior: CatchHttpClientErrorBehavior): TError|null
+{
+    switch(behavior)
+    {
+        default:
+        //case CatchHttpClientErrorBehavior.Suppress:
+        {
+            return null;
+        }
+        case CatchHttpClientErrorBehavior.PassThrogh:
+        {
+            return error;
+        }
+        case CatchHttpClientErrorBehavior.Throw:
+        {
+            throw error;
+        }
+    }
 }

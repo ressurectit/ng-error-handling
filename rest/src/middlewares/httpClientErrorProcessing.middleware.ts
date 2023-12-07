@@ -1,6 +1,6 @@
 import {HttpRequest} from '@angular/common/http';
 import {RESTClientBase, RestMiddleware} from '@anglr/rest';
-import {processHttpClientError} from '@anglr/error-handling';
+import {processHttpClientErrorResponse} from '@anglr/error-handling';
 import {Observable} from 'rxjs';
 
 import {RestHttpClientErrorProcessing} from '../interfaces';
@@ -40,7 +40,7 @@ export class HttpClientErrorProcessingMiddleware implements RestMiddleware<unkno
                next: (request: HttpRequest<unknown>) => Observable<unknown>): Observable<unknown>
     {
         return next(request)
-            .pipe(processHttpClientError(
+            .pipe(processHttpClientErrorResponse(
             {
                 injector: this.injector,
                 clientErrorsResponseMapper: descriptor.clientErrorsResponseMapper,
