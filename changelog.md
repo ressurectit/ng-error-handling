@@ -13,6 +13,10 @@
 - new `handleHttpClientErrors` function, that handles http client errors according provided options
 - new `handleHttp404Error` function, that is custom handler for http 404 status codes
 - new `applyBehavior` function, that gets result of catch http client error according provided behavior
+- new `provideClientErrorMessages` function, that provides client error messages and merges them with existing provided messages
+- new `provideClientErrorHandlers` function, that provides client error handlers and merges them with existing provided handlers
+- new `provideHttpClientErrorResponseMapper` function, that provides http client error response mapper function
+- new `provideHttpClientValidationErrorResponseMapper` function, that provides http client validation error response mapper function
 - new `processHttpClientErrorResponse` rxjs operator, that processes http client error response with code 400..499 and converts it into HttpClientError, otherwise throw original http error response
 - new `catchHttpClientError` rxjs operator, that catches http client errors and handles them according provided options
 - new `CatchHttpClientErrorBehavior` enum, that is enumeration of available behavior for catch http client error
@@ -44,6 +48,8 @@
         - `response` complete http error response object 
 - new `HttpNotFoundError` class, that represents information about http not found error (404)
 - new `HTTP_IGNORED_CLIENT_ERRORS` injection token, that contains array of http status codes that are ignored
+- new `HTTP_CLIENT_ERROR_MESSAGES` injection token that contains custom client error messages
+- new `HTTP_CLIENT_ERROR_HANDLERS` injection token that contains custom client error handlers
 - updated `InternalServerErrorSAComponent` component
     - is now standalone
 - updated `HttpClientErrorResponseMapper` type, return type is now `PromiseOr`, supports async usage
