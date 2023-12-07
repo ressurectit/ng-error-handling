@@ -20,9 +20,14 @@ export class HttpNotFoundError extends HttpClientError
 
     //######################### constructor #########################
     constructor(errors: string[],
-                validationErrors: HttpClientValidationErrors,
-                response: HttpErrorResponse&{status: 404},)
+                validationErrors: HttpClientValidationErrors|undefined|null,
+                response: HttpErrorResponse,)
     {
         super(errors, validationErrors, response);
+
+        if(this.response.status != 404)
+        {
+            throw new Error('HttpNotFoundError: cant be created for non 404 status code!');
+        }
     }
 }

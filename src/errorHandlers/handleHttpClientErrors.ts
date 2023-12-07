@@ -31,8 +31,8 @@ export async function handleHttpClientErrors(error: HttpClientError, options: Ca
 
     const message = options?.messages?.[error.statusCode];
 
-    //show custom error message if available
-    if(notifications && message)
+    //show custom error message if available and no received messages available
+    if(notifications && message && (!error.errors.length || options?.forceCustomMessageDisplay))
     {
         notifications.error(message);
     }

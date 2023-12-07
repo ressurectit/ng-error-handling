@@ -11,6 +11,7 @@
 - new `DummyInternalServerErrorRenderer` service, that is dummy renderer used for displaying/rendering internal server error
 - new `handleHttpClientErrorResponse` function, that handles http error response with code 400..499 and returns HttpClientError, otherwise returns original http error response
 - new `handleHttpClientErrors` function, that handles http client errors according provided options
+- new `handleHttp404Error` function, that is custom handler for http 404 status codes
 - new `applyBehavior` function, that gets result of catch http client error according provided behavior
 - new `processHttpClientErrorResponse` rxjs operator, that processes http client error response with code 400..499 and converts it into HttpClientError, otherwise throw original http error response
 - new `catchHttpClientError` rxjs operator, that catches http client errors and handles them according provided options
@@ -24,9 +25,9 @@
         - `behavior` behavior of catch http client error, default is `CatchHttpClientErrorBehavior.Suppress`
         - `skipErrorNotifications` indication whether skip displaying of notifications for errors
         - `skipServerValidationErrors` indication whether skip server validation errors processing
+        - `forceCustomMessageDisplay` indication whether forcibly display custom message if present, not only as fallback but always
         - `messages` object storing default messages to be displayed for specific http status codes
         - `handlers` object storing default error handlers for specific http status codes
-        - `` ???
 - new `HttpClientErrorHandler` interface, that represents function that is used for handling http client error according status code
 - new `HttpClientErrorOptions` interface, that represents options used for common handling of client errors
     - **properties**

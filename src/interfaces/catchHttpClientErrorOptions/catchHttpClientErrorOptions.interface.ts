@@ -29,6 +29,11 @@ export interface CatchHttpClientErrorOptions
     skipServerValidationErrors?: boolean;
 
     /**
+     * Indication whether forcibly display custom message if present, not only as fallback but always
+     */
+    forceCustomMessageDisplay?: boolean;
+
+    /**
      * Object storing default messages to be displayed for specific http status codes
      */
     messages?: HttpClientErrorMessages;
