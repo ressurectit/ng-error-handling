@@ -25,5 +25,5 @@ export interface HttpClientErrorOptions
     /**
      * Array of ignored http status codes that will not be processed
      */
-    ignoredHttpStatusCodes?: number[];
+    ignoredHttpStatusCodes?: number[]|null;
 }

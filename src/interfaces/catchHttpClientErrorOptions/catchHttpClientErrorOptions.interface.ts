@@ -16,30 +16,30 @@ export interface CatchHttpClientErrorOptions
     /**
      * Behavior of catch http client error, default is `CatchHttpClientErrorBehavior.Suppress`
      */
-    behavior?: CatchHttpClientErrorBehavior;
+    behavior?: CatchHttpClientErrorBehavior|null;
 
     /**
      * Indication whether skip displaying of notifications for errors
      */
-    skipErrorNotifications?: boolean;
+    skipErrorNotifications?: boolean|null;
 
     /**
      * Indication whether skip server validation errors processing
      */
-    skipServerValidationErrors?: boolean;
+    skipServerValidationErrors?: boolean|null;
 
     /**
      * Indication whether forcibly display custom message if present, not only as fallback but always
      */
-    forceCustomMessageDisplay?: boolean;
+    forceCustomMessageDisplay?: boolean|null;
 
     /**
      * Object storing default messages to be displayed for specific http status codes
      */
-    messages?: HttpClientErrorMessages;
+    messages?: HttpClientErrorMessages|null;
 
     /**
      * Object storing default error handlers for specific http status codes
      */
-    handlers?: HttpClientErrorHandlers;
+    handlers?: HttpClientErrorHandlers|null;
 }

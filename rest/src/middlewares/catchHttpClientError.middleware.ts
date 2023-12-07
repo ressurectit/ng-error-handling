@@ -1,21 +1,21 @@
 import {HttpRequest} from '@angular/common/http';
 import {RESTClientBase, RestMiddleware} from '@anglr/rest';
-import {processHttpClientErrorResponse} from '@anglr/error-handling';
+import {catchHttpClientError} from '@anglr/error-handling';
 import {Observable} from 'rxjs';
 
-import {RestHttpClientErrorProcessing} from '../interfaces';
+import {RestCatchHttpClientError} from '../interfaces';
 
 /**
- * Middleware that is used for processing http client errors (400..499)
+ * Middleware that catches http client error and handles according options
  */
-export class HttpClientErrorProcessingMiddleware implements RestMiddleware<unknown, unknown, RestHttpClientErrorProcessing>
+export class CatchHttpClientErrorMiddleware implements RestMiddleware<unknown, unknown, RestCatchHttpClientError>
 {
     //######################### public static properties #########################
 
     /**
      * String identification of middleware
      */
-    public static id: string = 'HttpClientErrorProcessingMiddleware';
+    public static id: string = 'CatchHttpClientErrorMiddleware';
 
     //######################### public methods - implementation of RestMiddleware #########################
 
@@ -34,18 +34,21 @@ export class HttpClientErrorProcessingMiddleware implements RestMiddleware<unkno
                _id: string,
                _target: unknown,
                _methodName: string,
-               descriptor: RestHttpClientErrorProcessing,
+               descriptor: RestCatchHttpClientError,
                _args: unknown[],
                request: HttpRequest<unknown>,
                next: (request: HttpRequest<unknown>) => Observable<unknown>): Observable<unknown>
     {
         return next(request)
-            .pipe(processHttpClientErrorResponse(
+            .pipe(catchHttpClientError(
             {
                 injector: this.injector,
-                clientErrorsResponseMapper: descriptor.clientErrorsResponseMapper,
-                clientValidationErrorsResponseMapper: descriptor.clientValidationErrorsResponseMapper,
-                ignoredHttpStatusCodes: descriptor.ignoredHttpStatusCodes,
+                behavior: descriptor.behavior,
+                forceCustomMessageDisplay: descriptor.forceCustomMessageDisplay,
+                handlers: descriptor.handlers,
+                messages: descriptor.messages,
+                skipErrorNotifications: descriptor.skipErrorNotifications,
+                skipServerValidationErrors: descriptor.skipServerValidationErrors,
             }));
     }
 }

@@ -13,8 +13,8 @@
 - new `handleHttpClientErrors` function, that handles http client errors according provided options
 - new `handleHttp404Error` function, that is custom handler for http 404 status codes
 - new `applyBehavior` function, that gets result of catch http client error according provided behavior
-- new `provideClientErrorMessages` function, that provides client error messages and merges them with existing provided messages
-- new `provideClientErrorHandlers` function, that provides client error handlers and merges them with existing provided handlers
+- new `provideHttpClientErrorMessages` function, that provides http client error messages and merges them with existing provided messages
+- new `provideHttpClientErrorHandlers` function, that provides http client error handlers and merges them with existing provided handlers
 - new `provideHttpClientErrorResponseMapper` function, that provides http client error response mapper function
 - new `provideHttpClientValidationErrorResponseMapper` function, that provides http client validation error response mapper function
 - new `processHttpClientErrorResponse` rxjs operator, that processes http client error response with code 400..499 and converts it into HttpClientError, otherwise throw original http error response
@@ -56,12 +56,25 @@
 - updated `HttpClientValidationErrorResponseMapper` type, return type is now `PromiseOr`, supports async usage
 - *subpackage* `@anglr/error-handling/rest`
     - new `HttpClientErrorProcessingMiddleware` middleware, that is used for processing http client errors (400..499)
+    - new `CatchHttpClientErrorMiddleware` middleware, that catches http client error and handles according options
     - new `HttpClientErrorsMapper` decorator, that sets custom http client errors mapper function
     - new `HttpClientValidationErrorsMapper` decorator, that sets custom http client validation errors mapper function
-    - new `RestHttpClientErrorProcessing` interface, that contains custom mapper functions
+    - new `IgnoredHttpErrorStatusCodes` decorator, that sets ignored http error status codes that will be ignored by http client error processing middleware
+    - new `HttpClientErrorMessages` decorator, that sets http client error messages
+    - new `HttpClientErrorHandlers` decorator, that sets http client error handlers
+    - new `RestHttpClientErrorProcessing` interface, configuration that can be used within http client error processing middleware
         - **properties**
             - `clientErrorsResponseMapper` response mapper for http client errors
             - `clientValidationErrorsResponseMapper` response mapper for http client validation errors
+            - `ignoredHttpStatusCodes` array of ignored http status codes that will not be processed
+    - new `RestCatchHttpClientError` interface, configuration that can be used within catch http client error middleware
+        - **properties**
+            - `behavior` behavior of catch http client error, default is `CatchHttpClientErrorBehavior.Suppress`
+            - `skipErrorNotifications` indication whether skip displaying of notifications for errors
+            - `skipServerValidationErrors` indication whether skip server validation errors processing
+            - `forceCustomMessageDisplay` indication whether forcibly display custom message if present, not only as fallback but always
+            - `messages` object storing default messages to be displayed for specific http status codes
+            - `handlers` object storing default error handlers for specific http status codes
 - *subpackage* `@anglr/error-handling/material`
     - updated `DialogInternalServerErrorSAComponent` component
         - is now standalone

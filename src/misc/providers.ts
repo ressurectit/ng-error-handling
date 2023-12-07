@@ -38,10 +38,10 @@ export function provideInternalServerErrorRenderer(renderer: Type<InternalServer
 }
 
 /**
- * Provides client error messages and merges them with existing provided messages
+ * Provides http client error messages and merges them with existing provided messages
  * @param messages - Object storing messages to be provided
  */
-export function provideClientErrorMessages(messages: HttpClientErrorMessages): Provider
+export function provideHttpClientErrorMessages(messages: HttpClientErrorMessages): Provider
 {
     return <FactoryProvider> {
         provide: HTTP_CLIENT_ERROR_MESSAGES,
@@ -55,10 +55,10 @@ export function provideClientErrorMessages(messages: HttpClientErrorMessages): P
 }
 
 /**
- * Provides client error handlers and merges them with existing provided handlers
+ * Provides http client error handlers and merges them with existing provided handlers
  * @param handlers - Object storing handlers to be provided
  */
-export function provideClientErrorHandlers(handlers: HttpClientErrorHandlers): Provider
+export function provideHttpClientErrorHandlers(handlers: HttpClientErrorHandlers): Provider
 {
     return <FactoryProvider> {
         provide: HTTP_CLIENT_ERROR_HANDLERS,

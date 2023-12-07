@@ -15,6 +15,7 @@ export const ERROR_HANDLING_REST_MIDDLEWARES_ORDER: RestMiddlewareOrderType<midd
     'QueryParameterMiddleware',
     'HeadersMiddleware',
     'HeaderParameterMiddleware',
+    'CatchHttpClientErrorMiddleware',
     'HttpClientErrorProcessingMiddleware',
     'ProducesMiddleware',
     'LoggerMiddleware',
