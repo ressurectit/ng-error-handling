@@ -34,3 +34,8 @@ export const ANGLR_EXCEPTION_EXTENDERS: InjectionToken<AnglrExceptionExtender[]>
  * Injection token used for InternalServerErrorRenderer
  */
 export const INTERNAL_SERVER_ERROR_RENDERER: InjectionToken<InternalServerErrorRenderer> = new InjectionToken<InternalServerErrorRenderer>('INTERNAL_SERVER_ERROR_RENDERER', {providedIn: 'root', factory: () => new DummyInternalServerErrorRenderer()});
+
+/**
+ * Injection token that contains array of http status codes that are ignored
+ */
+export const HTTP_IGNORED_CLIENT_ERRORS: InjectionToken<number[]> = new InjectionToken<number[]>('HTTP_IGNORED_CLIENT_ERRORS', {providedIn: 'root', factory: () => [401, 403]});

@@ -16,11 +16,25 @@ export async function handleHttpClientErrors(error: HttpClientError, options: Ca
 {
     const notifications: Notifications|null = options.injector.get(CLIENT_ERROR_NOTIFICATIONS, null, {optional: true});
     const behavior: CatchHttpClientErrorBehavior = options.behavior ?? CatchHttpClientErrorBehavior.Suppress;
+    const customHandler = options?.handlers?.[error.statusCode];
+    
+    if(customHandler)
+    {
+        return await customHandler(error, options);
+    }
 
     //show server validations errors
-    if(error.validationErrors)
+    if(!options?.skipServerValidationErrors && error.validationErrors)
     {
         options.injector?.get(ServerValidationService).addServerValidationErrors(error.validationErrors);
+    }
+
+    const message = options?.messages?.[error.statusCode];
+
+    //show custom error message if available
+    if(notifications && message)
+    {
+        notifications.error(message);
     }
 
     //show client errors

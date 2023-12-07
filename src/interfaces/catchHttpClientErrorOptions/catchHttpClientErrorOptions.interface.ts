@@ -1,6 +1,7 @@
 import {Injector} from '@angular/core';
 
 import {CatchHttpClientErrorBehavior} from '../../misc/enums';
+import {HttpClientErrorHandlers, HttpClientErrorMessages} from '../../misc/types';
 
 /**
  * Options for catch http client errors
@@ -21,4 +22,19 @@ export interface CatchHttpClientErrorOptions
      * Indication whether skip displaying of notifications for errors
      */
     skipErrorNotifications?: boolean;
+
+    /**
+     * Indication whether skip server validation errors processing
+     */
+    skipServerValidationErrors?: boolean;
+
+    /**
+     * Object storing default messages to be displayed for specific http status codes
+     */
+    messages?: HttpClientErrorMessages;
+
+    /**
+     * Object storing default error handlers for specific http status codes
+     */
+    handlers?: HttpClientErrorHandlers;
 }

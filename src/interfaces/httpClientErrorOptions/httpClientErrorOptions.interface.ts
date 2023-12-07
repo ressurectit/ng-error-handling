@@ -21,4 +21,9 @@ export interface HttpClientErrorOptions
      * Response mapper for http client validation errors
      */
     clientValidationErrorsResponseMapper?: HttpClientValidationErrorResponseMapper|null;
+
+    /**
+     * Array of ignored http status codes that will not be processed
+     */
+    ignoredHttpStatusCodes?: number[];
 }

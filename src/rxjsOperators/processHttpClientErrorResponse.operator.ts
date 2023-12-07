@@ -4,6 +4,7 @@ import {MonoTypeOperatorFunction, Observable, catchError, throwError} from 'rxjs
 
 import {HttpClientErrorOptions} from '../interfaces';
 import {handleHttpClientErrorResponse} from '../errorHandlers';
+import {HTTP_IGNORED_CLIENT_ERRORS} from '../misc/tokens';
 
 /**
  * Processes http client error response with code 400..499 and converts it into HttpClientError, otherwise throw original http error response
@@ -12,6 +13,7 @@ import {handleHttpClientErrorResponse} from '../errorHandlers';
 export function processHttpClientErrorResponse<TType>(options?: HttpClientErrorOptions): MonoTypeOperatorFunction<TType>
 {
     const injector: Injector = options?.injector ?? inject(Injector);
+    const ignoredCodes = options?.ignoredHttpStatusCodes ?? injector.get(HTTP_IGNORED_CLIENT_ERRORS);
 
     return source =>
     {
@@ -33,9 +35,10 @@ export function processHttpClientErrorResponse<TType>(options?: HttpClientErrorO
             {
                 (async () =>
                 {
-                    const processedError = await handleHttpClientErrorResponse(err, 
+                    const processedError = await handleHttpClientErrorResponse(err,
                     {
-                        injector, 
+                        injector,
+                        ignoredHttpStatusCodes: ignoredCodes,
                         clientErrorsResponseMapper: options?.clientErrorsResponseMapper,
                         clientValidationErrorsResponseMapper: options?.clientValidationErrorsResponseMapper,
                     });

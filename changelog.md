@@ -4,6 +4,8 @@
 
 ### Features
 
+- new `HttpClientErrorHandlers` type, that is object storing error handlers for http client errors according status code
+- new `HttpClientErrorMessages` type, that is object storing error messages for http client errors according status code
 - new `provideAnglrExceptionExtenders` function, that provides anglr exception extends functions
 - new `provideInternalServerErrorRenderer` function, that provides internal server error renderer type
 - new `DummyInternalServerErrorRenderer` service, that is dummy renderer used for displaying/rendering internal server error
@@ -21,12 +23,17 @@
         - `injector` instance of injector used for obtaining dependencies
         - `behavior` behavior of catch http client error, default is `CatchHttpClientErrorBehavior.Suppress`
         - `skipErrorNotifications` indication whether skip displaying of notifications for errors
+        - `skipServerValidationErrors` indication whether skip server validation errors processing
+        - `messages` object storing default messages to be displayed for specific http status codes
+        - `handlers` object storing default error handlers for specific http status codes
         - `` ???
-- new `ClientErrorOptions` interface, that represents options used for common handling of client errors
+- new `HttpClientErrorHandler` interface, that represents function that is used for handling http client error according status code
+- new `HttpClientErrorOptions` interface, that represents options used for common handling of client errors
     - **properties**
         - `injector` injector used for obtaining dependencies
         - `clientErrorsResponseMapper` response mapper for http client errors
         - `clientValidationErrorsResponseMapper` response mapper for http client validation errors
+        - `ignoredHttpStatusCodes` array of ignored http status codes that will not be processed
 - new `HttpClientError` class, that represents information about http client error (400..499)
     - **properties**
         - `errors` array of processed client errors
@@ -35,6 +42,7 @@
         - `message` http error response message
         - `response` complete http error response object 
 - new `HttpNotFoundError` class, that represents information about http not found error (404)
+- new `HTTP_IGNORED_CLIENT_ERRORS` injection token, that contains array of http status codes that are ignored
 - updated `InternalServerErrorSAComponent` component
     - is now standalone
 - updated `HttpClientErrorResponseMapper` type, return type is now `PromiseOr`, supports async usage
