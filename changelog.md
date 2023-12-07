@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 13.0.0 (2023-12-06)
+## Version 13.0.0 (2023-12-07)
 
 ### Features
 
@@ -8,7 +8,7 @@
 - new `provideInternalServerErrorRenderer` function, that provides internal server error renderer type
 - new `DummyInternalServerErrorRenderer` service, that is dummy renderer used for displaying/rendering internal server error
 - new `handleHttpClientErrors` function, that handles http error response with code 400..499 and returns HttpClientError, otherwise returns original http error response
-- new `catchHttpClientError` rxjs operator, that catches http client error response with code 400..499 and returns HttpClientError, otherwise returns original http error response
+- new `processHttpClientError` rxjs operator, that processes http client error response with code 400..499 and converts it into HttpClientError, otherwise throw original http error response
 - new `ClientErrorOptions` interface, that represents options used for common handling of client errors
     - **properties**
         - `injector` injector used for obtaining dependencies
@@ -24,6 +24,16 @@
 - new `HttpNotFoundError` class, that represents information about http not found error (404)
 - updated `InternalServerErrorSAComponent` component
     - is now standalone
+- updated `HttpClientErrorResponseMapper` type, return type is now `PromiseOr`, supports async usage
+- updated `HttpClientValidationErrorResponseMapper` type, return type is now `PromiseOr`, supports async usage
+- *subpackage* `@anglr/error-handling/rest`
+    - new `HttpClientErrorProcessingMiddleware` middleware, that is used for processing http client errors (400..499)
+    - new `HttpClientErrorsMapper` decorator, that sets custom http client errors mapper function
+    - new `HttpClientValidationErrorsMapper` decorator, that sets custom http client validation errors mapper function
+    - new `RestHttpClientErrorProcessing` interface, that contains custom mapper functions
+        - **properties**
+            - `clientErrorsResponseMapper` response mapper for http client errors
+            - `clientValidationErrorsResponseMapper` response mapper for http client validation errors
 - *subpackage* `@anglr/error-handling/material`
     - updated `DialogInternalServerErrorSAComponent` component
         - is now standalone
@@ -41,6 +51,7 @@
 - removed `InternalServerErrorModule`, `InternalServerErrorSAComponent` is now standalone
 - removed `ServerValidationsModule`, `ServerValidationValidatorSADirective` is now standalone
 - renamed `InternalServerErrorComponent` to `InternalServerErrorSAComponent`
+- updated `readErrorsFromHttpErrorResponse` function, is now `async`
 - *subpackage* `@anglr/error-handling/html2canvas`
     - removed `ERROR_WITH_SCREENSHOT_EXTENDER` provider, use `provideAnglrExceptionExtenders` to provide it
 - *subpackage* `@anglr/error-handling/material`

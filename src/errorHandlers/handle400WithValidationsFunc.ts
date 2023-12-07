@@ -14,16 +14,16 @@ import {ServerValidationService} from '../services';
  * @param clientErrorReturnCallback - Callback that transforms processed http error response error messages into TClientError
  * @param clientValidationErrorReturnCallback - Callback that transforms processed http error response validation error messages into TClientValidationError
  */
-export function handle400WithValidationsFunc<TError, TClientError, TClientValidationError>(error: HttpErrorResponse,
-                                                                                           options: Handle4xxOptions,
-                                                                                           errorReturnCallback: (error: HttpErrorResponse) => TError,
-                                                                                           clientErrorReturnCallback: (error: XXXHttpClientError) => TClientError,
-                                                                                           clientValidationErrorReturnCallback?: (error: XXXHttpClientError) => TClientValidationError): TError|TClientError|TClientValidationError
+export async function handle400WithValidationsFunc<TError, TClientError, TClientValidationError>(error: HttpErrorResponse,
+                                                                                                 options: Handle4xxOptions,
+                                                                                                 errorReturnCallback: (error: HttpErrorResponse) => TError,
+                                                                                                 clientErrorReturnCallback: (error: XXXHttpClientError) => TClientError,
+                                                                                                 clientValidationErrorReturnCallback?: (error: XXXHttpClientError) => TClientValidationError): Promise<TError|TClientError|TClientValidationError>
 {
     //handles 400 code
     if(error.status == 400)
     {
-        const {errors, validationErrors} = readErrorsFromHttpErrorResponse(error, options.injector, options.clientErrorsResponseMapper, options.clientValidationErrorsResponseMapper);
+        const {errors, validationErrors} = await readErrorsFromHttpErrorResponse(error, options.injector, options.clientErrorsResponseMapper, options.clientValidationErrorsResponseMapper);
         const notifications = options.injector?.get(CLIENT_ERROR_NOTIFICATIONS, null);
 
         if(notifications)

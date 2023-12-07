@@ -11,15 +11,15 @@ import {Handle4xxOptions, XXXHttpClientError} from '../interfaces';
  * @param errorReturnCallback - Callback that transforms unprocessed http error response into TError
  * @param clientErrorReturnCallback - Callback that transforms processed http error response error messages into TClientError
  */
-export function handle4xxFunc<TError, TClientError>(error: HttpErrorResponse,
-                                                    options: Handle4xxOptions,
-                                                    errorReturnCallback: (error: HttpErrorResponse) => TError,
-                                                    clientErrorReturnCallback: (error: XXXHttpClientError) => TClientError): TError|TClientError
+export async function handle4xxFunc<TError, TClientError>(error: HttpErrorResponse,
+                                                          options: Handle4xxOptions,
+                                                          errorReturnCallback: (error: HttpErrorResponse) => TError,
+                                                          clientErrorReturnCallback: (error: XXXHttpClientError) => TClientError): Promise<TError|TClientError>
 {
     //handles 4xx code
     if(error.status >= 400 && error.status < 500)
     {
-        const {errors} = readErrorsFromHttpErrorResponse(error, options.injector, options.clientErrorsResponseMapper);
+        const {errors} = await readErrorsFromHttpErrorResponse(error, options.injector, options.clientErrorsResponseMapper);
         const notifications = options.injector?.get(CLIENT_ERROR_NOTIFICATIONS, null);
 
         if(notifications)

@@ -15,10 +15,10 @@ export interface HttpClientErrorOptions
     /**
      * Response mapper for http client errors
      */
-    clientErrorsResponseMapper?: HttpClientErrorResponseMapper;
+    clientErrorsResponseMapper?: HttpClientErrorResponseMapper|null;
 
     /**
      * Response mapper for http client validation errors
      */
-    clientValidationErrorsResponseMapper?: HttpClientValidationErrorResponseMapper;
+    clientValidationErrorsResponseMapper?: HttpClientValidationErrorResponseMapper|null;
 }

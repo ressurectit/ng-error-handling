@@ -12,7 +12,7 @@ import {HttpClientErrors, HttpClientValidationErrors} from '../interfaces';
  * @param clientErrorsResponseMapper - Function that extracts client errors from response
  * @param clientValidationErrorsResponseMapper - Function that extracts validation errors from response
  */
-export function readErrorsFromHttpErrorResponse(error: HttpErrorResponse, injector?: Injector, clientErrorsResponseMapper?: HttpClientErrorResponseMapper, clientValidationErrorsResponseMapper?: HttpClientValidationErrorResponseMapper): HttpClientErrors
+export async function readErrorsFromHttpErrorResponse(error: HttpErrorResponse, injector?: Injector, clientErrorsResponseMapper?: HttpClientErrorResponseMapper|null, clientValidationErrorsResponseMapper?: HttpClientValidationErrorResponseMapper|null): Promise<HttpClientErrors>
 {
     clientErrorsResponseMapper ??= injector?.get(HTTP_CLIENT_ERROR_RESPONSE_MAPPER);
     clientValidationErrorsResponseMapper ??= injector?.get(HTTP_CLIENT_VALIDATION_ERROR_RESPONSE_MAPPER);
@@ -22,12 +22,12 @@ export function readErrorsFromHttpErrorResponse(error: HttpErrorResponse, inject
 
     if(clientErrorsResponseMapper)
     {
-        errors = clientErrorsResponseMapper(error);
+        errors = await clientErrorsResponseMapper(error);
     }
 
     if(clientValidationErrorsResponseMapper)
     {
-        validationErrors = clientValidationErrorsResponseMapper(error);
+        validationErrors = await clientValidationErrorsResponseMapper(error);
     }
 
     //in case of incorrect type
