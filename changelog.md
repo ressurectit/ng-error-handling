@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 13.0.0 (2023-12-07)
+## Version 13.0.0 (2024-01-04)
 
 ### Features
 
@@ -62,6 +62,10 @@
     - new `IgnoredHttpErrorStatusCodes` decorator, that sets ignored http error status codes that will be ignored by http client error processing middleware
     - new `HttpClientErrorMessages` decorator, that sets http client error messages
     - new `HttpClientErrorHandlers` decorator, that sets http client error handlers
+    - new `HttpClientErrorBehavior` decorator, that sets http client error behavior
+    - new `HttpClientErrorForceCustomMessage` decorator, that sets http client error to force custom message displaying
+    - new `HttpClientErrorSkipErrorNotifications` decorator, that sets http client error to skip error notifications
+    - new `HttpClientErrorSkipServerValidationErrors` decorator, that sets http client error to skip server validation errors
     - new `RestHttpClientErrorProcessing` interface, configuration that can be used within http client error processing middleware
         - **properties**
             - `clientErrorsResponseMapper` response mapper for http client errors
