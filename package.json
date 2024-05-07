@@ -148,7 +148,7 @@
             "esm2022": "./es2022/material/src/index.js",
             "es2022": "./es2022/material/src/index.js",
             "node": "./es2022/material/src/index.js",
-            "default": "./es2020/material/src/index.js"
+            "default": "./es2022/material/src/index.js"
         }
     }
 }

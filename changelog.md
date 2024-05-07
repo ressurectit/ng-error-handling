@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 13.0.1 (2024-05-07)
+
+### Bug Fixes
+
+- fixed `package.json` default export for material subpackage
+
 ## Version 13.0.0 (2024-01-04)
 
 ### Features
