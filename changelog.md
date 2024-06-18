@@ -1,19 +1,10 @@
 # Changelog
 
-## Version 13.0.2 (2024-06-18)
-
-### Bug Fixes
-
-- *subpackage* `@anglr/error-handling/rest`
-    - fixed missing exports for interfaces `RestCatchHttpClientError`, `RestHttpClientErrorProcessing`
-
-## Version 13.0.1 (2024-05-07)
+## Version 13.0.0 (2024-06-18)
 
 ### Bug Fixes
 
 - fixed `package.json` default export for material subpackage
-
-## Version 13.0.0 (2024-01-04)
 
 ### Features
 
