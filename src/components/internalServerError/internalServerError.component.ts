@@ -14,19 +14,19 @@ import {INTERNAL_SERVER_ERROR_RENDERER} from '../../misc/tokens';
 {
     selector: 'internal-server-error',
     templateUrl: 'internalServerError.component.html',
-    styleUrls: ['internalServerError.component.css'],
+    styleUrl: 'internalServerError.component.css',
     standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InternalServerErrorSAComponent implements OnDestroy
+export class InternalServerErrorComponent implements OnDestroy
 {
     //######################### private fields #########################
-    
+
     /**
      * Subscription for internalServerErrorService changed event
      */
     private _subscription: Subscription|null = null;
-    
+
     //######################### public properties - template bindings #########################
 
     /**
@@ -57,7 +57,7 @@ export class InternalServerErrorSAComponent implements OnDestroy
     }
 
     //######################### public methods - implementation of OnDestroy #########################
-    
+
     /**
      * Called when component is destroyed
      */

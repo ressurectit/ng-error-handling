@@ -10,15 +10,15 @@ import {DialogInternalServerErrorData} from './dialogInternalServerError.interfa
 {
     selector: 'dialog-internal-server-error',
     templateUrl: 'dialogInternalServerError.component.html',
-    styleUrls: ['dialogInternalServerError.component.css'],
+    styleUrl: 'dialogInternalServerError.component.css',
     standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DialogInternalServerErrorSAComponent
+export class DialogInternalServerErrorComponent
 {
     //######################### constructor #########################
     constructor(@Inject(MAT_DIALOG_DATA) public data: DialogInternalServerErrorData,
-                public dialog: MatDialogRef<DialogInternalServerErrorSAComponent>)
+                public dialog: MatDialogRef<DialogInternalServerErrorComponent>)
     {
     }
 }

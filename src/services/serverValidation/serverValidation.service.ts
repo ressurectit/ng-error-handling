@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {extend} from '@jscrpt/common';
+import {extend} from '@jscrpt/common/extend';
 import {Subject, Observable} from 'rxjs';
 
 import {HttpClientValidationErrors} from '../../interfaces';
@@ -11,7 +11,7 @@ import {HttpClientValidationErrors} from '../../interfaces';
 export class ServerValidationService
 {
     //######################### protected fields #########################
-    
+
     /**
      * Subject that enables emiting server validation has changed, parameter indicates whether there are errors present, or not
      */
@@ -21,14 +21,14 @@ export class ServerValidationService
      * Server validation errors that are currently present
      */
     protected _serverValidations: HttpClientValidationErrors = {};
-    
+
     /**
      * Server validation errors that are currently present, cached version for external use
      */
     protected _serverValidationsCache?: HttpClientValidationErrors;
-    
+
     //######################### public properties #########################
-    
+
     /**
      * Occurs when server validation has changed, parameter indicates whether errors were added or removed
      */
@@ -36,7 +36,7 @@ export class ServerValidationService
     {
         return this._serverValidationsChangedSubject.asObservable();
     }
-    
+
     /**
      * Server validation errors that are currently present
      */
@@ -52,9 +52,9 @@ export class ServerValidationService
     {
         return Object.keys(this._serverValidations);
     }
-    
+
     //######################### public methods #########################
-    
+
     /**
      * Adds server validation errors
      * @param validationErrors - List of validation errors
@@ -66,7 +66,7 @@ export class ServerValidationService
 
         this._serverValidationsChangedSubject.next(true);
     }
-    
+
     /**
      * Clears all set server validation errors
      */

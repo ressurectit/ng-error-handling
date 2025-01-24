@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {InternalServerErrorInfo, InternalServerErrorRenderer} from '@anglr/error-handling';
 
-import {DialogInternalServerErrorSAComponent} from '../../components/dialogInternalServerError/dialogInternalServerError.component';
+import {DialogInternalServerErrorComponent} from '../../components/dialogInternalServerError/dialogInternalServerError.component';
 import {DialogInternalServerErrorData} from '../../components/dialogInternalServerError/dialogInternalServerError.interface';
 
 /**
@@ -25,15 +25,15 @@ export class DialogInternalServerErrorRenderer implements InternalServerErrorRen
      */
     public show(errorInfo: InternalServerErrorInfo, deleteCallback: (errorInfo: InternalServerErrorInfo) => void): void
     {
-        this._dialog.open<DialogInternalServerErrorSAComponent, DialogInternalServerErrorData>(DialogInternalServerErrorSAComponent,
+        this._dialog.open<DialogInternalServerErrorComponent, DialogInternalServerErrorData>(DialogInternalServerErrorComponent,
         {
             width: '90vw',
             height: '90vh',
             data:
             {
                 errorInfo,
-                deleteCallback
-            }
+                deleteCallback,
+            },
         });
     }
 }

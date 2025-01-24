@@ -1,5 +1,15 @@
 # Changelog
 
+## Version 14.0.0 (2025-01-24)
+
+### BREAKING CHANGES
+
+- minimal supported version of `@angular` packages is `19.1.0`
+- minimal supported version of `@anglr/common` is `22.0.0`
+- minimal supported version of `@jscrpt/common` is `7.0.0`
+- renamed `DialogInternalServerErrorSAComponent` component to `DialogInternalServerErrorComponent`
+- renamed `InternalServerErrorSAComponent` component to `InternalServerErrorComponent`
+
 ## Version 13.0.0 (2024-06-18)
 
 ### Bug Fixes

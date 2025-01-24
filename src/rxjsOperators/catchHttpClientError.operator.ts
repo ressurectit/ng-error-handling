@@ -1,5 +1,5 @@
 import {Injector, inject} from '@angular/core';
-import {extend} from '@jscrpt/common';
+import {extend} from '@jscrpt/common/extend';
 import {Observable, OperatorFunction, catchError, throwError} from 'rxjs';
 
 import {CatchHttpClientErrorOptions} from '../interfaces';
@@ -41,12 +41,12 @@ export function catchHttpClientError<TIn>(options?: CatchHttpClientErrorOptions)
                             messages,
                             handlers,
                         });
-    
+
                         if(!result)
                         {
                             return;
                         }
-    
+
                         observer.next(result);
                         observer.complete();
                     }

@@ -1,5 +1,5 @@
 import {ClassProvider, EnvironmentProviders, FactoryProvider, Provider, Type, ValueProvider, makeEnvironmentProviders, inject} from '@angular/core';
-import {extend} from '@jscrpt/common';
+import {extend} from '@jscrpt/common/extend';
 
 import {ANGLR_EXCEPTION_EXTENDERS, HTTP_CLIENT_ERROR_HANDLERS, HTTP_CLIENT_ERROR_MESSAGES, HTTP_CLIENT_ERROR_RESPONSE_MAPPER, HTTP_CLIENT_VALIDATION_ERROR_RESPONSE_MAPPER, INTERNAL_SERVER_ERROR_RENDERER} from './tokens';
 import {AnglrExceptionExtender, InternalServerErrorRenderer} from '../interfaces';
