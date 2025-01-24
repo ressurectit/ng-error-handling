@@ -74,14 +74,14 @@
     },
     "optionalDependencies": {
         
-        "@anglr/rest": ">=14.0.0-beta.20231115182003",
+        "@anglr/rest": ">=14.0.0",
         "@angular/cdk": ">=19.1.0",
         "@angular/material": ">=19.1.0",
         "html2canvas": ">=1.4.1"
     },
     "devDependencies": {
         "@anglr/common": "22.0.0",
-        "@anglr/rest": "14.0.0-beta.20231115182003",
+        "@anglr/rest": "14.0.0",
         "@angular/animations": "19.1.0",
         "@angular/cdk": "19.1.0",
         "@angular/common": "19.1.0",

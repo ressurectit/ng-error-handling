@@ -15,7 +15,6 @@ import {INTERNAL_SERVER_ERROR_RENDERER} from '../../misc/tokens';
     selector: 'internal-server-error',
     templateUrl: 'internalServerError.component.html',
     styleUrl: 'internalServerError.component.css',
-    standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InternalServerErrorComponent implements OnDestroy

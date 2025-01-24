@@ -11,7 +11,6 @@ import {DialogInternalServerErrorData} from './dialogInternalServerError.interfa
     selector: 'dialog-internal-server-error',
     templateUrl: 'dialogInternalServerError.component.html',
     styleUrl: 'dialogInternalServerError.component.css',
-    standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DialogInternalServerErrorComponent

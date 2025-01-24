@@ -4,9 +4,11 @@
 
 ### BREAKING CHANGES
 
+- minimal supported version of `NodeJs` is `18`
 - minimal supported version of `@angular` packages is `19.1.0`
 - minimal supported version of `@anglr/common` is `22.0.0`
 - minimal supported version of `@jscrpt/common` is `7.0.0`
+- minimal supported version of `tslib` is `2.8.1`
 - renamed `DialogInternalServerErrorSAComponent` component to `DialogInternalServerErrorComponent`
 - renamed `InternalServerErrorSAComponent` component to `InternalServerErrorComponent`
 
