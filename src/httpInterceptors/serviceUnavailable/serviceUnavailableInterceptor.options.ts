@@ -17,12 +17,12 @@ export class ServiceUnavailableInterceptorOptions
     /**
      * Text displayed
      */
-    text: string = 'Remote server is unavailable. Try again later.';
+    public text: string = 'Remote server is unavailable. Try again later.';
 
     /**
      * Action called when 504 status code received
      */
-    action: ServiceUnavailableAction = (injector: Injector, observer: Observer<unknown>) =>
+    public action: ServiceUnavailableAction = (injector: Injector, observer: Observer<unknown>) =>
     {
         const notifications = injector.get(ERROR_HANDLING_NOTIFICATIONS);
 

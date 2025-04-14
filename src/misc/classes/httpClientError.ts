@@ -36,7 +36,7 @@ export class HttpClientError
     }
 
     /**
-     * Complete http error response object 
+     * Complete http error response object
      */
     public readonly response: HttpErrorResponse;
 

@@ -23,7 +23,7 @@ export function catchHttpClientError<TIn>(options?: CatchHttpClientErrorOptions)
         return source.pipe(catchError(err =>
         {
             //nothing to process
-            if (!(err instanceof HttpClientError))
+            if(!(err instanceof HttpClientError))
             {
                 return throwError(() => err);
             }

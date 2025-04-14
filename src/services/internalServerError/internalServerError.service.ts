@@ -50,7 +50,7 @@ export class InternalServerErrorService
         {
             errorHtml: errorHtml,
             requestUrl: requestUrl,
-            id: this._id++
+            id: this._id++,
         });
     }
 }

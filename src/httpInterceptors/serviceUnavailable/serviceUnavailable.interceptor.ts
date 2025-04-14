@@ -67,5 +67,5 @@ export const SERVICE_UNAVAILABLE_INTERCEPTOR_PROVIDER: ClassProvider =
 {
     provide: HTTP_INTERCEPTORS,
     multi: true,
-    useClass: ServiceUnavailableInterceptor
+    useClass: ServiceUnavailableInterceptor,
 };

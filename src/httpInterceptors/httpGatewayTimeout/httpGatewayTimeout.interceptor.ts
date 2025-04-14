@@ -32,7 +32,7 @@ export class HttpGatewayTimeoutInterceptor implements HttpInterceptor
     {
         return next.handle(req).pipe(catchError((err) =>
         {
-            return new Observable(observer  =>
+            return new Observable(observer =>
             {
                 //client error, not response from server, or is ignored
                 if (err.error instanceof Error ||
@@ -67,5 +67,5 @@ export const HTTP_GATEWAY_TIMEOUT_INTERCEPTOR_PROVIDER: ClassProvider =
 {
     provide: HTTP_INTERCEPTORS,
     multi: true,
-    useClass: HttpGatewayTimeoutInterceptor
+    useClass: HttpGatewayTimeoutInterceptor,
 };

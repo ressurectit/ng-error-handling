@@ -19,7 +19,7 @@ export const errorWithScreenShotExtender: AnglrExceptionExtender = async (inject
         return errorWithScreenshot;
     }
 
-    const document = injector.get(DOCUMENT);    
+    const document = injector.get(DOCUMENT);
     const canvas = await html2canvas(document.body);
 
     errorWithScreenshot.screenshotBase64 = canvas.toDataURL().replace('data:image/png;base64,', '');

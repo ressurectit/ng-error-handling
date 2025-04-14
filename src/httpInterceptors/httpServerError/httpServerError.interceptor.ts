@@ -38,7 +38,7 @@ export class HttpServerErrorInterceptor implements HttpInterceptor
                     }
 
                     //client error, not response from server, or is ignored
-                    if (err.error instanceof Error || 
+                    if (err.error instanceof Error ||
                         req.context.get(IGNORED_INTERCEPTORS).some(itm => itm == HttpServerErrorInterceptor))
                     {
                         return;
@@ -66,9 +66,9 @@ export class HttpServerErrorInterceptor implements HttpInterceptor
 /**
  * Provider for proper use of HttpServerErrorInterceptor, use this provider to inject this interceptor
  */
-export const HTTP_SERVER_ERROR_INTERCEPTOR_PROVIDER: ClassProvider = 
+export const HTTP_SERVER_ERROR_INTERCEPTOR_PROVIDER: ClassProvider =
 {
     provide: HTTP_INTERCEPTORS,
     multi: true,
-    useClass: HttpServerErrorInterceptor
+    useClass: HttpServerErrorInterceptor,
 };

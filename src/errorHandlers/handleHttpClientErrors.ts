@@ -17,7 +17,7 @@ export async function handleHttpClientErrors(error: HttpClientError, options: Ca
     const notifications: Notifications|null = options.injector.get(CLIENT_ERROR_NOTIFICATIONS, null, {optional: true});
     const behavior: CatchHttpClientErrorBehavior = options.behavior ?? CatchHttpClientErrorBehavior.Suppress;
     const customHandler = options?.handlers?.[error.statusCode];
-    
+
     if(customHandler)
     {
         return await customHandler(error, options);

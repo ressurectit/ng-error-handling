@@ -8,10 +8,10 @@ import {ServerValidationService} from '../../services';
 /**
  * Validator that is injected with directive ServerValidationValidator
  */
-export const SERVER_VALIDATIONS_VALIDATOR: ExistingProvider = 
+export const SERVER_VALIDATIONS_VALIDATOR: ExistingProvider =
 {
-    provide: NG_VALIDATORS, 
-    useExisting: forwardRef(() => ServerValidationValidatorDirective), 
+    provide: NG_VALIDATORS,
+    useExisting: forwardRef(() => ServerValidationValidatorDirective),
     multi: true
 };
 
@@ -77,7 +77,7 @@ export class ServerValidationValidatorDirective implements Validator, OnInit, On
     }
 
     //######################### public methods - implementation of OnInit #########################
-    
+
     /**
      * Initialize component
      */
@@ -89,7 +89,7 @@ export class ServerValidationValidatorDirective implements Validator, OnInit, On
     }
 
     //######################### public methods - implementation of OnDestroy #########################
-    
+
     /**
      * Called when component is destroyed
      */

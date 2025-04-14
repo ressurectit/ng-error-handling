@@ -26,7 +26,7 @@ export const CLIENT_ERROR_NOTIFICATIONS: InjectionToken<Notifications> = new Inj
 export const HTTP_CLIENT_VALIDATION_ERROR_RESPONSE_MAPPER: InjectionToken<HttpClientValidationErrorResponseMapper> = new InjectionToken<HttpClientValidationErrorResponseMapper>('HTTP_CLIENT_VALIDATION_ERROR_RESPONSE_MAPPER');
 
 /**
- * Injection token used for injecting multiple AnglrExceptionExtender 
+ * Injection token used for injecting multiple AnglrExceptionExtender
  */
 export const ANGLR_EXCEPTION_EXTENDERS: InjectionToken<AnglrExceptionExtender[]> = new InjectionToken<AnglrExceptionExtender[]>('ANGLR_EXCEPTION_EXTENDERS');
 

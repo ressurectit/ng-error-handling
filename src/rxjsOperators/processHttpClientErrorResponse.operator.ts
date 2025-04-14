@@ -20,13 +20,13 @@ export function processHttpClientErrorResponse<TType>(options?: HttpClientErrorO
         return source.pipe(catchError(err =>
         {
             //nothing to process
-            if (!(err instanceof HttpErrorResponse))
+            if(!(err instanceof HttpErrorResponse))
             {
                 return throwError(() => err);
             }
 
             //client error, not response from server
-            if (err.error instanceof Error)
+            if(err.error instanceof Error)
             {
                 return throwError(() => err);
             }

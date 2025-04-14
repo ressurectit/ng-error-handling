@@ -3,8 +3,6 @@ export * from './angularError/angularError.interface';
 export * from './catchHttpClientErrorOptions/catchHttpClientErrorOptions.interface';
 export * from './errorWithStack/errorWithStack.interface';
 export * from './errorWithUrl/errorWithUrl.interface';
-export * from './handle4xxOptions/handle4xxOptions.interface';
-export * from './httpClientError/httpClientError.interface';
 export * from './httpClientErrorHandler/httpClientErrorHandler.interface';
 export * from './httpClientErrorOptions/httpClientErrorOptions.interface';
 export * from './httpClientErrors/httpClientErrors.interface';

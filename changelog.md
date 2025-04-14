@@ -1,5 +1,42 @@
 # Changelog
 
+## Version 15.0.0 (2025-04-14)
+
+### BREAKING CHANGES
+
+- removed `handle4xxFunc` error handler, use new ones
+- removed `handle400WithValidationsFunc` error handler, use new ones
+- removed `handle404Func` error handler, use new ones
+- removed `handle4xxSuppress` rxjs operator, use new ones
+- removed `handle4xx` rxjs operator, use new ones
+- removed `handle400WithValidations` rxjs operator, use new ones
+- removed `handle404` rxjs operator, use new ones
+- removed `handle404Suppress` rxjs operator, use new ones
+- removed `Handle4xxOptions` interface, use new ones
+- removed `XXXHttpClientError` interface, use new ones
+- removed `ClientValidationError` class, use new ones
+- removed `RestClientError` class, use new ones
+- removed `RestNotFoundError` class, use new ones
+- removed `HttpClientErrorCustomHandler` type
+- *subpackage* `@anglr/error-handling/rest`
+    - removed `ClientErrorHandlingBehavior` enum
+    - removed `ClientErrorHandlingOptions` class
+    - removed `getDefaultClientErrorObservable` function
+    - removed `RestHttpClientErrors` interface
+    - removed `CLIENT_ERROR_HANDLING_MIDDLEWARE_OPTIONS` injection token
+    - removed `HTTP_CLIENT_ERROR_CUSTOM_HANDLER` injection token
+    - removed `HTTP_IGNORED_CLIENT_ERRORS` injection token, use one from base package
+    - removed `HttpClientErrorCustomHandlerDef` type
+    - removed `getErrorHandlers` function
+    - removed `ClientErrorHandlingMiddleware` middleware
+    - removed `ErrorPassThrough` decorator
+    - removed `ErrorPassThroughHttp` decorator
+    - removed `Handle400WithValidations` decorator
+    - removed `Handle404` decorator
+    - removed `IgnoreClientErrors` decorator
+    - removed `SuppressError` decorator
+    - removed `WithRestClientError` decorator
+
 ## Version 14.0.0 (2025-01-24)
 
 ### BREAKING CHANGES

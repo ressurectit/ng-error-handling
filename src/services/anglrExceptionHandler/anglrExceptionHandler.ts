@@ -12,7 +12,7 @@ import {AnglrExceptionExtender, AngularError, ErrorWithStack} from '../../interf
  * Exception handler that is capable of customized handling of unhandled errors
  */
 @Injectable()
-export class AnglrExceptionHandler implements ErrorHandler 
+export class AnglrExceptionHandler implements ErrorHandler
 {
     //######################### private fields #########################
 
@@ -41,9 +41,9 @@ export class AnglrExceptionHandler implements ErrorHandler
             this._extenders = [];
         }
     }
-    
+
     //######################### public methods - implementation of IExceptionHandler #########################
-    
+
     /**
      * Method called when exception occurs
      * @param error - Occured exception object
@@ -55,7 +55,7 @@ export class AnglrExceptionHandler implements ErrorHandler
         const message = error.message || (error.toString ? error.toString() : `${error}`);
         let originalStack = error.stack || '';
         let stack = await this._fromSourceMap(originalStack);
-        
+
         if(this._notifications && isPresent(message))
         {
             this._notifications.error(message);
@@ -71,7 +71,7 @@ ${error.rejection.stack}`;
             stack += `--------------------------PROMISE STACK--------------------------------
 ${rejectionStack}`;
         }
-        
+
         if(this._options.debugMode)
         {
             console.error(`
@@ -92,7 +92,7 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
             }
         }
 
-        let logError: ErrorWithStack = 
+        let logError: ErrorWithStack =
         {
             message: message,
             stack: stack,
@@ -107,7 +107,7 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
 
         this._logger.error('Unhandled error: {{@logError}}', {logError});
     }
-    
+
     //######################### private methods #########################
 
     /**
@@ -131,8 +131,8 @@ PROMISE ERROR STACKTRACE: ${error.rejection.stack}`);
 /**
  * Anglr custom exception handler provider
  */
-export const ANGLR_EXCEPTION_HANDLER_PROVIDER: ClassProvider = 
+export const ANGLR_EXCEPTION_HANDLER_PROVIDER: ClassProvider =
 {
     provide: ErrorHandler,
-    useClass: AnglrExceptionHandler
+    useClass: AnglrExceptionHandler,
 };
