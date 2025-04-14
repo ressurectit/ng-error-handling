@@ -4,6 +4,10 @@
 
 ### Features
 
+- new `httpGatewayTimeoutInterceptor` http interceptor function, which is used for intercepting http responses and handling 504 statuses
+- new `httpServerErrorInterceptor` http interceptor function, which is used for handling http server errors with codes 500..599 and displaying of internal server error
+- new `noConnectionInterceptor` http interceptor function, which is used for intercepting http responses and handling 0 statuses
+- new `serviceUnavailableInterceptor` http interceptor function, which is used for intercepting http responses and handling 503 statuses
 - new `CatchHttpClientErrorHttpStatusCodeOptions` interface, which represents options for cattch http client errors specific for http status code
     - **properties**
         - `behavior` behavior of catch http client error, default is `CatchHttpClientErrorBehavior.Suppress`
