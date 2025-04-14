@@ -1,5 +1,6 @@
 export * from './anglrExceptionExtender/anglrExceptionExtender.interface';
 export * from './angularError/angularError.interface';
+export * from './catchHttpClientErrorHttpStatusCodeOptions/catchHttpClientErrorHttpStatusCodeOptions.interface';
 export * from './catchHttpClientErrorOptions/catchHttpClientErrorOptions.interface';
 export * from './errorWithStack/errorWithStack.interface';
 export * from './errorWithUrl/errorWithUrl.interface';

@@ -1,7 +1,7 @@
 import {InjectionToken} from '@angular/core';
 import {Notifications} from '@anglr/common';
 
-import {HttpClientErrorHandlers, HttpClientErrorMessages, HttpClientErrorResponseMapper, HttpClientValidationErrorResponseMapper} from './types';
+import {HttpClientErrorConfigs, HttpClientErrorHandlers, HttpClientErrorResponseMapper, HttpClientValidationErrorResponseMapper} from './types';
 import {AnglrExceptionExtender, InternalServerErrorRenderer} from '../interfaces';
 import {DummyInternalServerErrorRenderer} from '../services';
 
@@ -41,9 +41,9 @@ export const INTERNAL_SERVER_ERROR_RENDERER: InjectionToken<InternalServerErrorR
 export const HTTP_IGNORED_CLIENT_ERRORS: InjectionToken<number[]> = new InjectionToken<number[]>('HTTP_IGNORED_CLIENT_ERRORS', {providedIn: 'root', factory: () => [401, 403]});
 
 /**
- * Injection token that contains custom client error messages
+ * Injection token that contains custom configs for http client error handlers for specific http status codes
  */
-export const HTTP_CLIENT_ERROR_MESSAGES: InjectionToken<HttpClientErrorMessages> = new InjectionToken<HttpClientErrorMessages>('HTTP_CLIENT_ERROR_MESSAGES');
+export const HTTP_CLIENT_ERROR_CONFIGS: InjectionToken<HttpClientErrorConfigs> = new InjectionToken<HttpClientErrorConfigs>('HTTP_CLIENT_ERROR_CONFIGS');
 
 /**
  * Injection token that contains custom client error handlers

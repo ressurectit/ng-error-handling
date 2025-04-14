@@ -14,19 +14,19 @@ import {HttpNotFoundError} from '../misc/classes/httpNotFoundError';
  */
 export function handleHttp404Error(error: HttpClientError, options: CatchHttpClientErrorOptions): HttpNotFoundError|null
 {
-    const notifications: Notifications = options.injector.get(CLIENT_ERROR_NOTIFICATIONS);
-    const behavior: CatchHttpClientErrorBehavior = options.behavior ?? CatchHttpClientErrorBehavior.Throw;
+    const notifications: Notifications|null = options.injector.get(CLIENT_ERROR_NOTIFICATIONS, null, {optional: true});
+    const behavior: CatchHttpClientErrorBehavior = options.configs?.[error.statusCode]?.behavior ?? options.behavior ?? CatchHttpClientErrorBehavior.Throw;
 
-    const message = options?.messages?.[error.statusCode];
+    const message = options.configs?.[error.statusCode]?.message;
 
     //show custom error message if available and no received messages available
-    if(message && (!error.errors.length || options?.forceCustomMessageDisplay))
+    if(notifications && message && (!error.errors.length || (options.configs?.[error.statusCode]?.forceCustomMessageDisplay ?? options.forceCustomMessageDisplay)))
     {
         notifications.error(message);
     }
 
     //show client errors
-    if(!options.skipErrorNotifications && notifications)
+    if(!(options.configs?.[error.statusCode]?.skipErrorNotifications ?? options.skipErrorNotifications) && notifications)
     {
         for(const clientError of error.errors)
         {

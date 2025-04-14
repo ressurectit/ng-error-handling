@@ -15,7 +15,14 @@ export function HttpClientErrorMessages(messages: HttpClientErrorMessages)
     {
         const descr = descriptor as RestCatchHttpClientError & RestMethodMiddlewares;
 
-        descr.messages = messages;
+        for(const statusCode in messages)
+        {
+            const message = messages[statusCode];
+
+            descr.configs ??= {};
+            descr.configs[statusCode] ??= {};
+            descr.configs[statusCode].message = message;
+        }
 
         return descr as TDecorated;
     };

@@ -46,7 +46,7 @@ export class CatchHttpClientErrorMiddleware implements RestMiddleware<unknown, u
                 behavior: descriptor.behavior,
                 forceCustomMessageDisplay: descriptor.forceCustomMessageDisplay,
                 handlers: descriptor.handlers,
-                messages: descriptor.messages,
+                configs: descriptor.configs,
                 skipErrorNotifications: descriptor.skipErrorNotifications,
                 skipServerValidationErrors: descriptor.skipServerValidationErrors,
             }));

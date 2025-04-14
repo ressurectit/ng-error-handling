@@ -2,6 +2,40 @@
 
 ## Version 15.0.0 (2025-04-14)
 
+### Features
+
+- new `CatchHttpClientErrorHttpStatusCodeOptions` interface, which represents options for cattch http client errors specific for http status code
+    - **properties**
+        - `behavior` behavior of catch http client error, default is `CatchHttpClientErrorBehavior.Suppress`
+        - `skipErrorNotifications` indication whether skip displaying of notifications for errors
+        - `skipServerValidationErrors` indication whether skip server validation errors processing
+        - `forceCustomMessageDisplay` indication whether forcibly display custom message if present, not only as fallback but always
+        - `message` object storing default messages to be displayed for specific http status codes
+- new `HttpClientErrorConfigs` type, that is object storing specific options/config according status code
+- new `HTTP_CLIENT_ERROR_CONFIGS` injection token, that contains custom configs for http client error handlers for specific http status codes
+- new `provideHttpClientErrorConfigs` provider, which provides http client error handlers and merges them with existing provided handlers
+- updated `CatchHttpClientErrorOptions` interface
+    - new `configs` property, with specific options/config for http status codes
+- updated `handleHttpClientErrors` error handler
+    - now use new `configs` property as priority for handling of errors
+- updated `handleHttp404Error` error handler
+    - now use new `configs` property as priority for handling of errors
+- *subpackage* `@anglr/error-handling/rest`
+    - updated `RestCatchHttpClientError` interface
+        - new `configs` property, object storing options/config for specific http status codes
+    - updated `HttpClientErrorBehavior` decorator
+        - **new parameter**
+            - `statusCode` if specified, behavior will be set for specific http status code
+    - updated `HttpClientErrorForceCustomMessage` decorator
+        - **new parameter**
+            - `statusCode` if specified, force custom message display will be set for specific http status code
+    - updated `HttpClientErrorSkipErrorNotifications` decorator
+        - **new parameter**
+            - `statusCode` if specified, skip error notifications will be set for specific http status code
+    - updated `HttpClientErrorSkipServerValidationErrors` decorator
+        - **new parameter**
+            - `statusCode` if specified, skip server validation errors will be set for specific http status code
+
 ### BREAKING CHANGES
 
 - removed `handle4xxFunc` error handler, use new ones
@@ -18,6 +52,10 @@
 - removed `RestClientError` class, use new ones
 - removed `RestNotFoundError` class, use new ones
 - removed `HttpClientErrorCustomHandler` type
+- removed `HTTP_CLIENT_ERROR_MESSAGES` injection token, functionality moved into `HTTP_CLIENT_ERROR_CONFIGS` 
+- removed `provideHttpClientErrorMessages` provider, functionality moved into `provideHttpClientErrorConfigs` 
+- updated `CatchHttpClientErrorOptions` interface
+    - removed `messages` property, functionality moved into `configs` property
 - *subpackage* `@anglr/error-handling/rest`
     - removed `ClientErrorHandlingBehavior` enum
     - removed `ClientErrorHandlingOptions` class
@@ -36,6 +74,8 @@
     - removed `IgnoreClientErrors` decorator
     - removed `SuppressError` decorator
     - removed `WithRestClientError` decorator
+    - updated `RestCatchHttpClientError` interface
+        - removed `messages` property, functionality moved into `configs` property
 
 ## Version 14.0.0 (2025-01-24)
 

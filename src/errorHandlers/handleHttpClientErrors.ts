@@ -15,8 +15,8 @@ import {applyBehavior} from '../misc/utils';
 export async function handleHttpClientErrors(error: HttpClientError, options: CatchHttpClientErrorOptions): Promise<HttpClientError|null>
 {
     const notifications: Notifications|null = options.injector.get(CLIENT_ERROR_NOTIFICATIONS, null, {optional: true});
-    const behavior: CatchHttpClientErrorBehavior = options.behavior ?? CatchHttpClientErrorBehavior.Suppress;
-    const customHandler = options?.handlers?.[error.statusCode];
+    const behavior: CatchHttpClientErrorBehavior = options.configs?.[error.statusCode]?.behavior ?? options.behavior ?? CatchHttpClientErrorBehavior.Suppress;
+    const customHandler = options.handlers?.[error.statusCode];
 
     if(customHandler)
     {
@@ -24,21 +24,21 @@ export async function handleHttpClientErrors(error: HttpClientError, options: Ca
     }
 
     //show server validations errors
-    if(!options?.skipServerValidationErrors && error.validationErrors)
+    if(!(options.configs?.[error.statusCode]?.skipServerValidationErrors ?? options.skipServerValidationErrors) && error.validationErrors)
     {
         options.injector?.get(ServerValidationService).addServerValidationErrors(error.validationErrors);
     }
 
-    const message = options?.messages?.[error.statusCode];
+    const message = options.configs?.[error.statusCode]?.message;
 
     //show custom error message if available and no received messages available
-    if(notifications && message && (!error.errors.length || options?.forceCustomMessageDisplay))
+    if(notifications && message && (!error.errors.length || (options.configs?.[error.statusCode]?.forceCustomMessageDisplay ?? options.forceCustomMessageDisplay)))
     {
         notifications.error(message);
     }
 
     //show client errors
-    if(!options.skipErrorNotifications && notifications)
+    if(!(options.configs?.[error.statusCode]?.skipErrorNotifications ?? options.skipErrorNotifications) && notifications)
     {
         for(const clientError of error.errors)
         {

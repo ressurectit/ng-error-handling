@@ -1,4 +1,4 @@
-import {CatchHttpClientErrorBehavior, HttpClientErrorHandlers, HttpClientErrorMessages} from '@anglr/error-handling';
+import {CatchHttpClientErrorBehavior, HttpClientErrorConfigs, HttpClientErrorHandlers} from '@anglr/error-handling';
 
 /**
  * Configuration that can be used within catch http client error middleware
@@ -26,9 +26,9 @@ export interface RestCatchHttpClientError extends TypedPropertyDescriptor<unknow
     forceCustomMessageDisplay: boolean|undefined|null;
 
     /**
-     * Object storing default messages to be displayed for specific http status codes
+     * Object storing options/config for specific http status codes
      */
-    messages: HttpClientErrorMessages|undefined|null;
+    configs: HttpClientErrorConfigs|undefined|null;
 
     /**
      * Object storing default error handlers for specific http status codes

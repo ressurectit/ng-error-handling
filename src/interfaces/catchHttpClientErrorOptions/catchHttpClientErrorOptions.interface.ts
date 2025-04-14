@@ -1,12 +1,12 @@
 import {Injector} from '@angular/core';
 
-import {CatchHttpClientErrorBehavior} from '../../misc/enums';
-import {HttpClientErrorHandlers, HttpClientErrorMessages} from '../../misc/types';
+import {HttpClientErrorConfigs, HttpClientErrorHandlers} from '../../misc/types';
+import {CatchHttpClientErrorHttpStatusCodeOptions} from '../catchHttpClientErrorHttpStatusCodeOptions/catchHttpClientErrorHttpStatusCodeOptions.interface';
 
 /**
  * Options for catch http client errors
  */
-export interface CatchHttpClientErrorOptions
+export interface CatchHttpClientErrorOptions extends Omit<CatchHttpClientErrorHttpStatusCodeOptions, 'message'>
 {
     /**
      * Instance of injector used for obtaining dependencies
@@ -14,29 +14,9 @@ export interface CatchHttpClientErrorOptions
     injector: Injector;
 
     /**
-     * Behavior of catch http client error, default is `CatchHttpClientErrorBehavior.Suppress`
+     * Object storing options/config for specific http status codes
      */
-    behavior?: CatchHttpClientErrorBehavior|null;
-
-    /**
-     * Indication whether skip displaying of notifications for errors
-     */
-    skipErrorNotifications?: boolean|null;
-
-    /**
-     * Indication whether skip server validation errors processing
-     */
-    skipServerValidationErrors?: boolean|null;
-
-    /**
-     * Indication whether forcibly display custom message if present, not only as fallback but always
-     */
-    forceCustomMessageDisplay?: boolean|null;
-
-    /**
-     * Object storing default messages to be displayed for specific http status codes
-     */
-    messages?: HttpClientErrorMessages|null;
+    configs?: HttpClientErrorConfigs|null;
 
     /**
      * Object storing default error handlers for specific http status codes

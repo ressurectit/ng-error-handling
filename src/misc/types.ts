@@ -1,7 +1,7 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {PromiseOr} from '@jscrpt/common';
 
-import {HttpClientValidationErrors, HttpClientErrorHandler} from '../interfaces';
+import {HttpClientValidationErrors, HttpClientErrorHandler, CatchHttpClientErrorHttpStatusCodeOptions} from '../interfaces';
 import {HttpClientError} from './classes/httpClientError';
 
 /**
@@ -18,6 +18,11 @@ export type HttpClientValidationErrorResponseMapper = (err: HttpErrorResponse) =
  * Object storing error messages for http client errors according status code
  */
 export type HttpClientErrorMessages = Record<number, string|undefined|null>;
+
+/**
+ * Object storing specific options/config according status code
+ */
+export type HttpClientErrorConfigs = Record<number, CatchHttpClientErrorHttpStatusCodeOptions|undefined|null>;
 
 /**
  * Object storing error handlers for http client errors according status code
