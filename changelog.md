@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 15.0.1 (2025-04-22)
+
+### Bug Fixes
+
+- fixed `HttpServerErrorInterceptor` logging, now correctly displays error
+
 ## Version 15.0.0 (2025-04-14)
 
 ### Features
