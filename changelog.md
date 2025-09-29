@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 16.0.1 (2025-09-29)
+
+### Bug Fixes
+
+- fixes previous package release
+
 ## Version 16.0.0 (2025-09-29)
 
 ### Features
