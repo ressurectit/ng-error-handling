@@ -20,7 +20,7 @@
         "esModuleInterop": true,
         "importHelpers": true,
         "useDefineForClassFields": false,
-        "skipLibCheck": false,
+        "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "newLine": "lf",
         "rootDir": ".",
@@ -56,6 +56,7 @@
         "strictInputAccessModifiers": true,
         "strictTemplates": true,
         "strictStandalone": true,
+        "typeCheckHostBindings": false,
         "extendedDiagnostics":
         {
             "checks":

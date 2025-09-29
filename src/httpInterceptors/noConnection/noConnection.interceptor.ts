@@ -1,4 +1,4 @@
-import {Injectable, Optional, Injector, ClassProvider, inject} from '@angular/core';
+import {Injectable, Injector, ClassProvider, inject, runInInjectionContext} from '@angular/core';
 import {HttpInterceptor, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpRequest, HttpHandlerFn} from '@angular/common/http';
 import {IGNORED_INTERCEPTORS} from '@anglr/common';
 import {Observable, Observer, catchError} from 'rxjs';
@@ -7,19 +7,14 @@ import {NoConnectionInterceptorOptions} from './noConnectionInterceptor.options'
 
 /**
  * NoConnectionInterceptor used for intercepting http responses and handling 0 statuses
- * @deprecated Use new `noConnectionInterceptor` function
+ * @deprecated Use new `noConnectionInterceptor` function instead
  */
 @Injectable()
 export class NoConnectionInterceptor implements HttpInterceptor
 {
-    //######################### constructor #########################
-    constructor(@Optional() private _options: NoConnectionInterceptorOptions,
-                private _injector: Injector)
+    //######################### constructors #########################
+    constructor(private _injector: Injector)
     {
-        if(!_options || !(_options instanceof NoConnectionInterceptorOptions))
-        {
-            this._options = new NoConnectionInterceptorOptions();
-        }
     }
 
     //######################### public methods - implementation of HttpInterceptor #########################
@@ -31,39 +26,13 @@ export class NoConnectionInterceptor implements HttpInterceptor
      */
     public intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>>
     {
-        return next.handle(req).pipe(catchError((err) =>
-        {
-            return new Observable((observer: Observer<unknown>) =>
-            {
-                //client error, not response from server, or is ignored
-                if (err.error instanceof Error ||
-                    req.context.get(IGNORED_INTERCEPTORS).some(itm => itm == NoConnectionInterceptor))
-                {
-                    observer.error(err);
-                    observer.complete();
-
-                    return;
-                }
-
-                //if no connection to server
-                if(err.status == 0)
-                {
-                    this._options.action(this._injector, observer);
-
-                    return;
-                }
-
-                //other errors
-                observer.error(err);
-                observer.complete();
-            }) as Observable<HttpEvent<unknown>>;
-        }));
+        return runInInjectionContext(this._injector, () => noConnectionInterceptor(req, next.handle.bind(next)));
     }
 }
 
 /**
  * Provider for proper use of NoConnectionInterceptor, use this provider to inject this interceptor
- * @deprecated Use new `noConnectionInterceptor` function
+ * @deprecated Use new `noConnectionInterceptor` function instead
  */
 export const NO_CONNECTION_INTERCEPTOR_PROVIDER: ClassProvider =
 {
@@ -91,7 +60,7 @@ export function noConnectionInterceptor(req: HttpRequest<unknown>, next: HttpHan
         {
             //client error, not response from server, or is ignored
             if(err.error instanceof Error ||
-               req.context.get(IGNORED_INTERCEPTORS).some(itm => itm == NoConnectionInterceptor))
+               req.context.get(IGNORED_INTERCEPTORS).some(itm => itm == NoConnectionInterceptor || itm == noConnectionInterceptor))
             {
                 observer.error(err);
                 observer.complete();

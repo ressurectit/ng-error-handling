@@ -1,5 +1,18 @@
 # Changelog
 
+## Version 16.0.0 (2025-09-29)
+
+### Features
+
+- all interceptors now use updated `IGNORED_INTERCEPTORS` token, which works also with functions
+
+### BREAKING CHANGES
+
+- minimal supported version of `Node.js` is `20.19.0`
+- minimal supported version of `@angular` packages is `20.3.2`
+- minimal supported version of `@angular/material` packages is `20.2.0`
+- minimal supported version of `@anglr/common` packages is `23.0.0`
+
 ## Version 15.0.1 (2025-04-22)
 
 ### Bug Fixes

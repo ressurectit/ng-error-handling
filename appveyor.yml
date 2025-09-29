@@ -1,7 +1,7 @@
 image: Visual Studio 2019
 
 environment:
-  nodejs_version: "20"
+  nodejs_version: "22"
 
 branches:
   only:

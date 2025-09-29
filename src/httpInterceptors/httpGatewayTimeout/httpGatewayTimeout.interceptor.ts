@@ -1,4 +1,4 @@
-import {Injectable, Optional, Injector, ClassProvider, inject} from '@angular/core';
+import {Injectable, Injector, ClassProvider, inject, runInInjectionContext} from '@angular/core';
 import {HttpInterceptor, HttpHandler, HttpEvent, HTTP_INTERCEPTORS, HttpRequest, HttpHandlerFn} from '@angular/common/http';
 import {IGNORED_INTERCEPTORS} from '@anglr/common';
 import {Observable, Observer, catchError} from 'rxjs';
@@ -7,19 +7,14 @@ import {HttpGatewayTimeoutInterceptorOptions} from './httpGatewayTimeoutIntercep
 
 /**
  * HttpGatewayTimeoutInterceptor used for intercepting http responses and handling 504 statuses
- * @deprecated Use new `httpGatewayTimeoutInterceptor` function
+ * @deprecated Use new `httpGatewayTimeoutInterceptor` function instead
  */
 @Injectable()
 export class HttpGatewayTimeoutInterceptor implements HttpInterceptor
 {
-    //######################### constructor #########################
-    constructor(@Optional() private _options: HttpGatewayTimeoutInterceptorOptions,
-                private _injector: Injector)
+    //######################### constructors #########################
+    constructor(private _injector: Injector)
     {
-        if(!_options || !(_options instanceof HttpGatewayTimeoutInterceptorOptions))
-        {
-            this._options = new HttpGatewayTimeoutInterceptorOptions();
-        }
     }
 
     //######################### public methods - implementation of HttpInterceptor #########################
@@ -31,39 +26,13 @@ export class HttpGatewayTimeoutInterceptor implements HttpInterceptor
      */
     public intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>>
     {
-        return next.handle(req).pipe(catchError((err) =>
-        {
-            return new Observable(observer =>
-            {
-                //client error, not response from server, or is ignored
-                if (err.error instanceof Error ||
-                    req.context.get(IGNORED_INTERCEPTORS).some(itm => itm == HttpGatewayTimeoutInterceptor))
-                {
-                    observer.error(err);
-                    observer.complete();
-
-                    return;
-                }
-
-                //if gateway timeout
-                if(err.status == 504)
-                {
-                    this._options.action(this._injector, observer as Observer<unknown>);
-
-                    return;
-                }
-
-                //other errors
-                observer.error(err);
-                observer.complete();
-            }) as Observable<HttpEvent<unknown>>;
-        }));
+        return runInInjectionContext(this._injector, () => httpGatewayTimeoutInterceptor(req, next.handle.bind(next)));
     }
 }
 
 /**
  * Provider for proper use of HttpGatewayTimeoutInterceptor, use this provider to inject this interceptor
- * @deprecated Use new `httpGatewayTimeoutInterceptor` function
+ * @deprecated Use new `httpGatewayTimeoutInterceptor` function instead
  */
 export const HTTP_GATEWAY_TIMEOUT_INTERCEPTOR_PROVIDER: ClassProvider =
 {
@@ -91,7 +60,7 @@ export function httpGatewayTimeoutInterceptor(req: HttpRequest<unknown>, next: H
         {
             //client error, not response from server, or is ignored
             if(err.error instanceof Error ||
-               req.context.get(IGNORED_INTERCEPTORS).some(itm => itm == HttpGatewayTimeoutInterceptor))
+               req.context.get(IGNORED_INTERCEPTORS).some(itm => itm == HttpGatewayTimeoutInterceptor || itm == httpGatewayTimeoutInterceptor))
             {
                 observer.error(err);
                 observer.complete();
