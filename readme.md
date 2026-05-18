@@ -107,7 +107,7 @@ The library uses injection tokens for notification services. You need to provide
 ```typescript
 import {ApplicationConfig} from '@angular/core';
 import {ERROR_HANDLING_NOTIFICATIONS, CLIENT_ERROR_NOTIFICATIONS} from '@anglr/error-handling';
-import {GlobalNotificationsService} from '@anglr/common';
+import {NOTIFICATIONS} from '@anglr/common';
 
 export const appConfig: ApplicationConfig =
 {
@@ -115,11 +115,11 @@ export const appConfig: ApplicationConfig =
     [
         {
             provide: ERROR_HANDLING_NOTIFICATIONS,
-            useExisting: GlobalNotificationsService,
+            useExisting: NOTIFICATIONS,
         },
         {
             provide: CLIENT_ERROR_NOTIFICATIONS,
-            useExisting: GlobalNotificationsService,
+            useExisting: NOTIFICATIONS,
         },
     ],
 };
@@ -132,6 +132,7 @@ export const appConfig: ApplicationConfig =
 ### Registration
 
 ```typescript
+import {ApplicationConfig, ValueProvider} from '@angular/core';
 import {ANGLR_EXCEPTION_HANDLER_PROVIDER, AnglrExceptionHandlerOptions} from '@anglr/error-handling';
 
 export const appConfig: ApplicationConfig =
@@ -139,7 +140,12 @@ export const appConfig: ApplicationConfig =
     providers:
     [
         ANGLR_EXCEPTION_HANDLER_PROVIDER,
-        new AnglrExceptionHandlerOptions(true, false),
+        //either use value provider or factory provider which benefits of using DI
+        <ValueProvider>
+        {
+            provide: AnglrExceptionHandlerOptions,
+            useValue: new AnglrExceptionHandlerOptions(true, false),
+        },
     ],
 };
 ```
@@ -170,7 +176,7 @@ All interceptors are available both as functional interceptors (recommended) and
 Handles HTTP responses with status `0` (server offline / no connection).
 
 ```typescript
-import {provideHttpClient, withInterceptors} from '@angular/common/http';
+import {ApplicationConfig, ValueProvider, provideHttpClient, withInterceptors} from '@angular/common/http';
 import {noConnectionInterceptor, NoConnectionInterceptorOptions} from '@anglr/error-handling';
 
 export const appConfig: ApplicationConfig =
@@ -181,7 +187,12 @@ export const appConfig: ApplicationConfig =
         [
             noConnectionInterceptor,
         ])),
-        new NoConnectionInterceptorOptions('Custom offline message.'),
+        //either use value provider or factory provider which benefits of using DI
+        <ValueProvider>
+        {
+            provide: NoConnectionInterceptorOptions,
+            useValue: new NoConnectionInterceptorOptions('Custom offline message.'),
+        },
     ],
 };
 ```
@@ -193,7 +204,7 @@ Default message: `'Server is offline. Try again later.'`
 Handles HTTP `503 Service Unavailable` responses.
 
 ```typescript
-import {provideHttpClient, withInterceptors} from '@angular/common/http';
+import {ApplicationConfig, ValueProvider, provideHttpClient, withInterceptors} from '@angular/common/http';
 import {serviceUnavailableInterceptor, ServiceUnavailableInterceptorOptions} from '@anglr/error-handling';
 
 export const appConfig: ApplicationConfig =
@@ -204,7 +215,12 @@ export const appConfig: ApplicationConfig =
         [
             serviceUnavailableInterceptor,
         ])),
-        new ServiceUnavailableInterceptorOptions('Service is temporarily unavailable.'),
+        //either use value provider or factory provider which benefits of using DI
+        <ValueProvider>
+        {
+            provide: ServiceUnavailableInterceptorOptions,
+            useValue: new ServiceUnavailableInterceptorOptions('Service is temporarily unavailable.'),
+        },
     ],
 };
 ```
@@ -216,7 +232,7 @@ Default message: `'Remote server is unavailable. Try again later.'`
 Handles HTTP `504 Gateway Timeout` responses.
 
 ```typescript
-import {provideHttpClient, withInterceptors} from '@angular/common/http';
+import {ApplicationConfig, ValueProvider, provideHttpClient, withInterceptors} from '@angular/common/http';
 import {httpGatewayTimeoutInterceptor, HttpGatewayTimeoutInterceptorOptions} from '@anglr/error-handling';
 
 export const appConfig: ApplicationConfig =
@@ -227,7 +243,12 @@ export const appConfig: ApplicationConfig =
         [
             httpGatewayTimeoutInterceptor,
         ])),
-        new HttpGatewayTimeoutInterceptorOptions('Gateway timeout occurred.'),
+        //either use value provider or factory provider which benefits of using DI
+        <ValueProvider>
+        {
+            provide: HttpGatewayTimeoutInterceptorOptions,
+            useValue: new HttpGatewayTimeoutInterceptorOptions('Gateway timeout occurred.'),
+        },
     ],
 };
 ```
@@ -239,7 +260,7 @@ Default message: `'Server did not respond in defined time.'`
 Handles HTTP `5xx` server errors. In dev mode (`jsDevMode`), logs errors and optionally renders error details through `InternalServerErrorService`.
 
 ```typescript
-import {provideHttpClient, withInterceptors} from '@angular/common/http';
+import {ApplicationConfig, provideHttpClient, withInterceptors} from '@angular/common/http';
 import {httpServerErrorInterceptor} from '@anglr/error-handling';
 
 export const appConfig: ApplicationConfig =
@@ -261,7 +282,7 @@ export const appConfig: ApplicationConfig =
 Converts `HttpErrorResponse` with status codes `400..499` into `HttpClientError` objects. Non-HTTP errors and client-side errors are re-thrown unchanged.
 
 ```typescript
-import {inject} from '@angular/core';
+import {inject, Injector} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {processHttpClientErrorResponse, catchHttpClientError} from '@anglr/error-handling';
 
@@ -270,12 +291,14 @@ export class UserService
 {
     private _httpClient: HttpClient = inject(HttpClient);
 
+    private _injector: Injector = inject(Injector);
+
     public getUser(id: number)
     {
         return this._httpClient.get(`/api/users/${id}`)
             .pipe(
-                processHttpClientErrorResponse(),
-                catchHttpClientError(),
+                processHttpClientErrorResponse({injector: this._injector}),
+                catchHttpClientError({injector: this._injector}),
             );
     }
 }
@@ -284,12 +307,10 @@ export class UserService
 #### Options
 
 ```typescript
-import {processHttpClientErrorResponse} from '@anglr/error-handling';
-
 // With custom options
 processHttpClientErrorResponse(
 {
-    injector: myInjector,
+    injector: angularInjector,
     ignoredHttpStatusCodes: [401, 403, 409],
     clientErrorsResponseMapper: err => [err?.error?.message ?? 'Unknown error'],
     clientValidationErrorsResponseMapper: err => err?.error?.validationErrors ?? null,
@@ -301,23 +322,21 @@ processHttpClientErrorResponse(
 Catches `HttpClientError` objects (produced by `processHttpClientErrorResponse`) and handles them according to provided options — displaying notifications, storing validation errors, and applying behavior.
 
 ```typescript
-import {CatchHttpClientErrorBehavior, catchHttpClientError} from '@anglr/error-handling';
-
 // Suppress errors (default) — observable never completes on error
-catchHttpClientError();
+catchHttpClientError({injector: angularInjector});
 
 // Pass through — HttpClientError is emitted as next value
-catchHttpClientError({behavior: CatchHttpClientErrorBehavior.PassThrogh});
+catchHttpClientError({injector: angularInjector, behavior: CatchHttpClientErrorBehavior.PassThrogh});
 
 // Throw — HttpClientError is re-thrown as observable error
-catchHttpClientError({behavior: CatchHttpClientErrorBehavior.Throw});
+catchHttpClientError({injector: angularInjector, behavior: CatchHttpClientErrorBehavior.Throw});
 ```
 
 #### Per-status-code configuration
 
-```typescript
-import {CatchHttpClientErrorBehavior, catchHttpClientError} from '@anglr/error-handling';
+Using default error handlers with custom configuration for different status codes.
 
+```typescript
 catchHttpClientError(
 {
     configs:
@@ -341,9 +360,9 @@ catchHttpClientError(
 
 #### Custom error handlers
 
-```typescript
-import {catchHttpClientError, HttpClientError} from '@anglr/error-handling';
+Using custom error handler for specified status code.
 
+```typescript
 catchHttpClientError(
 {
     handlers:
@@ -401,13 +420,13 @@ Directive that integrates server-side validation errors with Angular reactive fo
     <input formControlName="email"
            serverValidation />
 
-    <input formControlName="username"
+    <input [formControl]="username"
            serverValidation="userName" />
 </form>
 ```
 
-- When `serverValidation` is used without a value on a `formControlName` element, the `formControlName` value is used as the server validation property name
-- When a value is provided (e.g., `serverValidation="userName"`), that value is used instead
+- When `formControlName` is available value is used for obtaining name of validation property
+- If no `formControlName` is available, you have to specify validation property name using `serverValidation`
 
 The directive automatically revalidates the form control when server validation errors change.
 
@@ -444,6 +463,7 @@ export class CustomErrorRenderer implements InternalServerErrorRenderer
 Register using the provider function:
 
 ```typescript
+import {ApplicationConfig} from '@angular/core';
 import {provideInternalServerErrorRenderer} from '@anglr/error-handling';
 
 export const appConfig: ApplicationConfig =
@@ -542,6 +562,11 @@ Integration with `@anglr/rest` library, providing decorators and middlewares for
 - **`CatchHttpClientErrorMiddleware`** — wraps REST method responses with `catchHttpClientError` operator
 - **`HttpClientErrorProcessingMiddleware`** — wraps REST method responses with `processHttpClientErrorResponse` operator
 
+#### Injection tokens
+
+- **`ERROR_HANDLING_REST_MIDDLEWARES_ORDER`** - definition of array of rest middlewares order including error handling middleware
+- **`REST_ERROR_HANDLING_MIDDLEWARE_ORDER`** - provider for rest middleware order with error handling middleware
+
 #### Decorators
 
 All decorators modify REST method descriptors and are used on `@anglr/rest` service methods:
@@ -550,6 +575,7 @@ All decorators modify REST method descriptors and are used on `@anglr/rest` serv
 import {RESTClient, GET, BaseUrl} from '@anglr/rest';
 import {HttpClientErrorBehavior, HttpClientErrorMessages, HttpClientErrorSkipErrorNotifications, IgnoredHttpErrorStatusCodes} from '@anglr/error-handling/rest';
 import {CatchHttpClientErrorBehavior} from '@anglr/error-handling';
+import {NEVER} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 @BaseUrl('/api')
@@ -560,7 +586,7 @@ export class UsersRestService extends RESTClient
     @HttpClientErrorMessages({404: 'User not found'})
     public getUser(@Path('id') id: number): Observable<User>
     {
-        return undefined;
+        return NEVER;
     }
 
     @GET('/users')
@@ -569,7 +595,7 @@ export class UsersRestService extends RESTClient
     @IgnoredHttpErrorStatusCodes([409])
     public getUsers(): Observable<User[]>
     {
-        return undefined;
+        return NEVER;
     }
 }
 ```

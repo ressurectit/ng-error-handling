@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 16.0.2 (2026-05-18)
+
+### Bug Fixes
+
+- fixed missing readme file
+
 ## Version 16.0.1 (2025-09-29)
 
 ### Bug Fixes
